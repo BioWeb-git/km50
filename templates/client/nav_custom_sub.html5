@@ -1,0 +1,56 @@
+<?php
+    $parentID = "";
+    $hasparent = false;
+?>
+
+<ul class="<?= $this->level ?>">
+    <?php foreach ($this->items as $item): ?>
+        <?php if ($item['pid'] == $parentID && $item['pid'] != $item['rootId'] && $hasparent == false): ?>
+            <ul class="level_2">
+        <?php elseif ($item['pid'] != $parentID && $hasparent == true): ?>
+                </li>
+            </ul>
+        <?php endif; ?>
+
+        <li class="<?= $item['class'] ?>">
+
+            <?php if ($item['isActive']): ?>
+                <strong class="<?= $item['class'] ?>"<?php if (!empty($item['subitems'])) echo ' aria-haspopup="true"'; ?>>
+                    <?= $item['link'] ?>test
+                </strong>
+                <?php echo $item['subitems'] ?? '' ?>
+            <?php else: ?>
+                <?php if (strpos($item['class'], 'nolink') !== false): ?>
+                    <strong>
+                <?php else: ?>
+                    <a
+                        href="<?= $item['href'] ?: './' ?>"
+                        title="<?= $item['pageTitle'] ?: $item['title'] ?>"
+                        <?php if ($item['class']) echo ' class="' . $item['class'] . '"'; ?>
+                        <?php if ($item['accesskey']) echo ' accesskey="' . $item['accesskey'] . '"'; ?>
+                        <?php if (!empty($item['subitems'])) echo ' aria-haspopup="true"'; ?>
+                    >
+                <?php endif; ?>
+                <?= $item['link'] ?>
+                <?php if (strpos($item['class'], 'nolink') !== false): ?>
+                    </strong>
+                <?php else: ?>
+                    </a>
+                <?php endif; ?>
+                <?php echo $item['subitems'] ?? '' ?>
+            <?php endif; ?>
+
+
+        <?php if ($item['pid'] == $parentID && $item['pid'] != $item['rootId']): ?>
+            <?php $hasparent = true; ?>
+            </li>
+        <?php else: ?>
+            <?php $hasparent = false; ?>
+            <?php $parentID = $item['id'] ?>
+        <?php endif; ?>
+
+    <?php endforeach; ?>
+</ul>
+<?php
+    //$this->showTemplateVars();
+?>

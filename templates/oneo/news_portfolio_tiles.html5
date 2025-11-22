@@ -1,0 +1,13 @@
+<article class="portfolio-tiles-item <?php echo $this->class ?>" data-groups="<?php echo htmlspecialchars(json_encode(array($this->archive->title))) ?>">
+	<?php if ($this->addImage && $this->src): ?>
+		<?php $this->insert('picture_default', $this->picture) ?>
+	<?php else: ?>
+		<span class="no-image"></span>
+	<?php endif ?>
+	<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?> class="portfolio-tiles-item-link">
+		<h3><?php echo $this->newsHeadline ?></h3>
+		<?php if ($this->subheadline): ?>
+			<h4><?php echo $this->subheadline ?></h4>
+		<?php endif ?>
+	</a>
+</article>

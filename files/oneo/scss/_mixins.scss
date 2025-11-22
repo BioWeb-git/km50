@@ -1,0 +1,324 @@
+// Mixins
+//
+// @copyright Copyright (c) 2012 rocksolidthemes.com
+// @license   https://rocksolidthemes.com/agb   No free usage allowed
+//
+
+@mixin hidpi {
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-device-pixel-ratio: 4 / 3), only screen and (min-device-pixel-ratio: 1.3) {
+		@content;
+	}
+}
+
+@mixin ir($image-name: "", $image-extension: "png", $x: left, $y: top, $color: transparent) {
+	@if $image-name != "" {
+		background: $color inline-image(#{$image-name} + "." + #{$image-extension}, image/#{$image-extension}) $x $y no-repeat;
+		width: image-width(#{$image-name} + "." + #{$image-extension});
+		height: image-height(#{$image-name} + "." + #{$image-extension});
+		display: block;
+	}
+	@if $image-name == "" {
+		display: inline-block;
+	}
+	overflow: hidden;
+	line-height: 0;
+	text: {
+		indent: -9999px;
+		align: left;
+	};
+	br {
+		display: none;
+	}
+	@if $image-name != "" {
+		@include hidpi {
+			background-image: inline-image(#{$image-name} + "-x2." + #{$image-extension}, "image/" + #{$image-extension});
+			background-size: image-width(#{$image-name} + "." + #{$image-extension}), image-height(#{$image-name} + "." + #{$image-extension});
+		}
+	}
+}
+
+@mixin icon($content: "", $font-size: "100%", $line-height: 1) {
+	font: #{$font-size}/#{$line-height} "RockSolid Icons";
+	@if $content != "" {
+		content: $content;
+	}
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: geometricPrecision;
+	text-indent: 0;
+	display: inline-block;
+	position: relative;
+}
+
+@mixin hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+@mixin visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	&.focusable {
+		&:active, &:focus {
+			clip: auto;
+			height: auto;
+			margin: 0;
+			overflow: visible;
+			position: static;
+			width: auto;
+		}
+	}
+}
+
+@mixin invisible {
+	visibility: hidden;
+}
+
+@mixin clearfix {
+	&:before {
+		content: "";
+		display: table;
+	}
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	zoom: 1;
+}
+
+@mixin placeholder {
+	&:-webkit-placeholder {
+		@content;
+	}
+	&:-moz-placeholder {
+		@content;
+	}
+	&:-ms-placeholder {
+		@content;
+	}
+	&:-o-placeholder {
+		@content;
+	}
+	&:placeholder {
+		@content;
+	}
+}
+
+@mixin line-height($target-size, $parent-size: 15) {
+	// calculate line-height
+	// "+ 0.01" fixes rounding bugs in chrome
+	line-height: ($target-size + 0.01) / $parent-size;
+}
+
+@mixin column-classes($gutter-width, $max-columns, $class-name) {
+	@for $cols from 1 through $max-columns {
+		$colWidth: (1 - $gutter-width * ($cols - 1)) / $cols;
+		@for $span from 1 through $cols {
+			&.-#{unquote($class-name)}-col-#{$cols}-#{$span} {
+				width: ($colWidth * $span + $gutter-width * ($span - 1)) * 100%;
+			}
+		}
+	}
+}
+
+@mixin mediaquery($breakpoint, $property: max-width) {
+	@if $breakpoint == desktop {
+		$breakpoint: $breakpoint-desktop;
+	}
+	@else if $breakpoint == tablet {
+		$breakpoint: $breakpoint-tablet;
+	}
+	@else if $breakpoint == mobile {
+		$breakpoint: $breakpoint-mobile;
+	}
+	@else if $breakpoint == mobile-portrait {
+		$breakpoint: $breakpoint-mobile-portrait;
+	}
+	@media screen and (unquote($property): $breakpoint) {
+		@content;
+	}
+}
+
+@mixin fix-ie-font-size($font-size) {
+	/* IE8 and IE9 calculate em's wrong */
+	font-size: $font-size unquote("\9");
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		/* IE10 and IE11 calculate em's wrong */
+		font-size: $font-size;
+	}
+}
+
+@function col($columns, $container-columns) {
+	@return $columns / $container-columns * 100%;
+}
+
+@function em($target-size, $parent-size: 15) {
+	// remove units from values
+	@if unit($target-size) == "px" {
+		$target-size: $target-size / 1px;
+	}
+	@if unit($target-size) == "em" {
+		$target-size: $target-size / 1em;
+	}
+	@if unit($target-size) == "%" {
+		$target-size: $target-size / 1%;
+	}
+	@if unit($parent-size) == "px" {
+		$parent-size: $parent-size / 1px;
+	}
+	@if unit($parent-size) == "em" {
+		$parent-size: $parent-size / 1em;
+	}
+	@if unit($parent-size) == "%" {
+		$parent-size: $parent-size / 1%;
+	}
+	// calculate em
+	@return $target-size / $parent-size * 1em;
+}
+
+// ===========================================
+// Compass backwards compatibility
+// ========================================
+
+@mixin font-face($name, $font-files, $eot: false, $weight: false, $style: false) {
+	@font-face {
+		font-family: quote($name);
+		src: $font-files;
+		@if $weight {
+			font-weight: $weight;
+		}
+		@if $style {
+			font-style: $style;
+		}
+	}
+}
+
+@function font-files($url1, $format1, $url2, $format2) {
+	@return font-url($url1) format(quote($format1)), font-url($url2) format(quote($format2));
+}
+
+@function font-url($url) {
+	@return url("../fonts/#{unquote($url)}");
+}
+
+@function linear-gradient($angle, $param...) {
+	@if $angle == top {
+		$angle: to bottom;
+	}
+	@else if $angle == right {
+		$angle: to left;
+	}
+	@else if $angle == bottom {
+		$angle: to top;
+	}
+	@else if $angle == left {
+		$angle: to right;
+	}
+	@return #{unquote("linear-gradient(")}$angle, $param#{unquote(")")};
+}
+
+@mixin box-sizing($param...) {
+	box-sizing: $param;
+}
+
+@mixin text-shadow($param...) {
+	text-shadow: $param;
+}
+
+@mixin background($param...) {
+	background: $param;
+}
+
+@mixin background-image($param...) {
+	background-image: $param;
+}
+
+@mixin appearance($param...) {
+	-webkit-appearance: $param;
+	-moz-appearance: $param;
+	appearance: $param;
+}
+
+@mixin transition($param...) {
+	transition: $param;
+}
+
+@mixin transition-duration($param...) {
+	transition-duration: $param;
+}
+
+@mixin transition-property($param...) {
+	transition-property: $param;
+}
+
+@mixin transition-delay($param...) {
+	transition-delay: $param;
+}
+
+@mixin perspective($param...) {
+	perspective: $param;
+}
+
+@mixin backface-visibility($param...) {
+	backface-visibility: $param;
+}
+
+@mixin transform($param...) {
+	transform: $param;
+}
+
+@mixin filter($param...) {
+	filter: $param;
+}
+
+@mixin box-shadow($param...) {
+	box-shadow: $param;
+}
+
+@mixin border-radius($param...) {
+	@if length($param) < 1 {
+		$param: 5px;
+	}
+	border-radius: $param;
+}
+
+@mixin column-count($param...) {
+	column-count: $param;
+}
+
+@mixin column-gap($param...) {
+	column-gap: $param;
+}
+
+@mixin transform-origin($x: null, $y: null, $z: null) {
+	transform-origin: $x $y $z;
+}
+
+@mixin background-clip($param...) {
+	background-clip: $param;
+}
+
+@mixin opacity($param...) {
+	opacity: $param;
+}
+
+@mixin background-origin($param...) {
+	background-origin: $param;
+}
+
+@mixin animation($param...) {
+	animation: $param;
+}
+
+@mixin keyframes($param...) {
+	@keyframes #{unquote($param)} {
+		@content;
+	}
+}

@@ -1,0 +1,58 @@
+<div class="pricing-table-master">
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+	<div class="pricing-table rs-columns <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+		<?php foreach ($this->plans as $index => $plan): ?>
+			<?php
+				if (isset($plan->imageSize[2]) && $plan->imageSize[2] != '') {
+					$imageSize = $plan->imageSize[2];
+				} else {
+					$imageSize = $this->imageGeneralSize;
+				}
+			?>
+			<section class="pricing-table-plan <?php echo $this->getColumnClassName($index) ?><?php if ($plan->highlighted): ?> -highlighted<?php endif ?>">
+				<?php if ($plan->image): ?>
+					<div class="pricing-table-plan-image">
+						<img class="pricing-table-plan-img" src="<?= $this->getImageObject($plan->image,$imageSize)->src ?>" alt="Image">
+					</div>
+				<?php endif ?>
+				<?php if ($plan->headline): ?>
+					<h3 class="pricing-table-plan-title"><?php echo $plan->headline ?></h3>
+				<?php endif ?>
+
+				<?php if ($plan->price || $plan->price === '0'): ?>
+					<p>
+						<b><?php echo $this->currencySymbol ?></b>
+						<?php if (preg_match('([.,]\\d{2}$)', $plan->price)): ?>
+							<?php echo substr($plan->price, 0, -3) ?><span class="pricing-table-plan-price-part"><small><?php echo substr($plan->price, -3) ?></small>
+						<?php else: ?>
+							<?php echo $plan->price ?><span class="pricing-table-plan-price-part">
+						<?php endif ?>
+						<i><?php echo $plan->priceInfo ?></i>
+						</span>
+					</p>
+				<?php endif ?>
+
+				<?php if ($plan->highlighted): ?>
+					<h4><span><?php echo $plan->highlighted ?></span></h4>
+				<?php endif ?>
+
+				<?php if ($plan->features): ?>
+					<ul>
+						<li><?php echo str_replace("\n", "</li>\n<li>", trim($plan->features)) ?></li>
+					</ul>
+				<?php endif ?>
+
+				<?php if ($plan->linkLabel): ?>
+					<a href="<?php echo $plan->linkUrl ?>"<?php if (!$plan->highlighted): ?> class="-secondary"<?php endif ?><?php if ($plan->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php echo $plan->linkLabel ?></a>
+				<?php endif ?>
+
+			</section>
+
+		<?php endforeach ?>
+	</div>
+</div>

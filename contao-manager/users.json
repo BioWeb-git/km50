@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "secret": "3492f1d9a92ad434d3b8f1de12ff05720d8b78facae96ac2f3eb95de65b61ca661b1239c1eb4c98e",
+    "users": {
+        "bioweb": {
+            "username": "bioweb",
+            "password": "$2y$13$HKRjtd\/7d46clpTAbJrWD.zxC\/CsQPtdq5NTGg5iOErCphP5nG\/WG",
+            "passkey": null,
+            "scope": "admin",
+            "totp_secret": null
+        }
+    }
+}

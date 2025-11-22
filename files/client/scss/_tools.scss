@@ -1,0 +1,56 @@
+.cutoff-text{
+	@include cutoff-text;
+}
+.max-mobileportrait{
+	max-width: $breakpoint-mobile-portrait;
+}
+.max-mobile{
+	max-width: $breakpoint-mobile;
+}
+.max-tablet{
+	max-width: $breakpoint-tablet;
+}
+.max-desktop{
+	max-width: $breakpoint-desktop;
+}
+@function generate-max-width-class($wrapper-size) {
+	@return ".max-#{$wrapper-size} { max-width: #{$wrapper-size}px; }";
+}
+$wrapper-min-width: 50;
+$wrapper-max-width: 700;
+$wrapper-width-step: 50;
+@for $i from $wrapper-min-width through $wrapper-max-width {
+	.max-#{$i} {
+		@if $i % $wrapper-width-step == 0{
+			max-width : #{$i}px;
+		}
+	}
+}
+@for $i from $wrapper-min-width through $wrapper-max-width {
+	@include mediaquery(tablet){
+		@if $i % $wrapper-width-step == 0 {
+			.max-tablet-#{$i} {
+				max-width: #{$i}px;
+			}
+		}
+	}
+}
+@for $i from $wrapper-min-width through $wrapper-max-width {
+	@include mediaquery(mobile){
+		@if $i % $wrapper-width-step == 0 {
+			.max-mobile-#{$i} {
+				max-width: #{$i}px;
+			}
+		}
+	}
+}
+@include mediaquery(mobile){
+	.max-mobile-none {
+		max-width: none;
+	}
+}
+@include mediaquery(tablet){
+	.max-tablet-none {
+		max-width: none;
+	}
+}

@@ -1,0 +1,34 @@
+<article class="news-boxed-item <?php echo $this->class ?>">
+
+	<?php if ($this->addImage && $this->src): ?>
+		<div class="news-boxed-item-image">
+			<?php $this->insert('picture_default', $this->picture) ?>
+			<?php if ($this->more): ?>
+				<div class="news-boxed-item-image-more"><?php echo $this->more ?></div>
+			<?php endif ?>
+		</div>
+	<?php endif ?>
+
+	<p class="news-boxed-item-info">
+		<time datetime="<?php echo $this->datetime ?>"><?php echo $this->date ?></time>
+		<?php /* echo $this->author */ ?>
+		<?php /* echo $this->commentCount */ ?>
+	</p>
+
+	<h3>
+		<?php if ($this->link): ?>
+			<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+		<?php endif ?>
+		<?php echo $this->newsHeadline ?>
+		<?php if ($this->link): ?>
+			</a>
+		<?php endif ?>
+	</h3>
+
+	<?php echo $this->teaser ?>
+
+	<?php if ((!$this->addImage || !$this->src) && $this->more): ?>
+		<p class="news-boxed-item-more"><?php echo $this->more ?></p>
+	<?php endif ?>
+
+</article>

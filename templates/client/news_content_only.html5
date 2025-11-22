@@ -1,0 +1,22 @@
+
+<div class="layout_full block <?php echo $this->class; ?>">
+
+  <?php if ($this->text): ?>
+    <?php echo $this->text; ?>
+  <?php else: ?>
+    <div class="ce_text block">
+      <?php echo $this->teaser; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($this->enclosure): ?>
+    <ul class="enclosure">
+      <?php foreach ($this->enclosure as $enclosure): ?>
+        <li class="download-element ext-<?php echo $enclosure['extension']; ?>">
+           <a href="<?php echo $enclosure['href']; ?>" title="<?php echo $enclosure['title']; ?>"><?php echo $enclosure['link']; ?> <span class="size">(<?php echo $enclosure['filesize']; ?>)</span></a>
+        </li>
+      <?php endforeach; ?>
+    </ul>
+  <?php endif; ?>
+
+</div>

@@ -1,0 +1,45 @@
+/.env
+/.env.local
+/.env.local.php
+
+# logs & cache
+/var/*
+!/var/backups
+/.sass-cache
+
+# composer
+/vendor/
+/contao-manager/logs/*
+/contao-manager/cache/*
+
+# IDE, System
+/.DS_Store
+/.idea
+/.vagrant
+/Vagrantfile
+Thumbs.db
+*.afdesign~lock~
+
+# Generated folders
+/app/
+/assets/
+/system/*
+!/system/modules/my_custom_translations/
+!/system/config/
+
+# Symlinked resources
+/public/assets
+/public/bundles/
+/public/files/
+/public/share/
+/public/system/
+/public/vendor/
+/public/install.php
+
+# Skip files
+/system/modules/*/.skip
+
+# Client
+/files/public/**
+!/files/public/**/
+!/**/*.public

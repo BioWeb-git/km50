@@ -1,0 +1,15 @@
+<div class="slider-navigation" data-slider-id="<?php echo $this->sliderId ?>"<?php echo $this->cssID; ?>>
+	<a class="slider-navigation-prev" href="">prev</a>
+	<?php if ($this->buttonLabel): ?>
+		<?php
+			$buttonClasses = array(
+				$this->buttonVariation,
+				$this->buttonSize,
+			);
+		?>
+		<a class="button <?php echo implode(' ', $buttonClasses) ?>" <?php if ($this->buttonIcon): ?> data-icon="&#x<?php echo $this->buttonIcon ?>;"<?php endif ?> href="<?php echo $this->buttonUrl ?>"<?php if ($this->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+			<?php echo $this->buttonLabel ?>
+		</a>
+	<?php endif ?>
+	<a class="slider-navigation-next" href="">next</a>
+</div>

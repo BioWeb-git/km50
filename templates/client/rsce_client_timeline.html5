@@ -1,0 +1,71 @@
+<div class="timeline <?php echo $this->class ?>" id="timeline-<?= $this->id ?>">
+
+	<?php foreach ($this->events as $event): ?>
+
+		<section class="timeline-item is-animated does-repeat"<?php if ($event->icon): ?> data-icon="&#x<?php echo $event->icon ?>;"<?php endif ?>>
+
+			<?php if ($event->headline): ?>
+				<h3 class="timeline-item-title"><?php echo $event->headline ?></h3>
+			<?php endif ?>
+
+			<div class="timeline-item-text">
+
+				<?php if ($event->headline2): ?>
+					<h4><?php echo $event->headline2 ?></h4>
+				<?php endif ?>
+
+				<?php if ($image = $this->getImageObject($event->image, $event->imageSize)): ?>
+					<figure class="image_container">
+						<?php if ($event->imageLinkUrl || $event->openLightbox): ?>
+							<a
+								class="image-wrapper
+								<?php if(empty($event->imageLinkUrl) && $event->openLightbox): ?>
+									photoswipe"
+									data-pswp-width="<?= $this->getImageObject($event->image)->width ?>"
+									data-pswp-height="<?= $this->getImageObject($event->image)->height ?>"
+								<?php else: ?>
+									"
+								<?php endif ?>
+								<?php if($event->imageLinkUrl && $event->openLightbox): ?>
+									target="_blank"
+								<?php endif ?>
+								href="<?php echo $event->imageLinkUrl ?: $this->getImageObject($event->image)->src ?>">
+						<?php endif ?>
+						<?php $this->insert('picture_default', $image->picture) ?>
+						<?php if ($event->imageLinkUrl || $event->openLightbox): ?>
+							</a>
+						<?php endif ?>
+						<figcaption class="caption"><?php echo $event->imageCaption ?></figcaption>
+					</figure>
+				<?php endif ?>
+
+				<?php echo $event->text ?>
+
+			</div>
+
+		</section>
+
+	<?php endforeach ?>
+
+</div>
+
+<?php
+	if (isset($photoswipe_gallery_lib)){
+	    $GLOBALS['TL_CSS'][] = $GLOBALS['TL_CONFIG']['uploadPath'] . '/js/photoswipe/photoswipe.css';
+        $photoswipe_gallery_lib = true;
+    }
+	$GLOBALS['TL_BODY'][] = '
+		<script type="module">
+			import PhotoSwipeLightbox from "./files/js/photoswipe/photoswipe-lightbox.esm.js";
+			const lightbox = new PhotoSwipeLightbox({
+				gallery: "#timeline-' . $this->id . ' .image_container",
+				children: "a.photoswipe",
+				showHideAnimationType: "none",
+				bgOpacity: 0.9,
+				wheelToZoom: true,
+				pswpModule: () => import("./files/js/photoswipe/photoswipe.esm.js")
+			});
+			lightbox.init();
+		</script>
+'
+?>

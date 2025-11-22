@@ -1,0 +1,36 @@
+<?php
+	$cssClasses = array(
+		'headline-box',
+		$this->textAlign,
+		$this->class,
+		$this->headlineSize,
+	);
+	if ($this->headlineTracking) {
+		$cssClasses[] = '-no-tracking';
+	}
+	if ($this->headlineUnderline) {
+		$cssClasses[] = '-no-underline';
+	}
+?>
+
+<div class="<?php echo implode(' ', $cssClasses) ?><?php if($this->iconImage) : ?> icon-image <?php endif ?>"<?php echo $this->cssID; ?><?php if ($this->icon && $this->iconImage == ""): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?>>
+	<?php if($this->iconImage) : ?>
+		<img class="headline-box-icon" src="<?= $this->getImageObject($this->iconImage,$this->iconSize)->src ?>" alt="Icône">
+	<?php endif ?>
+	<?php if ($this->headline): ?>
+		<<?= $this->headline['unit'] ?>
+			class="headline <?php echo $this->headlineSize ?> <?php if ($this->headlineBold): ?> -bold<?php endif ?>"
+			<?php if($this->headlineColor): ?> style="color: #<?php echo $this->headlineColor ?>"<?php endif ?>>
+		<?= $this->headline['value'] ?></<?= $this->headline['unit'] ?>>
+	<?php endif ?>
+	<?php if ($this->subheadline['value']): ?>
+		<<?= $this->subheadline['unit'] ?>
+			class="subhealine <?php echo $this->headlineSize ?>"
+			<?php if($this->subHeadlineColor): ?> style="color: #<?php echo $this->subHeadlineColor ?>"<?php endif ?>>
+				<?php echo $this->subheadline['value'] ?>
+		</<?= $this->subheadline['unit'] ?>>
+	<?php endif ?>
+	<?php if ($this->description): ?>
+		<div class="description"><?php echo $this->description ?></div>
+	<?php endif ?>
+</div>

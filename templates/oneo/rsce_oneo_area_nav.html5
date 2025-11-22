@@ -1,0 +1,28 @@
+<nav class="area-navigation <?php echo $this->class ?>"<?php if ($this->changeUrl): ?> data-change-url="true"<?php endif ?><?php echo $this->cssID ?>>
+
+	<ul>
+		<li class="prev">
+			<a class="prev" href="{{env::request}}#"><span>Prev</span></a>
+		</li>
+		<?php foreach ($this->links as $link): ?>
+
+			<?php
+				$url = $link->url;
+				if (!$url) {
+					$url = '#top';
+				}
+				if (substr($url, 0, 1) === '#' || substr($url, 0, 5) === '&#35;') {
+					$url = '{{env::request}}' . $url;
+				}
+			?>
+			<li>
+				<a href="<?php echo $url ?>"<?php if ($link->invertControls): ?> data-navigation-class="-invert-controls"<?php endif ?>><span><?php echo $link->label ?></span></a>
+			</li>
+
+		<?php endforeach ?>
+		<li class="next">
+			<a class="next" href="{{env::request}}#"><span>Next</span></a>
+		</li>
+	</ul>
+
+</nav>

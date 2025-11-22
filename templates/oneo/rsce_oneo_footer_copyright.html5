@@ -1,0 +1,9 @@
+
+<!-- indexer::stop -->
+<p class="footer-copyright <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<span><?php echo $this->text ?></span>
+	<?php if (!$this->license): ?>
+		<a href="https://rocksolidthemes.com/de/contao-themes" class="rocksolid-copyright">RockSolid Contao Themes &amp; Templates</a>
+	<?php endif ?>
+</p>
+<!-- indexer::continue -->

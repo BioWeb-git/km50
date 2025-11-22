@@ -1,0 +1,22 @@
+<?php $this->extend('ce_youtube') ?>
+
+<?php
+	// Extended video player options got added in Contao 4.6
+	if (isset($this->playerAspect)) {
+		return;
+	}
+?>
+
+<?php $this->block('content') ?>
+
+<!-- indexer::stop -->
+<div class="ce_youtube-wrapper"<?php
+	if ($this->playerSize && ($playerSize = unserialize($this->playerSize)) && !empty($playerSize[0]) && !empty($playerSize[1])) {
+		echo ' style="padding-bottom:' . number_format($playerSize[1] / $playerSize[0] * 100, 2, '.', '') . '%;"';
+	}
+?>>
+	<iframe allowfullscreen src="<?php echo $this->src . (strpos($this->src, '?') === false ? '?' : '&amp;') ?>rel=0&amp;autohide=1&amp;showinfo=0" frameborder="0"></iframe>
+</div>
+<!-- indexer::continue -->
+
+<?php $this->endblock() ?>

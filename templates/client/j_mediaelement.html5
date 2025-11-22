@@ -1,0 +1,18 @@
+<?php
+
+try {
+	$templatePath = Contao\TemplateLoader::getDefaultPath($this->strTemplate, $this->strFormat);
+} catch (\Exception $exception) {
+	// Mediaelement got removed in Contao 4.8
+	return;
+}
+
+ob_start();
+include $templatePath;
+$parent = ob_get_clean();
+
+$replace = array(
+	'$(\'video,audio\')' => '$(\'video:not(.no-mejs),audio:not(.no-mejs)\')',
+	'.mediaelementplayer({' => '.mediaelementplayer({videoWidth:\'100%\',videoHeight:\'100%\',',
+);
+echo str_replace(array_keys($replace), array_values($replace), $parent);

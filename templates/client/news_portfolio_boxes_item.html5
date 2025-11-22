@@ -1,0 +1,23 @@
+<article class="portfolio-boxes-item <?php echo $this->class ?>">
+	<div
+		class="portfolio-boxes-item-image<?php if (!$this->addImage || !$this->src): ?> -no-image<?php endif ?>"
+		data-headline="<?php echo strip_tags($this->newsHeadline) ?>"
+		<?php if ($this->addImage && $this->src): ?>
+			style="background-image: url(&quot;<?php echo $this->src ?>&quot;);"
+		<?php endif ?>
+		<?php echo $this->attributes ?>
+	>
+		<?php if ($this->addImage && $this->src): ?>
+			<?php $this->insert('picture_default', $this->picture) ?>
+		<?php endif ?>
+	</div>
+	<div class="portfolio-boxes-item-text">
+		<h3><?php echo $this->newsHeadline ?></h3>
+		<?php echo $this->teaser ?>
+		<?php if ($this->more): ?>
+			<a class="portfolio-boxes-item-more" href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?>>
+				<span><?php echo strip_tags($this->more) ?></span>
+			</a>
+		<?php endif ?>
+	</div>
+</article>

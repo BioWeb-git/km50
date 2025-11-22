@@ -1,0 +1,331 @@
+@import "normalize";
+@import "compass/css/compass";
+@import "mixins";
+@import "needed";
+@import "tools";
+@import "icons";
+@import "main";
+@import "fonts";
+/* ===========================================
+ * Mediaqueries & Respoponsive
+ * ======================================== */
+.main-content, .sidebar, .header-navigation, .tagline{
+    container-type : inline-size;
+}
+/* ===========================================
+ * Columns
+ * ======================================== */
+.rs-columns{
+    &:after{
+        display : none !important;
+    }
+}
+/* ===========================================
+ * Theme Fixes
+ * ======================================== */
+.main-navigation-mobile-open{
+    position : fixed;
+}
+.nolink{
+    strong{
+        cursor : default;
+    }
+}
+.feature-box{
+    .feature-box-text{
+        .feature-box-title{
+            &:after{
+                display    : block;
+                content    : '';
+                width      : 4em;
+                height     : 2px;
+                margin     : 0.8em 0;
+                background : $color1;
+            }
+        }
+        p{
+            &:before{
+                display : none !important;
+            }
+        }
+    }
+}
+.page-header{
+    .main-navigation-wrapper{
+        .icon-links{
+            margin    : 10px 0;
+            font-size : 16px !important;
+        }
+        .main-navigation{
+            padding : 0 $gutter-width;
+        }
+    }
+    .logo{
+        @include mediaquery(tablet){
+            padding : $gutter-width*4 $gutter-width*2 $gutter-width*2;
+            margin  : 0 auto;
+        }
+        img{
+            @include mediaquery-min(tablet){
+                width : auto;
+            }
+        }
+    }
+}
+.breadcrumbs-wrapper{
+    @include container(mobile){
+        .breadcrumbs-headline{
+            margin-top  : 0;
+            padding-top : $gutter-width;
+        }
+        .mod_breadcrumb{
+            padding-bottom : $gutter-width;
+        }
+    }
+}
+.sidebar{
+    .icon-links{
+        display : block;
+        li{
+            > a, > span{
+                position : relative;
+                overflow : hidden;
+                .icon-links-label{
+                    padding-left : 25px;
+                    float        : left;
+                }
+                &:before{
+                    width    : 20px;
+                    position : absolute;
+                    left     : 0;
+                    top      : 15px;
+                }
+            }
+            @include clearfix;
+        }
+    }
+    .mod_newslist{
+        .news-boxed-item{
+            max-width : none;
+        }
+    }
+}
+.toggle-button{
+    cursor : pointer;
+}
+.mod_rocksolid_mega_menu{
+    ul{
+        li{
+            strong, a{
+                > small{
+                    display : block;
+                }
+            }
+        }
+    }
+}
+.icon-wrapper{
+    margin : 0 auto;
+    img{
+        object-fit : cover;
+        height     : 100%;
+        width      : 100%;
+    }
+}
+.counter-boxes-item{
+    p{
+        margin    : 0;
+        font-size : 3em;
+    }
+}
+.ce_image{
+    &.img-fluid{
+        .image_container{
+            display : block;
+            img{
+                width : 100%;
+            }
+        }
+    }
+}
+.content-youtube{
+    > figure{
+        button{
+            position : relative;
+            &:before{
+                content        : '▶';
+                font-size      : 5em;
+                position       : absolute;
+                vertical-align : 5em;
+                top            : 0;
+                bottom         : 0;
+                right          : 0;
+                left           : 0;
+                text-align     : center;
+                z-index        : 1;
+            }
+        }
+    }
+}
+.mod_newslist .pagination{
+    width  : 100%;
+    margin : $gutter-width auto;
+}
+.tag{
+    text-transform : none;
+    padding        : 1px 4px !important;
+    margin         : 1px;
+}
+.mod_newscategories{
+    .button{
+        display       : inline-block;
+        margin-bottom : 2px;
+    }
+}
+.news-category-btn,
+.mod_newscategories_cumulative a{
+    @extend .tag;
+}
+form{
+    select{
+        padding      : 10px;
+        border-color : $grey-medium;
+    }
+}
+.footer-copyright{
+    font-size : .8em;
+}
+/* ===========================================
+ * Tags
+ * ======================================== */
+.tag-button{
+    background    : $color1;
+    font-size     : .8em;
+    border-radius : 5px;
+    color         : $white;
+    padding       : 2px 4px;
+    &:hover, &:focus{
+        text-decoration : none;
+        background      : lighten($color1, 10%);
+    }
+}
+.tag-chain{
+    list-style : none !important;
+    margin     : $gutter-width auto !important;
+    padding    : 0 !important;
+    .tag-chain-item{
+        display : inline-block;
+        a{
+            @extend .tag-button;
+        }
+    }
+}
+.mod_news_tag_cloud, .tags{
+    > ul{
+        > li{
+            display : inline-block;
+        }
+    }
+    a{
+        &:not(.reset){
+            @extend .tag-button;
+            display : inline-block;
+            &.active{
+                &:after{
+                    content : 'x';
+                }
+                &:hover, &:focus{
+                    background : $red;
+                }
+            }
+        }
+    }
+    .count{
+        font-size      : 0.9em; /* Reduce the font size to make it smaller */
+        vertical-align : super; /* Align the text to the superscript position */
+        position       : relative;
+        top            : 1px; /* Fine-tune the vertical position if needed */
+    }
+}
+.mod_newslist{
+    .news-boxed-item{
+        margin : $gutter-width/2 0 $gutter-width !important;
+        .tags{
+            a{
+                @extend .tag-button;
+            }
+        }
+    }
+}
+/* ===========================================
+* Swipper
+* ======================================== */
+.ce_swiperStart{
+    margin : $gutter-width auto;
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next,
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+        &:after{
+            font-size : 1.6em;
+        }
+    }
+    .swiper-button-next, .swiper-container-rtl .swiper-button-prev{
+        right : 0;
+    }
+    .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
+        left : 0;
+    }
+    .swiper-wrapper-padded{
+        padding : 0 $gutter-width
+    }
+}
+/* ===========================================
+* CookieBar
+* ======================================== */
+.contao-cookiebar{
+    button{
+        &.cc-detail-btn, &.cc-detail-btn-details{
+            &:focus{
+                background : none;
+            }
+        }
+    }
+}
+.mod_cookiebar_opener{
+    color    : $white;
+    position : fixed;
+    bottom   : 5px;
+    right    : 5px;
+    z-index  : 100;
+    @extend .button;
+}
+/* ===========================================
+* Footer
+* ======================================== */
+.footer-secondary-navigation{
+    ul{
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        gap             : 10px;
+    }
+}
+/* ===========================================
+* Mobile Navigation
+* ======================================== */
+.main-navigation-mobile-open{
+    background-color : $white;
+    border : 1px solid $grey-light;
+}
+@include mediaquery(mobile){
+    .main-navigation-mobile-open{
+        left : auto;
+        right : $gutter-width;
+        top : 2rem;
+        z-index : 10;
+    }
+    .page-header{
+        .main-navigation-search {
+            right : 65px !important;
+        }
+    }
+}

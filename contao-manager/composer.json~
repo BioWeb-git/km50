@@ -1,0 +1,93 @@
+{
+    "name": "contao/contao-demo",
+    "type": "contao-theme",
+    "description": "This is an example website for Contao, a powerful open source CMS that allows you to create professional websites and scalable web applications.",
+    "version": "5.2",
+    "license": "CC-BY-SA-4.0",
+    "authors": [
+        {
+            "name": "Sascha Müller",
+            "homepage": "https://github.com/sascha-mueller"
+        },
+        {
+            "name": "Contao Community",
+            "homepage": "https://to.contao.org/demo-contributors"
+        }
+    ],
+    "funding": [
+        {
+            "type": "other",
+            "url": "https://to.contao.org/donate"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/contao/contao-demo/issues",
+        "forum": "https://community.contao.org",
+        "source": "https://github.com/contao/contao-demo",
+        "docs": "https://docs.contao.org"
+    },
+    "_repositories_": [
+        {
+            "type": "git",
+            "url": "https://github.com/BioWeb-git/bioweb-bundle.git"
+        }
+    ],
+    "require": {
+        "codefog/contao-haste": "^5.2",
+        "codefog/contao-news_categories": "^4.0",
+        "contao-themes-net/font-awesome-inserttag-bundle": "^1.1",
+        "contao/calendar-bundle": "5.6.*",
+        "contao/comments-bundle": "5.6.*",
+        "contao/conflicts": "*@dev",
+        "contao/faq-bundle": "5.6.*",
+        "contao/imagine-svg": "^1.0",
+        "contao/listing-bundle": "5.6.*",
+        "contao/manager-bundle": "5.6.*",
+        "contao/news-bundle": "5.6.*",
+        "contao/newsletter-bundle": "5.6.*",
+        "fritzmg/contao-newslist-extended": "^2.1",
+        "fritzmg/contao-sharebuttons": "^2.2",
+        "fritzmg/contao-swiper": "^4.3",
+        "heimseiten/contao-sticky-footer-backend-bundle": "^1.1",
+        "hofff/contao-social-tags": "^2.0",
+        "madeyourday/contao-rocksolid-antispam": "^2.1",
+        "madeyourday/contao-rocksolid-columns": "^2.1",
+        "madeyourday/contao-rocksolid-custom-elements": "^2.4",
+        "madeyourday/contao-rocksolid-frontend-helper": "^2.2",
+        "madeyourday/contao-rocksolid-icon-picker": "^2.1",
+        "madeyourday/contao-rocksolid-mega-menu": "^2.2",
+        "madeyourday/contao-rocksolid-slider": "^2.2",
+        "madeyourday/contao-rocksolid-theme-assistant": "^2.1",
+        "numero2/contao-proper-filenames": "^2.1",
+        "numero2/contao-tags": "^0.4",
+        "oveleon/contao-cookiebar": "^2.0",
+        "terminal42/contao-changelanguage": "^3.7",
+        "terminal42/contao-leads": "^3.0",
+        "terminal42/contao-mp_forms": "^5.2",
+        "terminal42/contao-url-rewrite": "^1.7",
+        "terminal42/dc_multilingual": "^4.5",
+        "terminal42/notification_center": "^2.0",
+        "trilobit-gmbh/contao-tiles-bundle": "^2.0",
+        "scssphp/scssphp": "*"
+    },
+    "extra": {
+        "contao-component-dir": "assets",
+        "public-dir": "public"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php vendor/bin/contao-setup"
+        ],
+        "post-update-cmd": [
+            "@php vendor/bin/contao-setup"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "contao-community-alliance/composer-plugin": true,
+            "contao-components/installer": true,
+            "php-http/discovery": true,
+            "contao/manager-plugin": true
+        }
+    }
+}

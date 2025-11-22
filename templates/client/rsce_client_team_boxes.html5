@@ -1,0 +1,119 @@
+<?php
+	$platforms = array(
+		'email' => array(
+		'color' => '888888',
+		'icon'  => 'e913',
+		'label' => 'E-Mail',
+		),
+		'facebook' => array(
+		'color' => '3b5998',
+		'icon'  => 'ef5e',
+		'label' => 'Facebook',
+		),
+		'twitter' => array(
+		'color' => '00acee',
+		'icon'  => 'ef71',
+		'label' => 'Twitter',
+		),
+		'instagram' => array(
+		'color' => 'c13584',
+		'icon'  => 'ef66',
+		'label' => 'Instagram',
+		),
+		'xing' => array(
+		'color' => '126567',
+		'icon'  => 'ef1e',
+		'label' => 'Xing',
+		),
+		'pinterest' => array(
+		'color' => 'c8232c',
+		'icon'  => 'ef6b',
+		'label' => 'Pinterest',
+		),
+		'linkedin' => array(
+		'color' => '0e76a8',
+		'icon'  => 'effd',
+		'label' => 'LinkedIn',
+		),
+		'dribbble' => array(
+		'color' => 'ea4c89',
+		'icon'  => 'ef5d',
+		'label' => 'Dribbble',
+		),
+		'youtube' => array(
+		'color' => 'c4302b',
+		'icon'  => 'ef27',
+		'label' => 'Youtube',
+		),
+		'vimeo' => array(
+		'color' => '44bbff',
+		'icon'  => 'ef4a',
+		'label' => 'Vimeo',
+		),
+		'skype' => array(
+		'color' => '00aff0',
+		'icon'  => 'efb0',
+		'label' => 'Skype',
+		),
+		);
+
+	$cssClasses = array(
+		$this->class,
+		$this->textAlign,
+		$this->headlineSize,
+	);
+?>
+<section class="team-boxes rs-columns <?php echo implode(' ', $cssClasses) ?>"<?php echo $this->cssID ?>>
+
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+
+	<?php foreach ($this->boxes as $index => $box): ?>
+
+		<div class="team-boxes-item <?php echo $this->arrData['getColumnClassName']($index) ?>">
+
+			<div class="team-boxes-image-wrapper">
+				<?php if ($box->linkUrl): ?>
+					<a href="<?php echo $box->linkUrl ?>"<?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+				<?php endif ?>
+					<?php if ($image = $this->arrData['getImageObject']($box->image, $this->size)): ?>
+						<?php $this->insert('picture_default', $image->picture) ?>
+					<?php else: ?>
+						<span class="no-image"></span>
+					<?php endif ?>
+				<?php if ($box->linkUrl): ?>
+					</a>
+				<?php endif ?>
+				<?php if ($box->socials): ?>
+					<ul class="team-boxes-social-links">
+				<?php endif ?>
+					<?php foreach ($box->socials as $social): ?>
+						<li><a href="<?php echo $social->linkUrl ?>" data-icon="&#x<?php echo $platforms[$social->platform]['icon'] ?>;" style="color: #<?php echo $platforms[$social->platform]['color'] ?>"<?php if ($social->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php echo $platforms[$social->platform]['label'] ?></a></li>
+					<?php endforeach ?>
+				<?php if ($box->socials): ?>
+					</ul>
+				<?php endif ?>
+			</div>
+			<div class="team-boxes-content">
+				<?php if ($box->name): ?>
+					<h2 class="team-boxes-content-title"><?php echo $box->name ?></h2>
+				<?php endif ?>
+				<?php if ($box->position): ?>
+					<h3 class="team-boxes-content-subtitle"><?php echo $box->position ?></h3>
+				<?php endif ?>
+				<?php if ($box->text): ?>
+					<div class="team-boxes-content-text"><?php echo $box->text ?></div>
+				<?php endif ?>
+	
+				<?php if ($box->linkUrl && ($this->detailLinkLabel || $box->detailLinkLabel)): ?>
+					<p><a href="<?php echo $box->linkUrl ?>"<?php if ($this->buttonVariation): ?> class="button <?php echo $this->buttonVariation ?>"<?php endif ?><?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php echo $box->detailLinkLabel ?: $this->detailLinkLabel ?></a></p>
+				<?php endif ?>
+			</div>
+		</div>
+
+	<?php endforeach ?>
+
+</section>

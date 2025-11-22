@@ -1,0 +1,18 @@
+<div class="info-lists -columns-<?php echo count($this->columns) ?> <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<?php foreach ($this->columns as $column): ?>
+		<dl class="info-list">
+			<?php foreach ($column->items as $item): ?>
+				<dt<?php if ($item->icon): ?> data-icon="&#x<?php echo $item->icon ?>;"<?php endif ?>><?php echo $item->title ?></dt>
+				<dd>
+					<?php if ($item->url): ?>
+						<a href="<?php echo $item->url ?>"<?php if ($item->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+					<?php endif ?>
+					<?php echo $item->description ?>
+					<?php if ($item->url): ?>
+						</a>
+					<?php endif ?>
+				</dd>
+			<?php endforeach ?>
+		</dl>
+	<?php endforeach ?>
+</div>

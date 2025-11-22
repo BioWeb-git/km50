@@ -1,0 +1,294 @@
+// Mixins
+//
+// @copyright Copyright (c) 2012 rocksolidthemes.com
+// @license   https://rocksolidthemes.com/agb   No free usage allowed
+//
+@import "compass";
+@mixin hidpi {
+	@media only screen and (-webkit-min-device-pixel-ratio: 1.3), only screen and (min--moz-device-pixel-ratio: 1.3), only screen and (-o-device-pixel-ratio: 4 / 3), only screen and (min-device-pixel-ratio: 1.3) {
+		@content;
+	}
+}
+
+@mixin ir($image-name: "", $image-extension: "png", $x: left, $y: top, $color: transparent) {
+	@if $image-name != "" {
+		background: $color inline-image('#{$image-name} + "." + #{$image-extension}', image/#{$image-extension}) $x $y no-repeat;
+		width: image-width('#{$image-name} + "." + #{$image-extension}');
+		height: image-height('#{$image-name} + "." + #{$image-extension}');
+		display: block;
+	}
+	@if $image-name == "" {
+		display: inline-block;
+	}
+	overflow: hidden;
+	line-height: 0;
+	text: {
+		indent: -9999px;
+		align: left;
+	};
+	br {
+		display: none;
+	}
+	@if $image-name != "" {
+		@include hidpi {
+			background-image: inline-image('#{$image-name} + "-x2." + #{$image-extension}', '"image/" + #{$image-extension}');
+			background-size: image-width('#{$image-name} + "." + #{$image-extension}'), image-height('#{$image-name} + "." + #{$image-extension}');
+		}
+	}
+}
+
+@mixin icon($content: "", $font-size: "100%", $line-height: 1) {
+	font: #{$font-size}/#{$line-height} "RockSolid Icons";
+	@if $content != "" {
+		content: $content;
+	}
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	text-rendering: geometricPrecision;
+	text-indent: 0;
+	display: inline-block;
+	position: relative;
+}
+
+@mixin hidden {
+	display: none !important;
+	visibility: hidden;
+}
+
+@mixin visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	&.focusable {
+		&:active, &:focus {
+			clip: auto;
+			height: auto;
+			margin: 0;
+			overflow: visible;
+			position: static;
+			width: auto;
+		}
+	}
+}
+
+@mixin invisible {
+	visibility: hidden;
+}
+
+@mixin clearfix {
+	&:before {
+		content: "";
+		display: table;
+	}
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	zoom: 1;
+}
+
+@mixin placeholder {
+	&:-webkit-placeholder {
+		@content;
+	}
+	&:-moz-placeholder {
+		@content;
+	}
+	&:-ms-placeholder {
+		@content;
+	}
+	&:-o-placeholder {
+		@content;
+	}
+	&:placeholder {
+		@content;
+	}
+}
+
+@mixin line-height($target-size, $parent-size: 15) {
+	// calculate line-height
+	// "+ 0.01" fixes rounding bugs in chrome
+	line-height: ($target-size + 0.01) / $parent-size;
+}
+
+@mixin column-classes($gutter-width, $max-columns, $class-name) {
+	@for $cols from 1 through $max-columns {
+		$colWidth: (1 - $gutter-width * ($cols - 1)) / $cols;
+		@for $span from 1 through $cols {
+			&.-#{unquote($class-name)}-col-#{$cols}-#{$span} {
+				//width: ($colWidth * $span + $gutter-width * ($span - 1)) * 100%;
+				width: percentage($span/$cols) - ($gutter-width / 2 );
+				//width: percentage(1/$cols);
+				//width: (100% - ($gutter-width * 2)) /$cols;
+			}
+		}
+	}
+}
+
+@mixin mediaquery($breakpoint, $property: max-width) {
+	@if $breakpoint == desktop {
+		$breakpoint: $breakpoint-desktop;
+	}
+	@else if $breakpoint == tablet {
+		$breakpoint: $breakpoint-tablet;
+	}
+	@else if $breakpoint == mobile {
+		$breakpoint: $breakpoint-mobile;
+	}
+	@else if $breakpoint == mobile-portrait {
+		$breakpoint: $breakpoint-mobile-portrait;
+	}
+	@media screen and (unquote($property): $breakpoint) {
+		@content;
+	}
+}
+@mixin container($breakpoint, $property: max-width) {
+	@if $breakpoint == desktop {
+		$breakpoint: $breakpoint-desktop;
+	}
+	@else if $breakpoint == tablet {
+		$breakpoint: $breakpoint-tablet;
+	}
+	@else if $breakpoint == mobile {
+		$breakpoint: $breakpoint-mobile;
+	}
+	@else if $breakpoint == mobile-portrait {
+		$breakpoint: $breakpoint-mobile-portrait;
+	}
+	@container (#{($property)}: #{$breakpoint}) {
+		@content;
+	}
+}
+
+@mixin mediaquery-min($breakpoint, $property: min-width) {
+	@if $breakpoint == desktopxl {
+		$breakpoint: $breakpoint-desktopxl + 1px;
+	}
+	@else if $breakpoint == desktop {
+		$breakpoint: $breakpoint-desktop + 1px;
+	}
+	@else if $breakpoint == tablet {
+		$breakpoint: $breakpoint-tablet + 1px;
+	}
+	@else if $breakpoint == mobile {
+		$breakpoint: $breakpoint-mobile + 1px;
+	}
+	@else if $breakpoint == mobile-portrait {
+		$breakpoint: $breakpoint-mobile-portrait + 1px;
+	}
+	@media screen and (unquote($property): $breakpoint) {
+		@content;
+	}
+}
+@mixin container-min($breakpoint, $property: min-width) {
+	@if $breakpoint == desktopxl {
+		$breakpoint: $breakpoint-desktopxl + 1px;
+	}
+	@else if $breakpoint == desktop {
+		$breakpoint: $breakpoint-desktop + 1px;
+	}
+	@else if $breakpoint == tablet {
+		$breakpoint: $breakpoint-tablet + 1px;
+	}
+	@else if $breakpoint == mobile {
+		$breakpoint: $breakpoint-mobile + 1px;
+	}
+	@else if $breakpoint == mobile-portrait {
+		$breakpoint: $breakpoint-mobile-portrait + 1px;
+	}
+	@container (#{$property}: #{$breakpoint}) {
+		@content;
+	}
+}
+
+@mixin fix-ie-font-size($font-size) {
+	/* IE8 and IE9 calculate em's wrong */
+	font-size: $font-size unquote("\9");
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		/* IE10 and IE11 calculate em's wrong */
+		font-size: $font-size;
+	}
+}
+
+@function col($columns, $container-columns) {
+	@return $columns / $container-columns * 100%;
+}
+
+@function em($target-size, $parent-size: 15) {
+	// remove units from values
+	@if unit($target-size) == "px" {
+		$target-size: $target-size / 1px;
+	}
+	@if unit($target-size) == "em" {
+		$target-size: $target-size / 1em;
+	}
+	@if unit($target-size) == "%" {
+		$target-size: $target-size / 1%;
+	}
+	@if unit($parent-size) == "px" {
+		$parent-size: $parent-size / 1px;
+	}
+	@if unit($parent-size) == "em" {
+		$parent-size: $parent-size / 1em;
+	}
+	@if unit($parent-size) == "%" {
+		$parent-size: $parent-size / 1%;
+	}
+	// calculate em
+	@return $target-size / $parent-size * 1em;
+}
+@mixin cutoff-text($maxLines: $max-lines, $lineHeight: $line-height){
+	@include container-min(mobile){
+		display : -webkit-box;
+		overflow : hidden;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: $max-lines;
+	}
+	/*@include container-min(mobile){
+		height : calc(#{$maxLines} * 1em * #{$lineHeight});
+		line-height : $lineHeight;
+		overflow : hidden;
+		position : relative;
+		&:before{
+			content : '';
+			position : absolute;
+			height : calc(1em * #{$lineHeight});
+			width: 100%;
+			bottom : 0;
+			pointer-events: none;
+			background : linear-gradient(to bottom, transparent, $white);
+		}
+	}*/
+}
+@mixin animation($value) {
+	-webkit-animation: unquote("#{$value}");
+	-moz-animation: unquote("#{$value}");
+	-o-animation: unquote("#{$value}");
+	animation: unquote("#{$value}");
+}
+@mixin animation-property($property, $value) {
+	-webkit-animation-#{$property}: unquote($value);
+	-moz-animation-#{$property}: unquote($value);
+	-o-animation-#{$property}: unquote($value);
+	animation-#{$property}: unquote($value);
+}
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+		@content;
+	}
+	@-moz-keyframes #{$name} {
+		@content;
+	}
+	@-o-keyframes #{$name} {
+		@content;
+	}
+	@keyframes #{$name} {
+		@content;
+	}
+}

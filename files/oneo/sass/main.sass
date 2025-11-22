@@ -1,0 +1,5467 @@
+/**
+ * Main Stylesheet
+ *
+ * @copyright Copyright (c) 2012 rocksolidthemes.com
+ * @license   https://rocksolidthemes.com/agb   No free usage allowed
+ */
+
+
+/* ===========================================
+ # Index: The structure of this stylesheet
+ *
+ - Imports (Sass only)
+ - Fonts
+ - Basic settings (Sass only)
+ - Colors (Sass only)
+ - General
+ - Buttons
+ - Wrapper elements
+ - Layout in order of appearance in HTML
+ - Content
+ - Forms
+ - Content elements
+ - Modules (Search, FAQ, News, Events, Comments)
+ - Sidebar / Widgets
+ - Footer
+ - Slider
+ - Grid (design + production helper)
+ * ========================================
+
+
+// ===========================================
+ * Imports (Mixins)
+ * ========================================
+
+@import "mixins.sass"
+
+
+/* ===========================================
+ * Fonts
+ * ========================================
+
++font-face("RockSolid Icons", font-files("rocksolid-icons.woff2", woff2, "rocksolid-icons.svg", svg), "rocksolid-icons.eot", normal, normal)
+
+@font-face
+	font-family: 'Open Sans'
+	font-weight: 400
+	font-style: normal
+	src: url('../fonts/open-sans-400.woff2') format('woff2')
+
+@font-face
+	font-family: 'Open Sans'
+	font-weight: 700
+	font-style: normal
+	src: url('../fonts/open-sans-700.woff2') format('woff2')
+
+@font-face
+	font-family: 'Open Sans'
+	font-weight: 400
+	font-style: italic
+	src: url('../fonts/open-sans-400italic.woff2') format('woff2')
+
+@font-face
+	font-family: 'Open Sans'
+	font-weight: 700
+	font-style: italic
+	src: url('../fonts/open-sans-700italic.woff2') format('woff2')
+
+
+// ===========================================
+ * Basic settings
+ * ========================================
+
+$logo-top:                    25%                      !default
+$logo-bottom:                 25%                      !default
+$logo-left:                   2.6666em                 !default
+$logo-tablet-height:          2em                      !default
+$logo-mobile-height:          2em                      !default
+
+// Widths
+$max-width:                   1280px                   !default
+
+// Font
+$font-family:                 "Open Sans", sans-serif  !default
+$font-size:                   15px                     !default
+$font-size-mobile:            13px                     !default
+$line-height:                 1.6                      !default
+
+$headline-size-1:             1.86667em                !default
+$headline-size-2:             1.6em                    !default
+$headline-size-3:             1.4em                    !default
+$headline-size-4:             1.2em                    !default
+$headline-size-5:             1em                      !default
+$headline-size-6:             1em                      !default
+
+$slider-full-height:          false                    !default
+$fluid-content-images:        true                     !default
+$content-image-cols:          5                        !default
+$image-hover:                 true                     !default
+
+// responsive break points
+$breakpoint-desktop:          $max-width               !default
+$breakpoint-tablet:           900px                    !default
+$breakpoint-mobile:           599px                    !default
+$breakpoint-mobile-portrait:  399px                    !default
+
+
+// ===========================================
+ * Colors
+ * ========================================
+
+// Colorset
+$black:                       #000000 !default
+$black-light:                 #242424 !default
+$grey-ultra-dark:             #353d47 !default
+$grey-dark:                   #717c8e !default
+$grey:                        #98a0ab !default
+$grey-medium:                 #dcdcdc !default
+$off-white:                   #f5f5f5 !default
+$grey-light:                  #f2f2f2 !default
+$white:                       #ffffff !default
+$blue-ultra-dark:             #126498 !default
+$blue-dark:                   #3685ab !default
+$blue:                        #33b1ec !default
+$purple:                      #8570a6 !default
+$green:                       #b5da44 !default
+$red:                         #df3763 !default
+
+
+
+
+// Content colors
+$selection-color:             $blue                    !default
+$font-color:                  $black-light             !default
+$font-color-light:            $grey                    !default
+$font-color-inverted:         $white                   !default
+$font-color-light-inverted:   $grey-medium             !default
+$headline-color-1:            $black-light             !default
+$headline-color-2:            $black-light             !default
+$highlight-color:             $blue                    !default
+$highlight-color-dark:        $blue-dark               !default
+$confirmation:                $green                   !default
+$information:                 $blue                    !default
+$warning:                     $red                     !default
+
+// Links & Navigation
+$link-color:                  $blue                    !default
+$nav-color:                   $black-light             !default
+$nav-hover-color:             $blue                    !default
+$nav-active-color:            $blue                    !default
+$dropdown-color:              $black-light             !default
+$dropdown-hover-color:        $blue                    !default
+$dropdown-active-color:       $grey-dark               !default
+$nav-mobile-color:            $white                   !default
+$slider-control-color:        $grey-dark               !default
+$slider-control-color-inverted: $white                 !default
+$main-navigation-margin:      2em                      !default
+$secondary-navigation-margin:       3.7em              !default
+
+// Border
+$border-light:                $grey-light              !default
+$border-medium:               $grey-medium             !default
+$border-dark:                 $grey-dark               !default
+$nav-border-color:            $grey-medium             !default
+$dropdown-border:             $grey-medium             !default
+$border-nav-mobile:           $black                   !default
+
+// Shadows
+$shadow-color:                $black                   !default
+
+// Backgrounds
+$boxed-layout:                false                    !default
+$background-image:            none                     !default
+$background-repeat:           no-repeat                !default
+$background-position:         50% 0                    !default
+$background-attachment:       scroll                   !default
+$background-size:             auto                     !default
+$background-color:            $white                   !default
+$main-background:             $white                   !default
+$page-background:             $white                   !default
+$content-wrapper-background:  $white                   !default
+$nav-background-color:        $white                   !default
+$dropdown-background:         $white                   !default
+$subnav-background-color:     $grey-light              !default
+$nav-mobile-background-color: $black-light             !default
+$placeholder-background:      $grey-dark               !default
+$background-color-inverted:   $grey-ultra-dark         !default
+$background-color-1:          $grey-ultra-dark         !default
+$background-color-2:          $off-white               !default
+
+// Buttons
+$button-color:                       $white            !default
+$button-background-color:            $blue-dark        !default
+
+
+/* ===========================================
+ * General
+ * ========================================
+
+#{":root"}
+	#{--main-padding-x}: (40 / 15) * 1rem
+	#{--safe-area-left}: 0px
+	#{--safe-area-right}: 0px
+	#{--safe-area-top}: 0px
+	#{--safe-area-bottom}: 0px
+	#{--page-padding-left}: calc(var(--safe-area-left) + var(--main-padding-x))
+	#{--page-padding-right}: calc(var(--safe-area-right) + var(--main-padding-x))
+	#{--page-inner-width}: calc(100% - var(--page-padding-left) - var(--page-padding-right))
+	+mediaquery($max-width)
+		#{--main-padding-x}: 1 / 32 * 100%
+	+mediaquery(tablet)
+		#{--main-padding-x}: 1 / 24 * 100%
+
+	@supports (padding: calc(constant(safe-area-inset-left, 0px) / 1.5))
+		/* Non-standard iOS 11.1 syntax
+		#{--safe-area-left}: calc(constant(safe-area-inset-left, 0px) / 1.5)
+		#{--safe-area-right}: calc(constant(safe-area-inset-right, 0px) / 1.5)
+		#{--safe-area-top}: constant(safe-area-inset-top, 0px)
+		#{--safe-area-bottom}: constant(safe-area-inset-bottom, 0px)
+
+	@supports (padding: calc(max(0px, env(safe-area-inset-left, 0px) - 14px))) and (padding: calc(max(0px, 1px)))
+		/* W3C standard and iOS 11.2 syntax
+		#{--safe-area-left}: calc(max(0px, env(safe-area-inset-left, 0px) - 14px))
+		#{--safe-area-right}: calc(max(0px, env(safe-area-inset-right, 0px) - 14px))
+		#{--safe-area-top}: env(safe-area-inset-top, 0px)
+		#{--safe-area-bottom}: env(safe-area-inset-bottom, 0px)
+
+html
+	position: relative
+	+box-sizing(border-box)
+	font: #{$font-size}/#{$line-height} $font-family
+	color: $font-color
+	-webkit-tap-highlight-color: $link-color
+	+mediaquery(mobile)
+		font-size: $font-size-mobile
+
+body
+	background: $background-color $background-image $background-position $background-repeat $background-attachment
+	background-size: $background-size
+	&[class^="icon-"], &[class*=" icon-"]
+		&:before
+			/* Ignore icon classes on the body element
+			content: none
+	&.background-variation-1
+		background: url("../img/demo/background-boxed.jpg") 50% 0 no-repeat
+		background-size: cover
+		background-attachment: fixed
+	&.background-variation-2
+		//background: image-url("demo/background-10.jpg") 50% 0 no-repeat
+		background-size: cover
+		background-attachment: fixed
+
+*, *:before, *:after
+	+box-sizing(inherit)
+
+.rs-columns
+	clear: both
+	display: inline-block
+	vertical-align: top
+	width: 100%
+
+.rs-column
+	float: left
+	width: 100%
+	margin-top: col(1, 20)
+	margin-right: col(1, 20)
+	&.-large-first
+		clear: left
+	&.-large-last
+		margin-right: -5px
+	&.-large-first-row
+		margin-top: 0
+	+column-classes((1 / 20), 7, large)
+	.oneo-no-sidebar &, .page-footer &
+		margin-top: col(1, 30)
+		margin-right: col(1, 30)
+		&.-large-last
+			margin-right: -5px
+		&.-large-first-row
+			margin-top: 0
+		+column-classes((1 / 30), 7, large)
+	+mediaquery(tablet)
+		&, .oneo-no-sidebar &, .page-footer &
+			margin-top: col(1, 22)
+			margin-right: col(1, 22)
+			&.-large-first
+				clear: none
+			&.-large-last
+				margin-right: col(1, 22)
+			&.-large-first-row
+				margin-top: col(1, 22)
+			&.-medium-first
+				clear: left
+			&.-medium-last
+				margin-right: -5px
+			&.-medium-first-row
+				margin-top: 0
+			+column-classes((1 / 22), 7, medium)
+	+mediaquery(mobile)
+		&, .oneo-no-sidebar &, .page-footer &
+			margin-right: col(1, 22)
+			&.-medium-first
+				clear: none
+			&.-medium-last
+				margin-right: col(1, 22)
+			&.-medium-first-row
+				margin-top: col(1, 22)
+			&.-small-first
+				clear: left
+			&.-small-last
+				margin-right: -5px
+			&.-small-first-row
+				margin-top: 0
+			+column-classes((1 / 22), 7, small)
+
+
+
+/* Resetting box model for moo_mediabox and j_colorbox
+#mbCenter, #colorbox
+	+box-sizing(content-box)
+
+::selection
+	background: $selection-color
+	color: $main-background
+	+text-shadow(none !important)
+::-moz-selection
+	background: $selection-color
+	color: $main-background
+	+text-shadow(none !important)
+
+button, input, select, textarea
+	font-family: inherit
+
+table
+	width: 100%
+	border-collapse: separate
+	border-spacing: 0
+	border: 1px solid $border-medium
+	background: $main-background
+	th, td
+		border: solid $border-light
+		border-width: 1px 0 0 1px
+		&:first-child
+			border-left: 0
+	> thead, > tbody:first-child, > tfoot:first-child + tbody
+		> tr:first-child
+			> th, > td
+				/* First row of the table
+				border-top: 0
+	th
+		padding: em(6) em(10)
+		font-weight: bold
+		text-align: left
+	td
+		padding: em(6) em(10)
+	thead
+		background: rgba($shadow-color, 0.02)
+	tfoot td
+		font-style: italic
+
+strong, b
+	font-weight: bold
+
+a
+	color: $link-color
+	text-decoration: none
+	&:hover, &:focus
+		text-decoration: underline
+	&:hover, &:active
+		outline: 0
+	&.external-link:after
+		+icon("\e151", em(13))
+		margin-left: em(4)
+	.-highlight-color &
+		color: darken($link-color, 30%)
+
+/* Icon attribute
+*[data-icon], *[class^="icon-"], *[class*=" icon-"]
+	&:before
+		+icon
+		margin-right: em(4)
+*[data-icon]
+	&:before
+		content: attr(data-icon)
+	&.after
+		&:before
+			content: none
+		&:after
+			+icon(attr(data-icon))
+			margin-left: em(4)
+
+.clear
+	clear: both
+
+.invisible
+	position: absolute
+	height: 1px !important
+	width: 1px !important
+	clip: rect(0 0 0 0)
+	margin: -1px
+	padding: 0 !important
+	overflow: hidden
+	border: 0
+
+.no-border
+	border: 0 !important
+
+.no-margin
+	margin: 0 !important
+
+.no-margin-top
+	margin-top: 0 !important
+
+.no-margin-bottom
+	margin-bottom: 0 !important
+
+.left
+	float: left
+
+.right
+	float: right
+
+@each $spacing in (none 0, xxs 10px, xs 25px, s 50px, m 75px, l 100px, xl 150px, xxl 200px)
+	@each $property in (margin-top, margin-right, margin-bottom, margin-left, padding-top, padding-right, padding-bottom, padding-left)
+		.#{$property}-#{nth($spacing, 1)}
+			#{$property}: nth($spacing, 2) !important
+			+mediaquery(mobile)
+				#{$property}: round(nth($spacing, 2) / 2) !important
+
+@each $size in (xxs 0.6em, xs 0.8em, s 0.9em, m 1.2em, l 1.5em, xl 2em, xxl 2.5em)
+	.font-size-#{nth($size, 1)}
+		font-size: nth($size, 2) !important
+		+mediaquery(mobile)
+			font-size: ((nth($size, 2) + 1em) / 2) !important
+
+.centered
+	display: block
+	margin-left: auto !important
+	margin-right: auto !important
+	text-align: center
+
+.syndication
+	margin: em(12) 0 0 em(20)
+	float: right
+	a
+		margin-left: em(2)
+
+.mime_icon
+	margin-bottom: -.25em
+
+.download-element
+	padding-top: 0
+	padding-right: 0
+	padding-bottom: 0
+
+.content-toplink,
+.ce_toplink,
+.toplink
+	overflow: hidden
+	margin: em(24) 0
+	&:after
+		content: ""
+		display: inline-block
+		vertical-align: middle
+		width: 100%
+		height: 0
+		overflow: visible
+		margin: 0 -100% 0 em(10)
+		border-top: 1px solid $border-medium
+	> a:before
+		+icon("\e00c")
+		margin-right: em(5)
+
+[data-ajax-form=loading]
+	opacity: 0.5
+	pointer-events: none
+
+/* Style for dlh_googlemaps (if you don't use the plugin, you might want to delete this)
+.dlh_googlemap
+	+box-sizing(content-box)
+.main-content, .sidebar
+	.dlh_googlemap
+		/* Setting the maps max-width to 100% is best practice, since it becomes fluid that way
+		max-width: 100%
+.main-content .dlh_googlemap img
+	max-width: none
+
+hr, .headline-hr:before, .headline-hr:after
+	clear: both
+	height: 0
+	overflow: visible
+	margin: em(36) 0
+	border: 0
+	border-top: 1px solid $border-medium
+hr.-hr-dotted, .headline-hr.-hr-dotted:before, .headline-hr.-hr-dotted:after
+	border-top-style: dotted
+	border-top-color: $border-dark
+hr.-hr-shadow, .headline-hr.-hr-shadow:before, .headline-hr.-hr-shadow:after
+	height: 8px
+	+background(radial-gradient(rgba($shadow-color, 0.1), rgba(white, 0) 60%))
+	background-size: 100% 16px
+	background-position: 50% -8px
+
+.headline-hr
+	overflow: hidden
+	clear: both
+	&:before, &:after
+		display: inline-block
+		vertical-align: middle
+		width: 100%
+		margin: 0 em(10) 0 calc(-100% - #{em(10)})
+	&:after
+		content: ""
+		margin: 0 calc(-100% - #{em(10)}) 0 em(10)
+	&.-centered
+		text-align: center
+		&:before
+			content: ""
+	&.-align-right
+		text-align: right
+		&:before
+			content: ""
+		&:after
+			content: none
+
+.icon-hr
+	display: block
+	&:before
+		position: relative
+		display: block
+		bottom: em(-8)
+		width: em(30)
+		margin: 0
+		background: $main-background
+	&.-centered:before
+		width: em(36)
+		margin: 0 auto
+		text-align: center
+	&.-align-right:before
+		margin: 0 0 0 auto
+		text-align: right
+	hr
+		margin: 0
+
+.confirmation
+	color: $confirmation
+.information
+	color: $information
+.warning
+	color: $warning
+p, div, span
+	&.confirmation, &.information, &.warning
+		position: relative
+		display: block
+		overflow: hidden
+		margin: em(25) 0
+		padding: em(16) col(1, 16) em(16) col(2, 16)
+		border: 1px solid $border-medium
+		@if lightness($main-background) < 50%
+			color: lighten($confirmation, 25%)
+		@else
+			color: darken($confirmation, 15%)
+		background: $main-background
+		+mediaquery(mobile)
+			padding-left: em(64)
+		&:before
+			+icon("\e044", em(24))
+			position: absolute
+			top: 50%
+			left: em(-10, 24)
+			width: em(60, 24)
+			height: em(60, 24)
+			margin: em(-30, 24) 0 0
+			padding: em(16, 24)
+			border-radius: 100%
+			color: $main-background
+			text-align: center
+			background: $confirmation
+	&.information
+		@if lightness($main-background) < 50%
+			color: lighten($information, 25%)
+		@else
+			color: darken($information, 15%)
+		&:before
+			content: "\e0a6"
+			background: $information
+	&.warning
+		@if lightness($main-background) < 50%
+			color: lighten($warning, 25%)
+		@else
+			color: darken($warning, 15%)
+		&:before
+			content: "\e143"
+			background: $warning
+
+p.drop-cap:first-letter, span.drop-cap
+	float: left
+	margin: em(4, 28) em(12, 28) 0 0
+	padding: em(11, 28)
+	font-size: em(28)
+	font-weight: bold
+	/* Fixes line-height difference between gecko and webkit
+	line-height: 0.7
+	color: $font-color-inverted
+	background: $highlight-color
+p.drop-cap:first-letter
+	/* IE8 and IE9 calculate em's from the parent element
+	margin: em(4) em(12) 0 0 unquote("\9")
+
+code
+	padding: em(2, 14) em(5, 14)
+	font-family: "Lucida Console", monospace
+	font-size: em(14)
+	+line-height(19, 14)
+	background-color: $border-light
+
+pre
+	margin: em(24, 14) 0
+	padding: em(7, 14) em(14, 14)
+	display: block
+	overflow: auto
+	font-family: "Lucida Console", monospace
+	font-size: em(14)
+	+line-height(24, 14)
+	background-color: $border-light
+	.hljs,
+	code
+		font-size: em(14, 14)
+		padding: 0
+		line-height: inherit
+		background-color: transparent
+
+
+/* ===========================================
+ * Buttons
+ * ========================================
+
+.button-box
+	margin: em(12) 0
+	&.-left
+		text-align: left
+	&.-right
+		text-align: right
+	&.-centered
+		text-align: center
+	&.-inline
+		display: inline
+
+%button, button, .button, input[type="submit"], input[type="reset"], input[type="button"]
+	position: relative
+	+appearance(none)
+	display: inline-block
+	padding: em(15, 14) em(20, 14)
+	border: 0
+	outline: none
+	font-size: em(14)
+	letter-spacing: 0.1em
+	+line-height(20, 14)
+	color: $button-color
+	text-align: center
+	text-decoration: none
+	text-transform: uppercase
+	background: $button-background-color
+	&:hover, &:focus
+		background-color: darken($button-background-color, 10%)
+		text-decoration: none
+	&:active
+		background-color: darken($button-background-color, 5%)
+	&.-small
+		padding: em(8, 12) em(12, 12)
+		font-size: em(12)
+		+line-height(20, 12)
+	&.-medium
+		padding: em(12, 16) em(18, 18)
+		font-size: em(18)
+		+line-height(20, 18)
+	&.-large
+		padding: em(15, 21) em(20, 21)
+		font-size: em(21)
+		+line-height(20, 21)
+	&.-super-size
+		padding: em(20, 36) em(25, 36)
+		font-size: em(36)
+		+line-height(36, 36)
+		+mediaquery(mobile)
+			font-size: em(28)
+	.-highlight-color &
+		color: $font-color-inverted
+
+button, .button, input[type="submit"]
+	&.-secondary
+		@extend %button-secondary
+	&.-tertiary
+		@extend %button-tertiary
+	&.-small
+		padding: em(5, 12) em(10, 12)
+		font-size: em(12)
+
+%button-secondary
+	@extend %button
+	padding: em(13, 14) em(18, 14)
+	border: 2px solid $font-color
+	border-color: currentColor
+	color: inherit
+	background: transparent
+	&:hover, &:focus
+		background-color: transparent
+		&:after
+			content: ""
+			position: absolute
+			top: 0
+			right: 0
+			bottom: 0
+			left: 0
+			background: currentColor
+			opacity: 0.2
+	&:active
+		background-color: transparent
+		&:after
+			opacity: 0.1
+	&.-large, &.-super-size
+		border-width: 3px
+
+%button-tertiary
+	padding: 0
+	font-size: em(24)
+	letter-spacing: normal
+	text-align: left
+	text-transform: none
+	background: none
+	color: $link-color
+	&.-small
+		font-size: em(14)
+		+line-height(20, 14)
+	&.-medium
+		font-size: em(18)
+		+line-height(20, 18)
+	&.-large
+		font-size: em(21)
+		+line-height(20, 21)
+	&.-super-size
+		font-size: em(36)
+		+line-height(36, 36)
+	&:before
+		top: -2px
+		font-size: 60%
+	.-color-inverted &
+		color: $font-color-inverted
+	&:hover, &:focus
+		color: mix($link-color, $font-color, 75%)
+
+/* ===========================================
+ * Wrapper Elements
+ * ========================================
+
+%wrapper
+	max-width: $max-width
+	margin-right: auto
+	margin-left: auto
+
+%inner-wrapper
+	width: 100%
+	max-width: ($max-width / 32 * 30)
+	margin-right: auto
+	margin-left: auto
+	+mediaquery($max-width)
+		width: col(30, 32)
+		width: var(--page-inner-width)
+		max-width: none
+		margin-right: 0
+		margin-left: col(1, 32)
+		margin-left: var(--page-padding-left)
+	+mediaquery(tablet)
+		width: col(22, 24)
+		width: var(--page-inner-width)
+		margin-left: col(1, 24)
+		margin-left: var(--page-padding-left)
+
+.page
+	+clearfix
+	position: relative
+	margin: 0 auto
+	padding-top: var(--safe-area-top)
+	padding-bottom: var(--safe-area-bottom)
+	background: $page-background
+	@if $boxed-layout
+		max-width: $max-width
+		border: solid $border-medium
+		border-width: 0 1px
+		box-shadow: 0 0 5px rgba($shadow-color, 0.2)
+	.oneo-boxed &
+		max-width: $max-width
+		border: solid $border-medium
+		border-width: 0 1px
+		box-shadow: 0 0 5px rgba($shadow-color, 0.2)
+	+mediaquery(desktop)
+		@if $boxed-layout
+			border: 0
+			box-shadow: none
+		.oneo-boxed &
+			border: 0
+			box-shadow: none
+	.oneo-not-boxed &
+		max-width: none
+		border: 0
+		box-shadow: none
+
+
+/* ===========================================
+ * Layout in order of appearance in HTML
+ * ========================================
+
+.header-navigation
+	position: relative
+	z-index: 5
+	&.is-fixed
+		position: fixed
+		top: 0
+		left: 0
+		width: 100%
+		box-shadow: 0 0 10px rgba($shadow-color, 0.2)
+		+transform(translateZ(0))
+		@if $boxed-layout
+			left: auto
+			margin-left: -1px
+			max-width: $max-width
+		.oneo-boxed &
+			left: auto
+			margin-left: -1px
+			max-width: $max-width
+
+.main-navigation-wrapper
+	+clearfix
+	position: relative
+	border: solid $nav-border-color
+	border-width: 1px 0
+	background: $nav-background-color
+
+.logo
+	position: absolute
+	top: $logo-top
+	bottom: $logo-bottom
+	left: $logo-left
+	left: calc(#{$logo-left} + var(--safe-area-left))
+	margin: 0
+	font-size: inherit
+	+mediaquery(tablet)
+		position: static
+		float: left
+		margin-left: col(1, 24)
+		margin-left: var(--page-padding-left)
+		padding-top: em(24)
+		padding-bottom: em(6)
+	+mediaquery(mobile)
+		float: none
+		text-align: center
+		margin-left: 0
+		padding-top: em(12)
+	a
+		display: block
+		height: 100%
+		+mediaquery(tablet)
+			display: inline
+	img
+		display: block
+		width: auto
+		height: 100%
+		+mediaquery(tablet)
+			display: inline
+			height: $logo-tablet-height
+		+mediaquery(mobile)
+			height: $logo-mobile-height
+
+.main-navigation
+	float: right
+	padding-right: em(22)
+	+mediaquery(desktop)
+		padding-right: em(12)
+	+mediaquery(tablet)
+		+clearfix
+		position: relative
+		float: none
+		clear: both
+		padding-left: em(22)
+		padding-left: calc(#{em(22)} + var(--safe-area-left))
+	+mediaquery(mobile)
+		display: none
+	ul
+		display: inline
+		margin: 0
+		padding: 0
+	> ul > li
+		position: relative
+		float: left
+		margin-left: $main-navigation-margin
+		+mediaquery(desktop)
+			margin-left: 0
+		&:before
+			/* disable icons
+			content: none
+			display: none
+		&.-mega
+			position: static
+		> a, > strong, > span.active, > span.trail, > span.forward
+			z-index: 1
+			position: relative
+			float: left
+			padding: em(8, 13) em(14, 13) em(7, 13)
+			border: solid transparent
+			border-width: em(11, 13) 0
+			font-size: em(13)
+			+line-height(21, 13)
+			font-weight: bold
+			letter-spacing: 0.1em
+			color: $nav-color
+			text-transform: uppercase
+			+background-clip(padding-box)
+			&.highlight
+				color: $highlight-color
+				&:after
+					content: ""
+					position: absolute
+					top: 0
+					left: 0
+					right: 0
+					bottom: 0
+					width: auto
+					height: auto
+					border: 2px solid $highlight-color
+			&:hover, &:focus
+				color: $nav-hover-color
+				text-decoration: none
+		> a, > strong, > span
+			&.active, &.trail, &.forward
+				color: $nav-active-color
+				&:not(.highlight):after
+					content: ""
+					position: absolute
+					bottom: em(-12, 13)
+					left: 50%
+					display: block
+					width: em(11, 13)
+					height: em(11, 13)
+					margin-left: em(-8, 13)
+					border: solid $nav-border-color
+					border-width: 0 1px 1px 0
+					background: $nav-background-color
+					+transform(rotate(45deg))
+					+transform-origin(0, 100%)
+		> ul
+			position: absolute
+			top: 100%
+			left: 0
+			display: block
+			overflow: hidden
+			max-height: 0
+			min-width: 100%
+			padding: 0
+			border: 1px solid $dropdown-border
+			background: $dropdown-background
+			opacity: 0
+			box-shadow: 0 0 5px rgba($shadow-color, 0.1)
+			+transition(max-height 0s 0.3s, padding 0s 0.3s, opacity 0.3s)
+			pointer-events: none
+			.header-navigation.is-bottom &
+				top: auto
+				bottom: 100%
+			li
+				position: relative
+				display: block
+				padding: 0
+				border-top: 1px solid $dropdown-border
+				white-space: nowrap
+				&:first-child
+					border-top: 0
+				li
+					border: 0
+			li[data-icon], li[class^="icon-"], li[class*=" icon-"]
+				&:before
+					position: absolute
+					top: em(12, 14)
+					left: em(14, 14)
+					z-index: 1
+					font-size: em(14)
+				a, strong, span.active, span.trail, span.forward
+					padding-left: em(34, 14)
+			a, strong, span.active, span.trail, span.forward
+				position: relative
+				display: block
+				padding: em(8, 14) em(12, 14)
+				margin: 0
+				font-size: em(14)
+				font-weight: inherit
+				&:before
+					/* disable icons
+					content: none
+					display: none
+			a
+				color: $dropdown-color
+				+transition(background-color 0.6s ease-in, color 0.6s ease-in)
+				&:hover
+					text-decoration: none
+					color: $dropdown-hover-color
+					background-color: $border-light
+					+transition-duration(0.05s)
+			a, strong, span
+				&.active, &.trail, &.forward
+					color: $dropdown-active-color
+			ul
+				display: block
+				padding-left: em(10)
+		&:hover
+			z-index: 2
+			&:after
+				content: ""
+				position: absolute
+				top: 50%
+				right: 0
+				bottom: 0
+				left: 0
+				z-index: 1
+				margin-top: em(10)
+			> ul
+				z-index: 1
+				max-height: 9999px
+				opacity: 1
+				+transition(opacity 0.2s)
+				pointer-events: auto
+			> a, > strong, > span.active, > span.trail, > span.forward
+				z-index: 2
+		&.submenu:hover
+			> a, > strong, > span.active, > span.trail, > span.forward
+				&:after
+					content: ""
+					position: absolute
+					top: em(-3, 13)
+					right: 0
+					bottom: em(-12, 13)
+					left: 0
+					width: auto
+					height: auto
+					margin-left: 0
+					border: 0
+					border-top: 4px solid $highlight-color
+					border-radius: 2px 2px 0 0
+					box-shadow: 0 -3px 3px rgba($shadow-color, 0.1), inset 1px 0 $nav-border-color, inset -1px 0 $nav-border-color, inset 0 -10px $dropdown-background
+					background: none
+					+transform(none)
+					.header-navigation.is-bottom &
+						top: em(-12, 13)
+						bottom: em(-6, 13)
+						border-top: 0
+						border-bottom: 4px solid $highlight-color
+						border-radius: 0 0 2px 2px
+						box-shadow: 0 3px 3px rgba($shadow-color, 0.1), inset 1px 0 $nav-border-color, inset -1px 0 $nav-border-color, inset 0 10px $dropdown-background
+		&.last
+			> ul
+				left: auto
+				right: 0
+
+.mega-dropdown
+	position: absolute
+	top: 100%
+	left: 0
+	display: block
+	width: 100%
+	max-height: 0
+	padding: 0
+	overflow: hidden
+	border: solid $dropdown-border
+	border-width: 1px 0
+	background: $dropdown-background
+	opacity: 0
+	box-shadow: 0 0 5px rgba($shadow-color, 0.1)
+	+transition(max-height 0s 0.3s, padding 0s 0.3s, opacity 0.3s)
+	pointer-events: none
+	/* Fixes chrome text flicker
+	-webkit-backface-visibility: hidden
+	+mediaquery(tablet)
+		background-image: none !important
+	.header-navigation.is-bottom &
+		top: auto
+		bottom: 100%
+	li:hover > &
+		z-index: 1
+		max-height: 9999px
+		overflow: visible
+		padding: em(22, 14) 0
+		opacity: 1
+		+transition(opacity 0.2s)
+		pointer-events: auto
+	.rsts-nav
+		pointer-events: none
+	.rsts-nav-prev, .rsts-nav-next, .rsts-nav-item
+		pointer-events: auto
+
+.mega-dropdown-inner
+	@extend %inner-wrapper
+
+.mega-dropdown-column
+	h1, h2, h3
+		margin: 0 0 em(10, 14)
+		font-size: inherit
+		font-weight: bold
+		color: $dropdown-hover-color
+		a
+			color: inherit
+	p
+		margin: em(14, 14) 0
+	ul a
+		display: inline-block
+		padding: em(4, 14) 0 em(3, 14)
+		color: $dropdown-color
+		&:before
+			content: none
+		&:hover
+			color: $dropdown-hover-color
+		&.active, &.trail, &.forward
+			font-weight: bold
+	li li
+		margin-left: em(22, 14)
+
+.mega-dropdown-image
+	margin: em(20, 14) 0
+	img
+		display: block
+		width: 100%
+		height: auto
+
+.main-navigation-search
+	float: right
+	margin-right: var(--safe-area-right)
+	+mediaquery(mobile)
+		position: absolute
+		top: 50%
+		right: 0
+		margin-top: em(-29)
+	> a
+		display: block
+		overflow: hidden
+		margin-right: em(10)
+		padding: em(19) 0 em(18)
+		line-height: 0
+		color: $nav-color
+		text-decoration: none
+		text-indent: -99em
+		+mediaquery(desktop)
+			margin-right: 0
+		+mediaquery(tablet)
+			margin-top: em(10)
+		+mediaquery(tablet)
+			margin-top: 0
+			margin-right: 0
+		&:hover, &:focus
+			color: $nav-hover-color
+		&:after
+			+icon("\e0cb", em(21))
+			display: block
+			padding: 0 em(30, 21)
+			border-left: 1px solid $nav-color
+			text-indent: 0
+			+mediaquery(tablet)
+				border-left: 0
+	form
+		display: none
+
+.main-navigation-search-form
+	position: fixed
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	display: none
+	z-index: 100
+	color: $font-color-inverted
+	text-align: center
+	background: $highlight-color
+	background: rgba($highlight-color, 0.9)
+	&.is-active, &.is-pre-active
+		display: block
+	&.is-pre-active
+		opacity: 0
+	&.is-active
+		+transition(opacity 0.3s linear)
+	&:before
+		content: ""
+		display: block
+		height: 50%
+		margin-bottom: em(-100)
+	label
+		display: block
+		font-size: em(36)
+		+mediaquery(mobile)
+			font-size: em(28)
+	input, input:hover, input:focus
+		display: block
+		margin: em(12, 36) auto
+		padding: 0
+		border: 0
+		border-bottom: 2px solid currentColor
+		border-radius: 0
+		font-size: em(36)
+		color: inherit
+		text-align: center
+		background: none
+		box-shadow: none
+		+mediaquery(mobile)
+			width: 80%
+			font-size: em(28)
+	button
+		@extend %button-secondary
+
+.main-navigation-search-close
+	position: absolute
+	top: 0
+	right: 0
+	overflow: hidden
+	padding: em(30)
+	padding-top: calc(#{em(30)} + var(--safe-area-top))
+	padding-right: calc(#{em(30)} + var(--safe-area-right))
+	color: inherit
+	line-height: 0
+	text-indent: -99em
+	&:hover, &:focus
+		text-decoration: none
+	&:after
+		+icon("\e14a", em(42))
+		display: block
+		text-indent: 0
+
+.secondary-navigation-wrapper
+	+clearfix
+	background: $subnav-background-color
+
+.secondary-navigation
+	padding: 0 em(13, 13)
+	padding-right: calc(#{em(13, 13)} + var(--safe-area-right))
+	padding-left: calc(#{em(13, 13)} + var(--safe-area-left))
+	font-size: em(13)
+	text-align: center
+	+mediaquery(tablet)
+		text-align: left
+		padding-right: em(26, 13)
+		padding-right: calc(#{em(26, 13)} + var(--safe-area-right))
+		padding-left: em(26, 13)
+		padding-left: calc(#{em(26, 13)} + var(--safe-area-left))
+	+mediaquery(mobile)
+		display: none
+	ul
+		margin: 0
+		padding: 0
+	li
+		position: relative
+		display: inline-block
+		&:before
+			/* disable icons
+			content: none
+			display: none
+		&.-mega
+			position: static
+		> a, > strong, > span.active, > span.trail, > span.forward
+			position: relative
+			display: block
+			padding: em(15, 13) ($secondary-navigation-margin / 2)
+			letter-spacing: 0.075em
+			white-space: nowrap
+			color: $nav-color
+			text-transform: uppercase
+			+background-clip(padding-box)
+			+mediaquery(desktop)
+				padding-right: em(13, 13)
+				padding-left: em(13, 13)
+			+mediaquery(tablet)
+				padding-right: em(10, 13)
+				padding-left: em(10, 13)
+			&:before
+				margin-right: em(9, 13)
+		> a
+			&:hover, &:focus
+				color: $nav-hover-color
+				text-decoration: none
+		> a, > strong, > span
+			&.active, &.trail, &.forward
+				background-color: $nav-active-color
+				color: $main-background
+
+.main-navigation-mobile-open
+	position: absolute
+	top: 41px
+	left: col(1, 15)
+	left: calc(#{col(1, 15)} + var(--safe-area-left))
+	width: 44px
+	height: 39px
+	margin: -19px 0 0 -11px
+	padding: 11px
+	display: none
+	z-index: 200
+	text-indent: -99em
+	line-height: 0
+	&:after
+		content: ""
+		display: block
+		height: 3px
+		border-radius: 2px
+		background: $nav-color
+		box-shadow: 0 7px $nav-color, 0 14px $nav-color
+	+mediaquery(mobile)
+		display: block
+	.main-navigation-wrapper &
+		top: 50%
+
+.main-navigation-mobile-close
+	position: absolute
+	top: 0
+	right: col(-15, 85)
+	display: none
+	width: col(15, 85)
+	height: 100%
+	overflow: hidden
+	margin: 0
+	padding: 0
+	border: 0 !important
+	text-indent: -99em
+	background: none !important
+	box-shadow: none !important
+	.is-active > &
+		display: block
+
+.main-navigation-mobile
+	/* Hide mobile navigation by default
+	display: none
+	padding: 0
+	padding-top: var(--safe-area-top)
+	padding-bottom: var(--safe-area-bottom)
+	padding-left: var(--safe-area-left)
+	border-top: 1px solid $border-nav-mobile
+	color: $nav-mobile-color
+	background: $nav-mobile-background-color
+	+mediaquery(mobile)
+		display: block
+	.modernizr-js &
+		display: none
+	&.is-enabled
+		position: absolute
+		top: 0
+		left: -85%
+		z-index: 201
+		width: 85%
+		min-height: 100%
+		+transition(left 0.2s ease-out)
+		+mediaquery(mobile)
+			display: block
+		.modernizr-csstransforms3d &
+			left: 0
+			+transform(translate3d(-100%, 0, 0))
+			+transition(transform 0.2s ease-out)
+	&.is-active
+		left: 0
+		box-shadow: 0 0 10px rgba($shadow-color, 0.5)
+		.modernizr-csstransforms3d &
+			+transform(translate3d(0, 0, 0))
+	ul
+		display: block
+		margin: 0
+		padding: 0
+		ul
+			background: $nav-mobile-background-color
+			box-shadow: inset 0 40px 40px -20px rgba($shadow-color, 0.04), inset 0 -40px 40px -20px rgba($shadow-color, 0.04)
+	.is-collapsed > ul
+		display: none
+	li
+		position: relative
+		display: block
+		&:before
+			content: none
+	a, strong, span.active, span.trail, span.forward
+		display: block
+		padding: em(9, 14) em(13, 14) em(8, 14)
+		border-bottom: 1px solid $border-nav-mobile
+		color: inherit
+		background-color: $nav-mobile-background-color
+		box-shadow: inset 0 1px rgba($white, 0.05)
+		+transition(background-color 0.6s ease-out)
+		&:before
+			margin-right: em(6, 14)
+		&:hover, &:focus
+			outline: none
+			text-decoration: none
+			background-color: darken($nav-mobile-background-color, 5%)
+			+transition(background-color 0.2s ease-out)
+	a.active, a.trail, strong.active, strong.trail, strong.forward, span.active, span.trail, span.forward
+		font-weight: bold
+	a.active, strong.active, span.active
+		background-color: lighten($nav-mobile-background-color, 8%)
+		box-shadow: inset 0 0 5px $nav-mobile-background-color
+	li li
+		color: darken($nav-mobile-color, 25%)
+		a, strong, span.active, span.trail, span.forward
+			padding-left: em(26, 14)
+	li li li
+		a, strong, span.active, span.trail, span.forward
+			padding-left: em(39, 14)
+	li li li li
+		a, strong, span.active, span.trail, span.forward
+			padding-left: em(52, 14)
+	li li li li li
+		a, strong, span.active, span.trail, span.forward
+			padding-left: em(65, 14)
+	.main-navigation-mobile-expand
+		position: absolute
+		top: em(3, 14)
+		right: 0
+		overflow: hidden
+		margin: 0
+		padding: em(8, 14) em(13, 14)
+		border: solid transparent
+		border-width: em(3, 14) 0
+		box-shadow: inset 1px 0 lighten($border-nav-mobile, 12%)
+		border-radius: 0
+		outline: none
+		line-height: 0
+		color: inherit
+		text-indent: -99em
+		+text-shadow(none)
+		background: none
+		&:after
+			+icon("\e009", em(16, 14))
+			display: block
+	.is-expanded > .main-navigation-mobile-expand:after
+		content: "\e00c"
+
+.main-navigation-mobile-search
+	position: relative
+	margin: 5%
+	a, label
+		display: none
+	input
+		&, &:hover, &:focus
+			width: 100%
+			border: 1px solid $border-nav-mobile
+			background: transparent
+			box-shadow: inset 0 1px rgba($white, 0.05)
+	button
+		position: absolute
+		top: em(1, 14)
+		right: 0
+		width: em(50, 14)
+		height: 100%
+		margin: 0
+		padding: 0
+		border: 0
+		text-align: left
+		text-indent: -99em
+		+text-shadow(none)
+		line-height: 0
+		background: none
+		box-shadow: none
+		&:after
+			+icon("\e0cb", em(16, 14))
+			display: block
+			text-align: center
+
+.main-navigation-mobile-icons.main-navigation-mobile-icons
+	margin: em(14, 14) 0
+	text-align: center
+	li
+		display: inline
+		padding: 0
+	a
+		display: inline-block
+		width: em(40, 14)
+		height: em(40, 14)
+		overflow: hidden
+		padding: 0
+		border: 0
+		box-shadow: none
+		&:before
+			font-size: em(18, 14)
+			+line-height(40, 18)
+			margin: 0 0 100%
+			color: $nav-mobile-color !important
+		&:hover:before
+			color: inherit !important
+
+
+.tagline
+	.media > figure,
+	.content-image > figure,
+	.image_container
+		display: block
+		clear: both
+		margin: 0
+		padding: 0
+		border: 0
+		background: none
+		box-shadow: none
+	img
+		display: block
+
+.content-wrapper
+	@extend %wrapper
+	+clearfix
+	+mediaquery($max-width)
+		padding-right: var(--safe-area-right)
+		padding-left: var(--safe-area-left)
+	.tagline + &
+		position: relative
+		margin-top: em(-30)
+		border-radius: 2px 2px 0 0
+		background: $content-wrapper-background
+		+mediaquery(desktop)
+			border-radius: 0
+		+mediaquery(mobile)
+			margin-top: 0
+	.oneo-fullwidth &
+		max-width: none
+		margin-top: 0
+		padding-right: 0
+		padding-left: 0
+		border-radius: 0
+
+.centered-wrapper
+	+clearfix
+	position: relative
+	clear: both
+	background: 50% 50% no-repeat
+	background-size: cover
+	&.-vertical-centered
+		display: -webkit-box
+		display: -moz-box
+		display: -ms-flexbox
+		display: -webkit-flex
+		display: flex
+		-webkit-box-direction: normal
+		-moz-box-direction: normal
+		-webkit-box-orient: vertical
+		-moz-box-orient: vertical
+		-webkit-flex-direction: column
+		-ms-flex-direction: column
+		flex-direction: column
+		-webkit-box-pack: center
+		-moz-box-pack: center
+		-webkit-justify-content: center
+		-ms-flex-pack: center
+		justify-content: center
+	&.-border-top
+		border-top: 1px solid $border-medium
+	&.-border-bottom
+		border-bottom: 1px solid $border-medium
+	&.-color-inverted
+		color: $font-color-inverted
+	&.-highlight-color
+		background-color: $highlight-color
+	&.-background-color-1
+		background-color: $background-color-1
+	&.-background-color-2
+		background-color: $background-color-2
+	&.-height-small
+		min-height: 300px
+		+mediaquery(mobile)
+			min-height: 200px
+	&.-height-medium
+		min-height: 600px
+		+mediaquery(mobile)
+			min-height: 400px
+	&.-height-large
+		min-height: 900px
+		+mediaquery(mobile)
+			min-height: 600px
+	&.-viewport-height
+		min-height: 710px
+		min-height: calc(100vh - #{em(58)})
+		+mediaquery(tablet)
+			min-height: 100vh
+		+mediaquery(mobile)
+			min-height: 500px
+			min-height: 100vh
+	&.-background-mousemove,
+	&.-background-mousemove-inverted,
+	&.-background-parallax
+		overflow: hidden
+	&.-fade-in
+		&.not-in-view
+			opacity: 0
+		&.in-view
+			+transition(opacity 1.5s)
+
+.centered-wrapper-background
+	position: absolute
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	overflow: hidden
+	background: 50% 50% no-repeat
+	background-size: cover
+	video
+		/* Change this to `object-fit: cover;` once all browsers support it,
+		/* see http://stackoverflow.com/a/20851590
+		position: absolute
+		top: 50%
+		left: 50%
+		min-width: 100%
+		min-height: 100%
+		+transform(translate(-50%, -50%))
+	.-background-mousemove > &, .-background-mousemove-inverted > &
+		right: -12%
+
+.centered-wrapper-background-2
+	position: absolute
+	top: 0
+	right: 0
+	bottom: 0
+	left: 0
+	background: rgba($shadow-color, 0.1)
+
+.centered-wrapper-inner
+	@extend %inner-wrapper
+	position: relative
+	&.-fullwidth
+		width: 100%
+		max-width: none
+		margin: 0
+	&.-fullwidth-padded
+		max-width: none
+		padding-right: em(40)
+		padding-right: var(--page-padding-right)
+		padding-left: em(40)
+		padding-left: var(--page-padding-left)
+		+mediaquery($max-width)
+			padding-right: 0
+			padding-left: 0
+
+.centered-wrapper.-no-background-tablet
+	> .centered-wrapper-background, > .centered-wrapper-background-2
+		+mediaquery(tablet)
+			display: none
+
+.centered-wrapper.-no-background-mobile
+	> .centered-wrapper-background, > .centered-wrapper-background-2
+		+mediaquery(mobile)
+			display: none
+
+
+/* ===========================================
+ * Content
+ * ========================================
+
+h1, h2
+	line-height: 1.3
+
+h3, h4, h5, h6
+	line-height: 1.5
+	font-weight: normal
+
+.main-content
+	float: right
+	width: col(22, 32)
+	margin: em(24) col(2, 32) em(60) 0
+	+mediaquery(tablet)
+		float: none
+		width: auto
+		margin-right: col(1, 24)
+		margin-left: col(1, 24)
+	.oneo-no-sidebar &
+		float: none
+		width: auto
+		margin-left: col(2, 32)
+		margin-right: col(2, 32)
+		+mediaquery(tablet)
+			margin-right: col(1, 24)
+			margin-left: col(1, 24)
+	.oneo-sidebar-right &
+		float: left
+		margin-right: 0
+		margin-left: col(2, 32)
+		+mediaquery(tablet)
+			float: none
+			margin-right: col(1, 24)
+			margin-left: col(1, 24)
+	.oneo-3-columns &
+		width: col(16, 32)
+		margin-right: col(8, 32)
+		+mediaquery(tablet)
+			float: none
+			width: auto
+			margin-right: col(1, 24)
+	.oneo-fullwidth &
+		margin: 0
+	p, ul, ol, table, form, fieldset
+		margin-top: em(12)
+		margin-bottom: em(24)
+	p > span[style]
+		padding: 0 em(3)
+	h1, h2, h3, h4, h5, h6
+		margin-top: 1em
+		margin-bottom: .3em
+	h1
+		font-size: $headline-size-1
+		color: $headline-color-1
+	.-color-inverted h1
+		color: $font-color-inverted
+	h2, h3, h4
+		font-weight: normal
+	h2
+		font-size: $headline-size-2
+		color: $headline-color-2
+	.-color-inverted h2
+		color: $font-color-light-inverted
+	h3
+		font-size: $headline-size-3
+	h4
+		font-size: $headline-size-4
+	h5, h6
+		text-transform: uppercase
+	h5
+		font-size: $headline-size-5
+	h6
+		font-size: $headline-size-6
+		color: $font-color-light
+		.-color-inverted &
+			color: $font-color-light-inverted
+	ul, ol
+		padding-left: em(22)
+		li[data-icon], li[class^="icon-"], li[class*=" icon-"]
+			list-style: none
+			&:before
+				float: left
+				left: em(-22)
+				top: em(5)
+				margin-right: 0
+				width: 0
+				color: $highlight-color
+	ul
+		list-style: disc
+		ul
+			margin-top: 0
+	ol
+		padding-left: em(20)
+		list-style: decimal
+		ol, ul
+			margin-top: 0
+		ol
+			padding-left: em(24)
+			list-style: upper-alpha
+			ol
+				list-style: lower-roman
+				ol
+					list-style: lower-alpha
+	blockquote
+		position: relative
+		margin: em(27, 21) 0 em(27, 21) em(40, 21)
+		font-size: em(21)
+		+line-height(32, 21)
+		color: $font-color-light
+		.-color-inverted &
+			color: $font-color-light-inverted
+		+mediaquery(mobile)
+			margin-left: col(2, 16)
+		small, i, em
+			display: block
+			font-size: em(16, 21)
+			line-height: $line-height
+			font-style: normal
+		&:before
+			content: "\201c"
+			float: left
+			margin-left: em(-40, 50)
+			font-size: em(50, 21)
+			line-height: 1
+			color: $highlight-color
+			+mediaquery(mobile)
+				margin-left: col(-2, 16)
+	img
+		max-width: 100%
+		height: auto
+	.gm-style img
+		max-width: none
+	.rsts-main
+		margin: 24px 0
+	.main-slider
+		margin: 0
+
+
+/* ===========================================
+ * Forms
+ * ========================================
+
+form
+	h1, h2, h3, h4, h5, h6
+		clear: both
+	.widget
+		position: relative
+		clear: both
+	.widget b.error, p.error
+		display: block
+		margin: 0
+		color: $warning
+
+input, textarea
+	padding: em(12, 14) em(19, 14)
+	line-height: normal
+	border: 1px solid $border-medium
+	border-bottom-color: darken($border-medium, 5%)
+	font-size: em(14)
+	color: $font-color
+	background: $main-background
+	.valid &
+		border-color: $green
+	.invalid &, &.error
+		border-color: $warning
+	&::-webkit-input-placeholder
+		/* multiple rules, because user agents are required to ignore a rule with an unknown selector
+		color: $grey
+	&:-moz-placeholder
+		color: $grey
+	&:-ms-input-placeholder
+		color: $grey
+	&::placeholder
+		color: $grey
+	&:hover
+		border-color: darken($border-medium, 5%) darken($border-medium, 5%) darken($border-medium, 9%)
+		box-shadow: 0 0 6px rgba($shadow-color, 0.1)
+	&:focus
+		border-color: $highlight-color
+
+input
+	&[type="text"], &[type="search"], &[type="email"], &[type="password"], &[type="url"]
+		outline: none
+	&[type="checkbox"], &[type="radio"], &[type="image"]
+		width: auto !important
+		height: auto !important
+		margin: 0
+		padding: 0
+		border: 0
+		box-shadow: none
+	&[type="checkbox"]
+		vertical-align: middle
+		+appearance(checkbox)
+	&[type="radio"]
+		vertical-align: middle
+		+appearance(radio)
+		background: none
+
+input[type="file"]
+	height: auto
+	padding: 0
+	border: 0
+	/* IE8 and IE9
+	border: 1px solid $border-medium unquote("\9")
+	background: none
+	box-shadow: none
+
+button, input[type="submit"]
+	margin-top: em(18)
+
+textarea
+	height: 223px
+	resize: vertical
+	line-height: 1.5
+	outline: none
+
+fieldset
+	margin: em(18) 0
+	border: 1px solid $border-medium
+	legend
+		padding: 0 em(5)
+	+ br
+		/* Kill <br> that Contao injects
+		display: none
+
+.main-content
+	form
+		.widget
+			margin-top: em(18)
+			margin-bottom: em(18)
+	label
+		display: block
+		margin-bottom: em(5, 14)
+		font-size: em(14)
+		color: $font-color-light
+		.-color-inverted &
+			color: $font-color-light-inverted
+		.mandatory
+			margin-left: em(2, 14)
+			color: $highlight-color
+	input[type="checkbox"] + label
+		display: inline
+	fieldset
+		p
+			margin: 0
+		label
+			display: inline
+			margin: 0
+			&:after
+				/* add line break after label
+				content: "\A"
+				white-space: pre
+	input, textarea, select, fieldset
+		width: col(12, 16)
+		+mediaquery(mobile)
+			width: 100%
+	input[type="submit"]
+		width: auto
+		+mediaquery(mobile)
+			width: 100%
+
+.fullwidth-form
+	input, textarea, select, fieldset
+		width: 100%
+
+.explanation, .captcha_text
+	p
+		margin: 0
+.explanation
+	font-size: em(14)
+	margin: em(-12, 14) 0 em(24, 14)
+	color: $font-color-light
+	.-color-inverted &
+		color: $font-color-light-inverted
+.captcha_text
+	display: block
+	label &
+		display: inline
+
+.sidebar form
+	input, textarea, select, fieldset, button
+		width: 100%
+	label
+		display: block
+		margin-bottom: em(5, 16)
+		font-size: em(16)
+	input
+		&[type="checkbox"], &[type="radio"], &[type="image"]
+			width: auto
+
+
+/* ===========================================
+ * Content elements
+ * ========================================
+
+.media > figure,
+.content-image > figure,
+.content-gallery figure,
+.image_container
+	position: relative
+	display: inline-block
+	vertical-align: top
+	max-width: 100%
+	&.float_above
+		margin-top: em(24)
+	&.float_below
+		margin-bottom: em(24)
+	img
+		display: block
+		width: 100%
+		height: auto
+	a
+		position: relative
+		display: block
+		overflow: hidden
+		/* Fixes IE bug
+		text-decoration: none
+		&:hover, &:focus
+			&:before
+				@if $image-hover
+					content: ""
+					position: absolute
+					top: 0
+					left: 0
+					z-index: 1
+					width: 100%
+					height: 100%
+					background: rgba($highlight-color, 0.6)
+			&:after
+				@if $image-hover
+					+icon("\e0cb", em(24))
+					position: absolute
+					top: 50%
+					left: 50%
+					z-index: 1
+					margin: em(-12, 24)
+					color: $main-background
+	figcaption, .caption
+		/* overwrite elements style attribute
+		width: 100% !important
+		padding: em(6, 14) 0 0
+		font-size: em(14)
+		color: $font-color-light
+
+.media--below
+	display: flex
+	flex-direction: column
+	> figure
+		order: 1
+
+.media--right > figure,
+.media--left > figure,
+.image_container.float_right,
+.image_container.float_left
+	float: right
+	@if $fluid-content-images
+		width: col($content-image-cols, 16) !important
+	margin: em(8) 0 em(16) col(1, 16)
+	+mediaquery(mobile)
+		margin-left: 0
+		float: none !important
+		@if $fluid-content-images
+			width: auto !important
+		width: auto !important
+	.oneo-no-sidebar &
+		margin: em(8) 0 em(16) col(1, 30)
+		@if $fluid-content-images
+			width: col($content-image-cols, 30) !important
+		+mediaquery(tablet)
+			margin-left: col(1, 16)
+			@if $fluid-content-images
+				width: col($content-image-cols, 16) !important
+		+mediaquery(mobile)
+			margin-left: 0
+			@if $fluid-content-images
+				width: auto !important
+	.no-resize &, &.no-resize
+		&, .oneo-no-sidebar &
+			@if $fluid-content-images
+				width: auto !important
+
+
+.media--left > figure,
+.image_container.float_left
+	float: left
+	margin: em(8) col(1, 16) em(16) 0
+	+mediaquery(mobile)
+		margin-right: 0
+	.oneo-no-sidebar &
+		margin: em(8) col(1, 26) em(16) 0
+		+mediaquery(tablet)
+			margin-right: col(1, 16)
+		+mediaquery(mobile)
+			margin-right: 0
+
+.media:not(.media--left):not(.media--right) > figure,
+.image_container:not(.float_right):not(.float_left)
+	.no-resize &, &.no-resize
+		img
+			width: auto
+			max-width: 100%
+
+.ce_youtube-wrapper, .ce_vimeo-wrapper
+	position: relative
+	margin: em(24) 0
+	/* ratio 16 to 9
+	padding-bottom: col(9, 16)
+	height: 0
+	overflow: hidden
+	iframe, object, embed
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+.mejs__video
+	&:not(.mejs__container-fullscreen)
+		video
+			object-fit: cover
+.mejs__video, .mejs__audio
+	button
+		+appearance(button)
+		border-radius: 0
+		box-shadow: none
+		background-color: transparent
+
+.content-player video,
+.content-player audio,
+.video_container video,
+.audio_container audio
+	display: block
+	width: 100%
+.content-player video,
+.video_container video
+	height: auto
+
+.content-player > figure,
+.content-youtube > figure,
+.content-vimeo > figure,
+.video_container
+	margin: em(24) 0
+
+.content-player,
+.content-youtube,
+.content-vimeo,
+.video_container
+	iframe
+		border: 0
+	.aspect,
+	.responsive
+		position: relative
+		padding-bottom: (9 / 16 * 100%)
+		&.aspect--16\:9,
+		&.ratio-169
+			padding-bottom: (9 / 16 * 100%)
+		&.aspect--16\:10,
+		&.ratio-1610
+			padding-bottom: (10 / 16 * 100%)
+		&.aspect--21\:9,
+		&.ratio-219
+			padding-bottom: (9 / 21 * 100%)
+		&.aspect--4\:3,
+		&.ratio-43
+			padding-bottom: (3 / 4 * 100%)
+		&.aspect--3\:2,
+		&.ratio-32
+			padding-bottom: (2 / 3 * 100%)
+		iframe,
+		[data-splash-screen],
+		img
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			object-fit: cover
+		[data-splash-screen]
+			margin: 0
+			color: inherit
+			p
+				position: relative
+
+.content-gallery,
+.ce_gallery
+	@for $cols from 1 through 12
+		&.content-gallery--cols-#{$cols} > ul > li,
+		> ul.cols_#{$cols} > li
+			width: ((100% - (($cols + 1) * 1.5%)) / $cols)
+	+mediaquery(mobile)
+		&.content-gallery > ul > li,
+		&.ce_gallery > ul > li
+			/* doubled class for specificity
+			width: auto
+	&.no-resize > ul > li
+		width: auto
+	.main-content &
+		margin: em(24) 0
+	> ul
+		+clearfix
+		display: flex
+		flex-wrap: wrap
+		margin: 0 -1.545% !important
+		padding: 0 0 1.545% 0 !important
+		list-style: none !important
+		> li
+			float: left
+			width: 23.125%
+			margin: 1.5% 0 0 1.5%
+			+mediaquery(mobile)
+				margin-right: 1.5%
+				margin-bottom: 1.5%
+			> figure,
+			> .image_container
+				display: block
+				width: 100%
+	img
+		display: block
+		width: 100%
+		height: auto
+
+.content-downloads,
+.sidebar .content-downloads,
+.enclosure,
+.sidebar .enclosure,
+.ce_downloads,
+.sidebar .ce_downloads
+	margin: em(27) 0
+	padding: em(20) em(30)
+	border: 1px solid $border-medium
+	h1, h2, h3, h4, h5, h6
+		margin: em(-21, 12) em(-31, 12) em(20, 12)
+		padding: em(8, 12) em(20, 12)
+		font-size: em(12)
+		font-weight: bold
+		letter-spacing: em(1, 12)
+		color: $main-background
+		text-transform: uppercase
+		background: $headline-color-1
+		&:before
+			+icon("\e06d", em(14, 12))
+			top: em(1, 14)
+			float: right
+	ul, p
+		margin: 0
+		padding: 0
+		list-style: none
+
+.ce_accordion
+	&[data-icon], &[class^="icon-"], &[class*=" icon-"]
+		position: relative
+		&:before
+			position: absolute
+			top: em(15, 20)
+			left: em(20, 20)
+			z-index: 1
+			font-size: em(20)
+			color: $font-color-light
+		.toggler
+			padding-left: em(50)
+	.toggler
+		position: relative
+		/* collapse borders
+		margin-bottom: -2px
+		padding: em(11) em(40) em(13) em(20)
+		border: 1px solid $border-medium
+		outline: none
+		font-weight: bold
+		cursor: pointer
+		color: $font-color-light
+		background: $main-background
+		&:after
+			+icon("\2b", em(13))
+			position: absolute
+			top: em(18, 13)
+			right: em(20, 13)
+		&:hover
+			color: $link-color
+			text-decoration: none
+		&.ui-accordion-header-active
+			&:after
+				content: "\2212"
+	.accordion
+		+clearfix
+		position: relative
+		overflow: hidden
+		/* collapse borders
+		margin-bottom: -2px
+		padding: em(1) em(20)
+		border: 1px solid $border-medium
+		border-top-color: mix($border-medium, $main-background)
+		background: mix($main-background, $shadow-color, 95%)
+
+.feature-box
+	+clearfix
+	position: relative
+	overflow: hidden
+	&.-image-centered
+		text-align: center
+	&.-vertical-centered
+		display: table
+		table-layout: fixed
+		/* Fixes IE bug
+		width: 100%
+		+mediaquery(mobile)
+			display: flex
+			flex-direction: column
+			justify-content: center
+	&.-small
+		min-height: 300px
+		&.-vertical-centered
+			height: 300px
+		+mediaquery(mobile)
+			min-height: 200px
+			&.-vertical-centered
+				height: auto
+	&.-medium
+		min-height: 600px
+		&.-vertical-centered
+			height: 600px
+		+mediaquery(mobile)
+			min-height: 400px
+			&.-vertical-centered
+				height: auto
+	&.-large
+		min-height: 900px
+		&.-vertical-centered
+			height: 900px
+		+mediaquery(mobile)
+			min-height: 600px
+			&.-vertical-centered
+				height: auto
+
+.feature-box-text
+	position: relative
+	z-index: 1
+	margin: em(100) col(14, 30) em(100) 0
+	color: $font-color-light
+	+mediaquery(tablet)
+		margin-right: col(6, 16)
+	+mediaquery(mobile)
+		margin: em(36) 0
+	.-image-left > &
+		margin-right: 0
+		margin-left: col(14, 30)
+		+mediaquery(tablet)
+			margin-left: col(6, 16)
+		+mediaquery(mobile)
+			margin-left: 0
+	.-image-centered > &
+		margin-right: col(5, 30)
+		margin-left: col(5, 30)
+		+mediaquery(tablet)
+			margin-right: 0
+			margin-left: 0
+		+ .feature-box-image
+			margin-top: em(-36)
+			+mediaquery(mobile)
+				margin-top: 0
+	.-vertical-centered > &
+		display: table-cell
+		vertical-align: middle
+		width: col(17, 30)
+		margin: 0
+		padding: em(72) col(1, 30) em(72) 0
+		+mediaquery(tablet)
+			width: col(11, 16)
+		+mediaquery(mobile)
+			display: block
+			width: auto
+			padding-right: 0
+	.-vertical-centered.-image-left > &
+		padding-right: 0
+		padding-left: col(1, 30)
+		+mediaquery(mobile)
+			padding-left: 0
+	.-vertical-centered.-image-centered > &
+		width: 100%
+		padding-right: col(6, 30)
+		padding-left: col(6, 30)
+		+mediaquery(tablet)
+			padding-right: 0
+			padding-left: 0
+	.-vertical-centered.-large-image > &
+		width: col(12, 30)
+		+mediaquery(tablet)
+			width: col(11, 16)
+		+mediaquery(mobile)
+			width: auto
+	.-no-image > &
+		width: 100%
+	.-color-inverted &
+		color: $font-color-inverted
+	.no-margin &
+		margin: 0
+		padding: 0
+	.no-margin-top &
+		margin-top: 0
+		padding-top: 0
+	.no-margin-bottom &
+		margin-bottom: 0
+		padding-bottom: 0
+	h1, h2, h3
+		margin: 0
+		color: $font-color
+		font-size: $headline-size-1
+		font-weight: normal
+		letter-spacing: 0.1em
+		text-transform: uppercase
+		&.-small
+			font-size: em(21)
+			+mediaquery(mobile)
+				font-size: em(18)
+		&.-medium
+			font-size: em(36)
+			+mediaquery(mobile)
+				font-size: em(28)
+		&.-large
+			font-size: em(48)
+			+mediaquery(mobile)
+				font-size: em(36)
+		&.-super-size
+			font-size: em(60)
+			+mediaquery(mobile)
+				font-size: em(48)
+		& + a
+			margin-top: em(24)
+		.-color-inverted &
+			color: $font-color-inverted
+	p
+		font-size: em(18)
+		margin: em(24, 18) 0
+		&:before
+			content: ""
+			display: block
+			width: em(60)
+			height: 2px
+			margin: em(12) 0
+			background: $highlight-color
+		.-image-centered &:before
+			width: em(120, 21)
+			margin-left: auto
+			margin-right: auto
+
+	.feature-box-subheadline
+		margin-top: em(6, 21)
+		font-size: em(21)
+		color: $highlight-color
+
+
+.feature-box-link
+	@extend %button
+	&.-secondary
+		@extend %button-secondary
+
+.feature-box-image
+	display: block
+	float: right
+	width: col(13, 30)
+	margin: em(48) 0 em(48) col(1, 30)
+	+mediaquery(tablet)
+		width: col(5, 16)
+	+mediaquery(mobile)
+		width: 100%
+	.-image-left > &
+		float: left
+		margin-right: col(1, 30)
+		margin-left: 0
+		+mediaquery(mobile)
+			float: none
+			margin-right: 0
+	.-image-centered > &
+		float: none
+		width: col(18, 30)
+		margin-right: auto
+		margin-left: auto
+		+mediaquery(tablet)
+			width: 100%
+		+ .feature-box-text
+			margin-top: em(48)
+	.-image-top > &
+		margin-top: 0
+	.-image-bottom > &
+		position: absolute
+		bottom: 0
+		right: 0
+		margin: 0
+		+mediaquery(mobile)
+			position: static
+			margin-bottom: em(48)
+	.-image-bottom.-image-left > &
+		right: auto
+		left: 0
+	.-vertical-centered > &
+		display: table-cell
+		vertical-align: middle
+		float: none
+		margin: 0
+		padding: em(48) 0
+		+mediaquery(mobile)
+			display: block
+			padding-top: em(24)
+			padding-bottom: em(24)
+	.-image-rounded > & img
+		border-radius: 99em
+	.-large-image &
+		width: col(18, 30)
+		+mediaquery(tablet)
+			width: col(5, 16)
+		+mediaquery(mobile)
+			width: 100%
+	.-image-centered.-large-image &
+		width: col(22, 30)
+		+mediaquery(tablet)
+			width: col(10, 16)
+		+mediaquery(mobile)
+			width: 100%
+
+.feature-box-text, .feature-box-image
+	.not-in-view > &
+		&.-fade
+			opacity: 0
+		&.-move
+			+transform(translate(100%, 0))
+		&.-move-right
+			+transform(translate(-100%, 0))
+		&.-move-top
+			+transform(translate(0, 100%))
+		&.-move-bottom
+			+transform(translate(0, -100%))
+	.in-view > &
+		+transition(opacity 0.6s linear, transform 0.6s ease-out)
+		&.-fade
+			opacity: 1
+		&.-move
+			+transform(translate(0, 0))
+	video,
+	img
+		display: block
+		max-width: 100%
+		height: auto
+		margin: 0 auto
+
+.fading-boxes
+	+clearfix
+	margin: em(40) 0
+	> h1, > h2, > h3, > h4, > h5, > h6
+		margin-top: 0
+		margin-bottom: em(16)
+
+.fading-boxes-item
+	position: relative
+	z-index: 0
+	color: $main-background
+	+transition(transform 0.2s linear)
+	&.-with-link
+		&:hover, &.is-hovered
+			+transform(translate3d(0, em(-35), 0))
+	&:hover, &.is-hovered
+		z-index: 1
+
+.fading-boxes-item-image
+	position: relative
+	z-index: 1
+	background: 50% 50% $highlight-color no-repeat
+	background-size: cover
+	.-highlight-color &
+		background: $highlight-color-dark no-repeat
+	&:before
+		position: absolute
+		top: em(115, 40)
+		right: 50%
+		z-index: 1
+		margin: -0.5em
+		font-size: em(40)
+		+transition(top 0.2s linear, right 0.2s linear, font-size 0.2s linear)
+		.fading-boxes-item:hover &, .fading-boxes-item.is-hovered &
+			top: em(40, 32)
+			right: em(36, 32)
+			font-size: em(32)
+			+fix-ie-font-size(32px)
+	&:after
+		content: attr(data-headline)
+		position: absolute
+		top: em(145, 28)
+		left: 5%
+		width: 90%
+		font-size: em(28)
+		text-align: center
+		+transition(opacity 0.1s linear)
+		+transition-delay(0.1s)
+		.fading-boxes-item:hover &, .fading-boxes-item.is-hovered &
+			opacity: 0
+			+transition-delay(0s)
+		.-has-text-shadow &
+			+text-shadow(0 0 5px rgba(black, 0.5))
+
+.fading-boxes-item-text
+	min-height: em(270, 14)
+	/* clearfix
+	overflow: hidden
+	padding: 0 em(20, 14)
+	font-size: em(14)
+	background: rgba($highlight-color, 0.8)
+	opacity: 0
+	+transition(opacity 0.2s linear)
+	.fading-boxes-item:hover &, .fading-boxes-item.is-hovered &
+		opacity: 1
+	h3
+		margin: em(24, 24) 0 em(-7, 24)
+		font-size: em(24, 14)
+		font-weight: normal
+		color: inherit
+	p
+		margin: em(21, 14) 0
+	a
+		color: inherit
+		text-decoration: underline
+		&:hover
+			text-decoration: none
+
+.fading-boxes-item-link
+	visibility: hidden
+	margin: em(-80) 0 em(20)
+	padding: em(15) em(20)
+	background: $highlight-color
+	+transition(margin 0.2s linear, visibility 0s 0.2s)
+	.fading-boxes-item:hover &, .fading-boxes-item.is-hovered &
+		visibility: visible
+		margin-top: 0
+		margin-bottom: em(-60)
+		+transition-delay(0s)
+	.button
+		display: block
+
+.icon-boxes
+	+clearfix
+	margin: em(40) 0
+	> h1, > h2, > h3, > h4, > h5, > h6
+		margin-top: 0
+		margin-bottom: em(16)
+
+.icon-boxes-item
+	position: relative
+	color: inherit
+	text-align: center
+	text-decoration: none
+	&:hover, &:focus
+		text-decoration: none
+	h3
+		margin: 0
+		color: $highlight-color
+	&.-icon-color h3
+		color: $font-color
+	p
+		margin: em(7, 15) 0
+	&.-headline-icon
+		padding-left: em(80)
+	&.-align-left
+		text-align: left
+	&.-align-right
+		text-align: right
+	&.-color-inverted, .-color-inverted &
+		color: $font-color-inverted
+		h3
+			color: $font-color-inverted
+	&.-background-color
+		padding: em(20)
+		&.-headline-icon
+			padding-left: em(100)
+
+.icon-boxes-item-icon
+	display: inline-block
+	width: em(80, 32)
+	height: em(80, 32)
+	margin: 0 0 em(20, 32)
+	padding: em(24, 32)
+	font-size: em(32)
+	line-height: 1
+	color: $main-background
+	background: $highlight-color
+	+transition(background 0.2s, transform 0.2s, color 0.2s 0.3s)
+	&:before
+		margin-right: 0
+	.not-in-view > .icon-boxes-item > &
+		color: transparent !important
+		+transform(scale(0))
+	@for $num from 1 through 12
+		.in-view > .icon-boxes-item:nth-of-type(12n+#{$num}) > &
+			+transition-delay(0s, 0.1s * $num, 0.1s * $num + 0.3s)
+	.-inverted-icon > &
+		width: em(100, 48)
+		height: em(100, 48)
+		margin-bottom: em(20, 48)
+		padding: em(24, 48)
+		border: 2px solid $border-medium
+		border-radius: 99em
+		font-size: em(48)
+		color: $highlight-color
+		background: $main-background
+		background: rgba($main-background, 0.5)
+	.-headline-icon > &
+		position: absolute
+		top: 0
+		left: 0
+		width: em(56, 28)
+		height: em(56, 28)
+		padding: em(12, 28)
+		border: 2px solid $highlight-color
+		border-radius: 99em
+		font-size: em(28)
+		color: $highlight-color
+		background: none
+	.-background-color.-headline-icon > &
+		margin: em(20, 28)
+	.-highlight-color &
+		background: $highlight-color-dark
+	*:hover > &, *:focus > &
+		opacity: 0.7
+		+transition(opacity 0.2s)
+
+.icon-boxes-item-text
+	color: $font-color-light
+	.-color-inverted &
+		color: $font-color-inverted
+
+.icon-boxes-item-link
+	&.-link
+		color: $link-color
+		.icon-boxes-item:hover > &, .icon-boxes-item:focus > &
+			text-decoration: underline
+	.-color-inverted &
+		color: $font-color-inverted
+
+.area-navigation
+	z-index: 1
+	position: fixed
+	top: 0
+	right: 30px
+	right: calc(30px + var(--safe-area-right))
+	height: 100%
+	display: table
+	+mediaquery(desktop)
+		right: col(0.5, 32)
+		right: calc(#{col(0.5, 32)} + var(--safe-area-right))
+		margin-right: -12px
+	+mediaquery(tablet)
+		right: col(0.5, 24)
+		right: calc(#{col(0.5, 24)} + var(--safe-area-right))
+	+mediaquery(mobile)
+		display: none
+	ul
+		display: table-cell
+		vertical-align: middle
+		padding: 0
+		width: 24px
+	li
+		margin: 4px 0
+		text-align: center
+	a
+		position: relative
+		display: inline-block
+		width: 18px
+		height: 18px
+		margin: 0
+		padding: 4px
+		outline: none
+		color: $slider-control-color
+		text-decoration: none
+		&:after
+			content: ""
+			display: block
+			width: 10px
+			height: 10px
+			border: 2px solid rgba($slider-control-color, 0)
+			border-radius: 100%
+			background-color: $slider-control-color
+			background-clip: padding-box
+		&:hover, &.active
+			&:after
+				border-color: $slider-control-color
+				background-color: rgba($slider-control-color, 0.25)
+		&.prev, &.next
+			width: 24px
+			height: 24px
+			padding: 5px
+			border: 2px solid currentColor
+			border-radius: 100%
+			+transition(transform 0.1s)
+			+mediaquery(desktop)
+				display: none
+			&:after
+				+icon("\e01a", 10px)
+				display: block
+			&:after, &:hover:after
+				color: inherit
+				background-color: transparent
+				border: 0
+			&:hover
+				+transform(scale(1.05))
+			&.is-disabled
+				visibility: hidden
+				pointer-events: none
+			> span
+				display: none
+		&.next:after
+			content: "\e015"
+		> span
+			position: absolute
+			top: 50%
+			right: 100%
+			max-width: 0
+			overflow: hidden
+			margin: -0.5em 0.5em 0 0
+			font-size: em(14)
+			line-height: 1
+			white-space: nowrap
+			+transition(max-width 0.3s cubic-bezier(0, 1, 1, 1))
+		&:hover > span
+			max-width: 999px
+			+transition(max-width 0.6s cubic-bezier(0.75, 0, 1, 1))
+	&.-invert-controls
+		a
+			color: $slider-control-color-inverted
+			&:after
+				border-color: rgba($slider-control-color-inverted, 0)
+				background-color: $slider-control-color-inverted
+			&:hover, &.active
+				&:after
+					border-color: $slider-control-color-inverted
+					background-color: rgba($slider-control-color-inverted, 0.25)
+			&.prev, &.next
+				&:hover, &.active
+					color: $slider-control-color-inverted
+				&:after, &:hover:after
+					background-color: transparent
+
+.filter-navigation
+	text-align: center
+	margin: em(24) 0 em(36)
+	h1, h2, h3
+		font-size: em(12)
+		font-weight: normal
+		text-transform: uppercase
+		letter-spacing: 0.1em
+	> ul
+		margin: em(12) 0
+		padding: 0
+		list-style-type: none
+		li
+			display: inline
+			margin: 0 em(10)
+			white-space: nowrap
+			a
+				display: inline-block
+				margin-bottom: em(5, 14)
+				padding: em(5, 14) em(12, 14)
+				text-decoration: none
+				text-transform: uppercase
+				font-size: em(14)
+				line-height: 1
+				color: invert($font-color)
+				background: $font-color
+				border-radius: 2px
+				+transition(color 0.3s, border-color 0.3s)
+				&:first-child
+					margin-left: 0
+				&:hover
+					color: mix(invert($font-color), $font-color, 60%)
+				&.active
+					background: $link-color
+					&:hover
+						color: $font-color-inverted
+
+.portfolio-boxes
+	+clearfix
+	margin: em(40) 0
+	> h1, > h2, > h3, > h4, > h5, > h6
+		margin-top: 0
+		margin-bottom: em(16)
+	.mega-dropdown &
+		margin: 0
+
+.portfolio-boxes-item
+	position: relative
+	padding-bottom: em(80)
+	background: $main-background
+
+.portfolio-boxes-item-image
+	position: absolute
+	top: 0
+	right: 0
+	bottom: em(80)
+	left: 0
+	background: 50% 50% no-repeat
+	background-size: cover
+	img
+		display: none
+	&:before
+		/* Headline
+		content: attr(data-headline)
+		position: absolute
+		right: 0
+		bottom: em(-80, 15)
+		left: 0
+		display: block
+		padding: em(30, 15) em(10, 15)
+		font-size: em(15)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: inherit
+		text-align: center
+		text-transform: uppercase
+
+.portfolio-boxes-item-text
+	position: relative
+	display: block
+	min-height: em(300)
+	padding: em(30) em(20)
+	color: $font-color-inverted
+	text-align: center
+	background: $shadow-color
+	background: rgba($shadow-color, 0.7)
+	opacity: 0
+	+transition(opacity 0.3s linear)
+	&:hover, &:focus, &.is-hovered
+		text-decoration: none
+		opacity: 1
+		+transition(opacity 0.1s linear)
+	h3
+		margin: 0
+		font-size: em(15)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: inherit
+		text-transform: uppercase
+		&:after
+			content: ""
+			display: block
+			width: em(80, 15)
+			height: 1px
+			margin: em(27, 15) auto 0
+			background: $main-background
+	p
+		margin: em(15) 0 0
+
+.portfolio-boxes-item-more
+	position: absolute
+	bottom: em(-80)
+	left: 0
+	width: 100%
+	height: em(80)
+	background: $link-color
+	&:before, &:after
+		content: ""
+		position: absolute
+		top: 50%
+		left: 50%
+		background: $main-background
+	&:before
+		width: em(40)
+		height: 2px
+		margin: -1px em(-20)
+	&:after
+		width: 2px
+		height: em(40)
+		margin: em(-20) -1px
+	span
+		display: none
+
+.portfolio-tiles
+	clear: both
+	width: 100%
+	/* Clearfix
+	overflow: hidden
+	/* For rounding failures
+	margin-right: -1%
+
+.portfolio-tiles-item
+	position: relative
+	float: left
+	width: col(1, 4)
+	+mediaquery(tablet)
+		width: col(1, 3)
+	+mediaquery(mobile)
+		width: col(1, 2)
+		font-size: 0.8em
+	> img
+		display: block
+		width: 100%
+		height: auto
+	> .no-image
+		display: block
+		padding-bottom: (270 / 360 * 100%)
+		background: $grey-light
+
+.portfolio-tiles-item-link
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	padding-top: (270 / 360 * 50%)
+	text-align: center
+	background: rgba($link-color, 0.8)
+	opacity: 0
+	+transition(opacity 0.3s linear)
+	&:hover, &:focus, &.is-hovered
+		text-decoration: none
+		opacity: 1
+		+transition(opacity 0.1s linear)
+	&:before
+		content: "\2b"
+		display: block
+		width: em(40, 40)
+		margin: em(-50, 40) auto em(15, 40)
+		font-size: em(40)
+		line-height: 1
+		color: $link-color
+		background: $font-color-inverted
+	h3
+		margin: 0
+		font-size: em(20)
+		font-weight: bold
+		color: $font-color-inverted
+		text-transform: uppercase
+	h4
+		margin: 0
+		font-size: em(15)
+		font-weight: normal
+		color: darken($link-color, 30%)
+
+.portfolio-detail > .back
+	display: none
+
+.counter-boxes
+	+clearfix
+	text-align: center
+	margin: em(40) 0
+	overflow: hidden
+
+.counter-boxes-item
+	text-decoration: none
+	color: inherit
+	&:link:hover, &:link:focus
+		text-decoration: none
+		&:before
+			+transform(scale(1.2))
+	&:before
+		margin: 0
+		font-size: em(50)
+		color: $highlight-color
+	.-highlight-color &:before
+		color: $font-color-light-inverted
+	p
+		margin: em(5, 90) em(-36, 90) em(12, 90)
+		font-size: em(90)
+		line-height: 1
+		+mediaquery(desktop)
+			font-size: em(76)
+		+mediaquery(tablet)
+			font-size: em(58)
+		+mediaquery(mobile)
+			font-size: em(46)
+	h3
+		margin: 0
+		font-size: em(18)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: $font-color-light
+		text-transform: uppercase
+		.-color-inverted &
+			color: $font-color-light-inverted
+
+.typing-headline
+	margin-top: em(40)
+	margin-bottom: em(40)
+	text-align: center
+	&.-align-left
+		text-align: left
+	&.-align-right
+		text-align: right
+	&.-small
+		> h2, > h3
+			font-size: em(24)
+		> p
+			font-size: em(18)
+	&.-medium
+		> h2, > h3
+			font-size: em(36)
+			+mediaquery(mobile)
+				font-size: em(28)
+		> p
+			font-size: em(21)
+	&.-large
+		> h2, > h3
+			font-size: em(48)
+			+mediaquery(mobile)
+				font-size: em(32)
+		> p
+			font-size: em(21)
+	&.-super-size
+		> h2, > h3
+			font-size: em(72)
+			+mediaquery(mobile)
+				font-size: em(42)
+	&.-not-bold > h2
+		font-weight: normal
+	h2, h3
+		position: relative
+		margin: 0
+		font-size: em(60)
+		line-height: 1.2
+		+mediaquery(mobile)
+			font-size: em(36)
+		.modernizr-csstransitions & > .typing-headline-dummy
+			color: transparent
+			pointer-events: none
+		> .typing-headline-text
+			position: absolute
+			top: 0
+			left: 0
+			width: 100%
+			height: 100%
+			&.is-typing:after, &.is-done-typing:after
+				content: ""
+				display: inline-block
+				vertical-align: middle
+				width: 0
+				height: 1em
+				margin: -0.5em em(-4, 60) -0.5em em(2, 60)
+				border-left: 2px solid currentColor
+			&.is-done-typing:after
+				margin-right: em(-20, 60)
+				margin-left: em(18, 60)
+				+animation(typing-cursor 0.5s linear infinite alternate)
+	h2
+		font-weight: bold
+		.-color-inverted &
+			color: $font-color-inverted
+	h3
+		font-weight: normal
+		.-color-inverted &
+			color: $font-color-inverted
+	p
+		margin: em(18, 24) col(5, 30) em(24, 24) col(5, 30)
+		color: $headline-color-2
+		font-size: em(24)
+		+mediaquery(mobile)
+			margin-right: 0
+			margin-left: 0
+		.-color-inverted &
+			color: $font-color-inverted
+	&.-align-left > p
+		margin-left: 0
+	&.-align-right > p
+		margin-right: 0
+	h2 + .button, h3 + .button
+		margin-top: em(36)
+
++keyframes(typing-cursor)
+	from, 10%
+		opacity: 0
+	to, 60%
+		opacity: 1
+
+.team-boxes
+	margin: em(48) 0
+	// clear: both
+	+clearfix
+
+.team-boxes-item
+	text-align: center
+	> h3
+		font-size: em(16)
+		font-weight: normal
+		text-transform: uppercase
+	> h4
+		margin-top: em(6, 14)
+		font-size: em(14)
+		color: $font-color-light
+	&:hover
+		img, .no-image
+			opacity: 0.5
+			+transition(opacity 0.3s ease-in)
+		.team-boxes-social-links
+			bottom: 20px
+	.-align-left > &
+		text-align: left
+	.-align-right > &
+		text-align: right
+	.-small > &
+		> h3
+			font-size: em(14)
+		> h4
+			font-size: em(14)
+	.-medium > &
+		> h3
+			font-size: em(18)
+		> h4
+			font-size: em(16)
+	.-large > &
+		> h3
+			font-size: em(21)
+		> h4
+			font-size: em(18)
+	.-super-size > &
+		> h3
+			font-size: em(24)
+		> h4
+			font-size: em(21)
+
+	.team-boxes-social-links
+		position: absolute
+		top: auto
+		right: 0
+		bottom: -50%
+		left: 0
+		margin: 0
+		padding: 0
+		text-align: center
+		list-style-type: none
+		+transition(bottom 0.2s ease-out)
+		> li
+			display: inline
+			> a
+				display: inline-block
+				overflow: hidden
+				padding: em(6, 14)
+				border: 2px solid $border-medium
+				border-radius: 99em
+				outline: none
+				line-height: 0
+				/* Fixes Chrome bug
+				letter-spacing: -1em
+				text-indent: -99em
+				text-decoration: none
+				background-color: $main-background
+				&:hover
+					border-color: currentColor
+				&:before
+					content: none
+				&:after
+					+icon(attr(data-icon), em(18, 14))
+					display: block
+					letter-spacing: 0
+					color: $font-color-light
+				&:hover:after, &:focus:after
+					color: inherit !important
+
+.team-boxes-image-wrapper
+	position: relative
+	background-color: $highlight-color
+	overflow: hidden
+	> a
+		font-size: 0
+	> img, > a
+		display: block
+		width: 100%
+		height: auto
+	> .no-image
+		display: block
+		padding-bottom: (6 / 4 * 100%)
+		background-color: $background-color-2
+		&:after
+			+icon("\e13a", 100px)
+			position: absolute
+			left: 50%
+			top: 50%
+			margin-left: -50px
+			margin-top: -50px
+			color: $border-medium
+
+.multicolumn-icon-lists
+	margin: em(12) 0 em(24)
+	+clearfix
+
+.multicolumn-icon-list
+	float: left
+	margin: 0
+	padding-right: em(12)
+	padding-left: 0
+	list-style-type: none
+	.main-content &
+		margin: 0
+	> h2
+		font-size: em(21)
+		letter-spacing: 0.1em
+		text-transform: uppercase
+		margin-bottom: em(24, 21)
+		&:after
+			content: ""
+			display: block
+			width: em(40)
+			height: 2px
+			margin-top: em(6)
+			background: $highlight-color
+			.-color-inverted.-highlight-color &
+				background: $highlight-color-dark
+	ul
+		margin: 0
+	li
+		&:before
+			color: $highlight-color
+		a[target="_blank"]:after
+			content: none
+	@for $cols from 1 through 6
+		.-columns-#{$cols} > &
+			width: (100% / $cols)
+	&:last-of-type
+		margin-right: -1px
+	+mediaquery(mobile)
+		&.multicolumn-icon-list
+			/* doubled class for specificity
+			float: none
+			width: auto
+
+.info-lists
+	+clearfix
+
+.info-list
+	float: left
+	@for $cols from 1 through 6
+		.-columns-#{$cols} > &
+			width: (100% / $cols)
+	&:last-of-type
+		margin-right: -1px
+	dt
+		margin-top: em(12, 12)
+		color: $font-color-light
+		font-size: em(12)
+		letter-spacing: 0.1em
+		text-transform: uppercase
+		&:first-child
+			margin-top: 0
+	dd
+		margin-left: 0
+	+mediaquery(mobile)
+		&.info-list
+			/* doubled class for specificity
+			float: none
+			width: auto
+	a[target="_blank"]:after
+		content: none
+
+.headline-box
+	margin: em(36) 0
+	text-align: center
+	&.-align-left
+		text-align: left
+		&:before
+			text-align: left
+			margin-left: 0
+	&.-align-right
+		text-align: right
+		&:before
+			text-align: right
+			margin-right: 0
+	&.-no-underline:after
+		content: none
+	&.-small
+		margin: em(24) 0
+		&:before
+			font-size: em(24)
+			margin-bottom: em(6, 24)
+	&.-no-tracking
+		h2
+			letter-spacing: normal
+			text-transform: none
+	&:before
+		display: block
+		width: em(86, 44)
+		height: em(86, 44)
+		margin: 0 auto em(12, 44) auto
+		border-radius: 100%
+		font-size: em(44)
+		font-weight: normal
+		+line-height(88, 44)
+		text-align: center
+		background: $main-background
+		background: rgba($main-background, 0.6)
+		color: $highlight-color
+		.-color-inverted &
+			background: $background-color-inverted
+			background: rgba($background-color-inverted, 0.6)
+			color: $main-background
+	&:after
+		content: ""
+		display: inline-block
+		width: em(120)
+		height: 2px
+		background: $highlight-color
+		.-highlight-color &
+			background: $highlight-color-dark
+	&.-button-only:after
+		display: none
+	h2
+		margin: em(4, 36) 0
+		font-size: em(36)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: inherit
+		text-transform: uppercase
+		+mediaquery(mobile)
+			font-size: em(28)
+		&.-bold
+			font-weight: bold
+		&.-small
+			font-size: em(24)
+		&.-medium
+			font-size: em(32)
+			+mediaquery(mobile)
+				font-size: em(24)
+		&.-large
+			font-size: em(42)
+			+mediaquery(mobile)
+				font-size: em(32)
+		&.-super-size
+			font-size: em(52)
+			+mediaquery(mobile)
+				font-size: em(36)
+	h3
+		margin: 0
+		font-size: em(14)
+		font-weight: bold
+		letter-spacing: 0.1em
+		line-height: 1.5
+		color: $font-color-light
+		text-transform: uppercase
+		.-color-inverted.-highlight-color &
+			color: $highlight-color-dark
+		.-color-inverted &
+			color: $font-color-light-inverted
+		&.-small
+			font-size: em(13)
+		&.-medium
+			font-size: em(16)
+			+mediaquery(mobile)
+				font-size: em(14)
+		&.-large
+			font-size: em(18)
+			+mediaquery(mobile)
+				font-size: em(16)
+		&.-super-size
+			font-size: em(21)
+			+mediaquery(mobile)
+				font-size: em(18)
+	&.-button-inline
+		h2, h3
+			display: inline
+			+mediaquery(mobile)
+				display: block
+
+.headline-box-link
+	@extend %button
+	h2 + &, h3 + &
+		margin-top: em(27, 14)
+	&.-secondary
+		@extend %button-secondary
+	.-align-left > &
+		float: right
+		margin: em(-2, 14) 0 0 em(44, 14)
+		+mediaquery(mobile)
+			float: none
+			margin: 0 0 em(14, 14)
+	.-align-right > &
+		float: left
+		margin: em(-2, 14) em(44, 14) 0 0
+		+mediaquery(mobile)
+			float: none
+			margin: 0 0 em(14, 14)
+	.-button-inline > &
+		margin: 0 0 0 em(30, 14)
+		+mediaquery(mobile)
+			margin: em(14, 14) 0 0
+
+.teaser-boxes
+	+clearfix
+
+.teaser-boxes-item
+	text-align: center
+
+	.no-image
+		display: block
+		padding-top: 75%
+		background: $grey-light
+
+	.teaser-boxes-label
+		display: inline-block
+		margin-bottom: em(20, 18)
+		padding: 0 em(8, 18)
+		color: $highlight-color
+		border: 2px solid $highlight-color
+		border-radius: 99em
+		font-size: em(18)
+		font-weight: bold
+		text-transform: uppercase
+		letter-spacing: em(1, 18)
+		+mediaquery(mobile)
+			font-size: 0.9em
+		+ .teaser-boxes-content > h3
+			margin-top: 0
+
+	&.-align-left
+		text-align: left
+	&.-align-right
+		text-align: right
+	.-boxed > &
+		overflow: hidden
+		padding: em(20, 14)
+		border: 1px solid $border-medium
+		border-radius: 2px
+		outline: none
+		background-color: $main-background
+
+.teaser-boxes-content
+	> h3
+		font-size: em(18)
+		font-weight: bold
+
+.teaser-boxes-image
+	display: block
+	margin-bottom: em(24)
+	> img
+		display: block
+		margin: 0 auto
+	&.-image-circle
+		border-radius: 99em
+		overflow: hidden
+		/* Fixes hover in Chrome
+		opacity: 0.99
+		outline: none
+		> img
+			/* Fixes android bug with border-radius and overflow
+			border-radius: 99em
+	&.-has-hover:hover,
+	&.-has-hover:focus
+		img
+			+transform(scale(1.05))
+
+.testimonial, blockquote.testimonial
+	margin: em(40) 0
+	font-size: inherit
+	color: inherit
+	text-align: center
+	&:before
+		content: "\201c"
+		float: none
+		display: block
+		margin: em(-20, 100) 0
+		font-size: em(100)
+		+fix-ie-font-size(100px)
+		line-height: 1
+		color: $highlight-color
+		.-highlight-color &
+			color: $highlight-color-dark
+
+.testimonial-text
+	font-size: em(40)
+	+mediaquery(mobile)
+		font-size: em(28)
+	.-small &
+		font-size: em(16)
+		+mediaquery(mobile)
+			font-size: em(14)
+	.-medium &
+		font-size: em(21)
+		+mediaquery(mobile)
+			font-size: em(18)
+	.-large &
+		font-size: em(28)
+		+mediaquery(mobile)
+			font-size: em(24)
+	.-super-size &
+		font-size: em(48)
+		+mediaquery(mobile)
+			font-size: em(36)
+	p
+		margin: 0
+
+.testimonial-author
+	margin: em(20) 0
+	font-size: em(14)
+	letter-spacing: 0.1em
+	text-transform: uppercase
+	img
+		display: inline
+		vertical-align: middle
+		overflow: hidden
+		margin-right: em(10, 14)
+		border-radius: 99em
+	small
+		font-size: inherit !important
+	a
+		color: inherit
+
+.pricing-table
+	+clearfix
+	margin: em(40) 0
+	> h1, > h2, > h3, > h4, > h5, > h6
+		margin-top: 0
+
+.pricing-table-plan
+	position: relative
+	float: left
+	border: 1px solid $border-light
+	text-align: center
+	h4
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		overflow: hidden
+		margin: -2px
+		padding-bottom: 100%
+		font-size: inherit
+		font-weight: normal
+		pointer-events: none
+		span
+			float: left
+			margin: em(-27, 13)
+			padding: em(10, 13) em(38, 13)
+			font-size: em(13)
+			letter-spacing: 0.1em
+			text-transform: uppercase
+			color: $font-color-inverted
+			background: lighten($shadow-color, 15%)
+			+transform(translate(-30%, 0) rotate(-45deg))
+			+transform-origin(100%, 0)
+			+mediaquery(desktop)
+				font-size: em(10)
+	h3
+		margin: -1px -1px 1px
+		padding: em(20, 14) em(10, 14)
+		font-size: em(14)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: $font-color-inverted
+		text-transform: uppercase
+		background: $highlight-color-dark
+	p
+		position: relative
+		margin: -1px -1px 1px
+		padding: em(25, 80) em(10, 80) em(35, 80)
+		border-bottom: 1px solid $border-light
+		font-size: em(80)
+		line-height: 1
+		color: $font-color-inverted
+		background: $highlight-color
+		+mediaquery(desktop)
+			font-size: em(60)
+		&:after
+			content: ""
+			position: absolute
+			bottom: 0
+			left: 50%
+			margin: em(-10, 80)
+			border: em(10, 80) solid transparent
+			border-top-color: $highlight-color
+			border-bottom: 0
+		b
+			display: inline-block
+			vertical-align: top
+			margin: em(9, 34) em(-16, 34) 0 0
+			font-size: em(34, 80)
+			font-weight: normal
+	ul
+		margin: em(22) em(20)
+		padding: 0
+		list-style: none
+		color: $font-color-light
+	li
+		padding: em(7) 0 em(8)
+		border-top: 1px solid $border-light
+		+transition(background-color 0.3s ease-in)
+		&:hover
+			background-color: $border-light
+			+transition-duration(0.05s)
+		&:first-child
+			border-top: 0
+	a
+		@extend %button
+		display: block
+		margin: em(34, 14) em(20, 14) em(20, 14)
+		&.-secondary
+			@extend %button-secondary
+			display: block
+
+.pricing-table-plan-price-part
+	display: inline-block
+	vertical-align: bottom
+	text-align: left
+	margin-left: em(3, 80)
+	small
+		display: block
+		font-size: em(34, 80)
+		+ i
+			margin-top: em(16, 15)
+			&:after
+				/* Fix empty elements
+				content: "\a0"
+				margin-left: -0.26em
+	i
+		display: block
+		margin-bottom: em(6, 15)
+		font-size: em(15, 80)
+		font-style: normal
+
+.google-map
+	position: relative
+	padding-bottom: col(9, 16)
+	> a,
+	iframe
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+	> a
+		display: flex
+		justify-content: center
+		align-items: center
+		text-align: center
+		background: #e5e3df
+
+.info-map
+	position: relative
+	clear: both
+
+.info-map-gmap
+	height: em(470)
+	+mediaquery(mobile)
+		height: em(280, 14)
+		/* Add area for touch scrolling
+		margin-right: col(1, 18)
+		margin-left: col(1, 18)
+	> a
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		display: flex
+		justify-content: center
+		align-items: center
+		text-align: center
+		background: #e5e3df
+
+.skills
+	margin: em(24) 0
+
+.skills-item
+	margin: em(32) 0
+	&:first-child
+		margin-top: 0
+	> a
+		display: block
+		color: inherit
+		&:hover, &:focus
+			text-decoration: none
+			opacity: 0.6
+	h3, h4
+		margin: 0
+		margin-bottom: 16px
+		font-size: em(14)
+		font-weight: bold
+		letter-spacing: 0.1em
+		color: inherit
+		text-transform: uppercase
+	h3
+		float: left
+		&:after
+			content: ""
+			display: table
+	h4
+		color: $font-color-light
+		text-align: right
+
+.skills-item-meter
+	clear: both
+	height: em(24)
+	overflow: hidden
+	margin: em(16) 0
+	background: $border-medium
+
+.skills-item-meter-inner
+	height: 100%
+	color: $highlight-color
+	background-color: currentColor
+	.skills-item.not-in-view &
+		+transform(translateX(-100%))
+	.skills-item.in-view &
+		+transform(none)
+		+transition(transform 2s ease-out)
+
+.tab-navigation
+	border: 1px solid transparent
+	border-bottom-color: $border-medium
+	text-align: center
+	ul, li
+		margin: 0
+		padding: 0
+	ul
+		display: table
+		table-layout: fixed
+		display: flex
+		align-items: flex-end
+		width: 100%
+		+mediaquery(mobile)
+			display: inline
+	li
+		display: table-cell
+		flex-grow: 1
+		list-style-type: none
+		vertical-align: bottom
+		+mediaquery(mobile)
+			display: block
+		&:first-child a
+			margin-left: -1px
+	a
+		position: relative
+		display: block
+		margin: -1px -1px 0 0
+		padding: em(9) em(28)
+		letter-spacing: 0.1em
+		text-transform: uppercase
+		outline: none
+		border: 1px solid $border-medium
+		border-bottom-width: 0
+		background-color: $main-background
+		+mediaquery(mobile)
+			margin: 0 -1px
+		&:hover, &:focus
+			text-decoration: none
+		&.is-active
+			z-index: 1
+			box-shadow: 0 10px 0 -1px $main-background, 0 -3px $link-color, -3px 0 3px -1px rgba($shadow-color, 0.1), 3px 0 3px -1px rgba($shadow-color, 0.1)
+			+mediaquery(mobile)
+				border-color: $link-color
+				color: $font-color-inverted
+				background: $link-color
+				box-shadow: 0 1px $link-color
+	&.-image-tabs
+		border: 0
+		ul, li
+			display: inline
+		a
+			display: inline-block
+			margin: 0
+			padding: em(9, 16) em(28, 16)
+			border: 0
+			font-size: em(16)
+			color: inherit
+			background: none
+			&:hover, &:focus
+				color: $link-color
+			&.is-active
+				color: $link-color
+				box-shadow: none
+				&:after
+					content: ""
+					position: absolute
+					top: 100%
+					left: 50%
+					margin-left: em(-7, 16)
+					border: em(7, 16) solid transparent
+					border-top-color: $link-color
+					border-bottom: 0
+			&:before
+				display: block
+				margin: 0 auto em(12, 48)
+				font-size: em(48, 16)
+				color: $highlight-color
+			img
+				display: block
+				margin: 0 auto em(12)
+
+.tab-navigation-item
+	@for $cols from 1 through 6
+		.-columns-#{$cols} &
+			width: (100% / $cols)
+	&.tab-navigation-item
+		+mediaquery(mobile)
+			width: auto
+
+
+.tab-start
+	&.-has-border
+		margin-top: -1px
+		border: 1px solid $border-medium
+		padding-right: em(40)
+		padding-left: em(40)
+
+.timeline
+	margin: em(40) col(5, 30)
+	position: relative
+	+mediaquery(tablet)
+		margin-right: 0
+		margin-left: 0
+	&:before, &:after
+		content: ""
+		position: absolute
+		bottom: 0
+		left: 50%
+		background: $font-color-light
+		+mediaquery(mobile)
+			left: col(1, 22)
+	&:before
+		top: 0
+		width: 2px
+		margin: 0 -1px
+	&:after
+		width: 10px
+		height: 10px
+		margin: 0 -5px
+		border-radius: 99em
+
+.timeline-item
+	position: relative
+	min-height: em(90)
+	/* clearfix
+	overflow: hidden
+	padding: 0 0 em(30)
+	&:before
+		position: absolute
+		top: em(30, 30)
+		left: 50%
+		font-size: em(30)
+		border-radius: 99em
+		+mediaquery(mobile)
+			left: col(1, 22)
+	&.not-in-view
+		&:before
+			+transform(scale(0))
+	&.in-view
+		&:before
+			+transform(none)
+			+transition(transform 0.6s ease-out)
+	&:not([data-icon]):before
+		content: ""
+		width: em(20, 30)
+		height: em(20, 30)
+		margin: em(-10, 30)
+		border: em(2, 30) solid $font-color-light
+		background: $main-background
+	&[data-icon]:before
+		width: em(60, 30)
+		height: em(60, 30)
+		margin: em(-30, 30)
+		padding-top: em(15, 30)
+		color: $main-background
+		text-align: center
+		background: $highlight-color
+		+mediaquery(mobile)
+			font-size: em(16)
+	> h3
+		float: left
+		width: col(8, 20)
+		color: $font-color-light
+		text-align: right
+		+mediaquery(mobile)
+			float: none
+			width: auto
+			margin-left: col(3, 22)
+			text-align: left
+	&:nth-of-type(2n)
+		> h3
+			float: right
+			text-align: left
+			+mediaquery(mobile)
+				float: none
+		> .timeline-item-text
+			float: left
+			text-align: right
+			+mediaquery(mobile)
+				float: none
+				text-align: left
+
+.timeline-item-text
+	float: right
+	width: col(8, 20)
+	+mediaquery(mobile)
+		float: none
+		width: auto
+		margin-left: col(3, 22)
+
+.timeline-item > h3,
+.timeline-item-text h3,
+.timeline-item-text h4
+	margin-top: em(18, 18)
+	margin-bottom: em(18, 18)
+	font-size: em(18)
+	font-weight: bold
+	letter-spacing: 0.1em
+	text-transform: uppercase
+
+.timeline-image-caption
+	font-size: em(14)
+	color: $font-color-light
+
+
+
+/* ===========================================
+ * Modules (Search, FAQ, News, Events, Comments, Sitemap etc.)
+ * ========================================
+
+.fixed-note
+	position: fixed
+	display: table
+	top: auto
+	right: 0
+	bottom: 0
+	left: 0
+	width: 100%
+	min-height: em(60)
+	padding: em(12) em(20) em(12) em(80)
+	padding-right: calc(#{em(20)} + var(--safe-area-right))
+	padding-left: calc(#{em(80)} + var(--safe-area-left))
+	border-top: 1px solid $border-medium
+	z-index: 99
+	background-color: $main-background
+	box-shadow: 0 -2px 5px rgba($shadow-color, 0.1)
+	+mediaquery(tablet)
+		position: static
+	+mediaquery(mobile)
+		display: block
+		padding-left: em(20)
+		padding-left: calc(#{em(20)} + var(--safe-area-left))
+	&:before
+		position: absolute
+		top: 50%
+		margin-top: em(-18, 36)
+		left: em(30, 36)
+		left: calc(#{em(30, 36)} + var(--safe-area-left))
+		font-size: em(36)
+		color: $highlight-color
+		+mediaquery(tablet)
+			top: em(24, 36)
+			margin-top: 0
+		+mediaquery(mobile)
+			position: static
+	h1, h2, h3,
+		font-size: em(14)
+		margin: em(6, 14) 0
+	p
+		font-size: em(13)
+		margin: em(6, 13) 0
+
+.fixed-note-column
+	display: table-cell
+	vertical-align: middle
+	padding: 0 em(10)
+	&:last-child
+		text-align: right
+		+mediaquery(tablet)
+			text-align: left
+	+mediaquery(tablet)
+		display: block
+		margin: em(12) 0
+		padding: 0
+
+.fixed-note-link, .fixed-note-button
+	white-space: nowrap
+
+.fixed-note-button
+	margin: 0
+
+.fixed-note-closed
+	position: fixed
+	right: em(30)
+	right: calc(#{em(30)} + var(--safe-area-right))
+	bottom: 0
+	z-index: 99
+	padding: em(8) em(12)
+	color: $button-color
+	text-decoration: none
+	background: $button-background-color
+	box-shadow: 0 -2px 5px rgba($shadow-color, 0.1)
+	+mediaquery(tablet)
+		position: absolute
+		top: em(12)
+		top: calc(#{em(12)} + var(--safe-area-top))
+		right: em(70)
+		right: calc(#{em(70)} + var(--safe-area-right))
+		bottom: auto
+		padding: em(4) em(12)
+	&:hover, &:focus
+		background-color: darken($button-background-color, 10%)
+	&:before
+		+icon("\e0a6")
+	> span
+		display: none
+
+.breadcrumbs-wrapper
+	padding-bottom: em(30)
+	+mediaquery(mobile)
+		padding-bottom: 0
+	.oneo-fullwidth &
+		padding-bottom: 0
+
+.breadcrumbs-headline
+	float: left
+	margin: 0
+	font-size: em(21)
+	line-height: 1.5
+	font-weight: normal
+	color: inherit
+	padding: em(23, 21) 0 em(25, 21)
+	&:not(:last-child)
+		padding-bottom: 0
+	+mediaquery(mobile)
+		float: none
+		padding-top: 0
+		padding-bottom: 0
+		margin-top: em(20, 21)
+		margin-bottom: em(20, 21)
+		text-align: center
+
+.mod_breadcrumb
+	padding: em(32, 13) 0 em(27, 13)
+	font-size: em(13)
+	+mediaquery(mobile)
+		padding-top: 0
+		padding-bottom: 0
+		margin-top: em(20, 13)
+		margin-bottom: em(20, 13)
+		text-align: center
+	&.-right
+		float: right
+		+mediaquery(mobile)
+			float: none
+	ul, li
+		display: inline
+		margin: 0
+		padding: 0
+	li:before
+		content: " \A0 / \A0 "
+	li:first-child:before
+		content: none
+	a
+		color: inherit
+		text-decoration: underline
+		&:hover
+			text-decoration: none
+
+p.back a:before, p.previous a:before, p.next a:after
+	+icon("\e018", em(12))
+	top: em(-2, 12)
+	margin-right: em(6, 12)
+	vertical-align: middle
+
+p.next a:after
+	content: "\e019"
+	margin-right: 0
+	margin-left: em(6, 12)
+
+nav[data-pagination],
+.pagination
+	> p
+		text-align: center
+	ol,
+	ul
+		list-style-type: none !important
+		text-align: center
+	li
+		display: inline-block
+		a, strong, span
+			padding: 4px 12px
+			background-color: $main-background
+		.current, .active
+			font-weight: bold
+			color: inherit
+			text-decoration: none
+			border-bottom: 1px solid $border-light
+			+background-image(linear-gradient(rgba($shadow-color, 0), rgba($shadow-color, 0.02)))
+
+.news-image-teaser
+	+clearfix
+	position: relative
+	margin: em(68) 0
+	&:first-child
+		margin-top: em(45)
+	h2
+		margin: 0 em(90, 28) em(10, 28) 0
+		font-size: em(28)
+		font-weight: normal
+		+line-height(36, 28)
+		color: inherit
+		+mediaquery(mobile)
+			margin-right: 0
+		a
+			color: inherit
+			&:hover, &:focus
+				color: $link-color
+				text-decoration: none
+	p
+		margin: em(10) 0
+		color: $font-color-light
+		&.news-image-teaser-info
+			margin: em(-7) 0 em(5)
+
+.news-image-teaser-image
+	float: right
+	max-width: col(7, 20)
+	margin-left: col(1, 20)
+	+mediaquery(mobile)
+		float: none
+		max-width: none
+		margin-left: 0
+		margin-bottom: em(10)
+	img
+		display: block
+		max-width: 100%
+		height: auto
+		margin: 0
+
+.news-image-teaser-date
+	position: absolute
+	right: em(20, 28)
+	top: 0
+	width: em(52, 28)
+	padding: em(7, 28) 0 em(9, 28)
+	font-size: em(28)
+	font-weight: bold
+	line-height: 1
+	color: $highlight-color
+	text-align: center
+	background: $main-background
+	box-shadow: 0 2px 5px rgba($shadow-color, 0.15)
+	+mediaquery(mobile)
+		position: static
+		float: right
+		.news-image-teaser-image ~ &
+			position: absolute
+			right: auto
+			left: em(20, 28)
+	b
+		display: block
+		margin: em(-1, 17) 0 0
+		font-size: em(17, 28)
+		font-weight: normal
+		text-transform: uppercase
+
+.news-image-teaser-more
+	font-size: em(13)
+	font-weight: bold
+	letter-spacing: em(1, 13)
+	text-transform: uppercase
+
+.news-boxed
+	+clearfix
+	margin: em(40) 0
+
+.news-boxed-item
+	h3
+		margin: 0
+		font-size: em(18)
+		font-weight: normal
+		+line-height(24, 18)
+		> a
+			color: inherit
+			text-decoration: none
+			&:hover, &:focus
+				color: $link-color
+	p
+		margin: em(10) 0
+		color: $font-color-light
+		&.news-boxed-item-info
+			margin: 0 0 em(2, 12)
+			font-size: em(12)
+
+.news-boxed-item-image
+	position: relative
+	margin-bottom: em(5)
+	&:after
+		+icon("\e0dd", em(25))
+		position: absolute
+		top: 0
+		right: em(20, 25)
+		padding: em(8, 25)
+		color: $highlight-color
+		background: $main-background
+		box-shadow: 0 2px 5px rgba($shadow-color, 0.15)
+	img
+		display: block
+		width: 100%
+		height: auto
+
+.news-boxed-item-image-more > a
+	position: absolute
+	top: 0
+	left: 0
+	width: 100%
+	height: 100%
+	font-size: em(14)
+	font-weight: bold
+	letter-spacing: em(1, 14)
+	color: $font-color-inverted
+	text-align: center
+	text-decoration: none
+	text-transform: uppercase
+	background: $link-color
+	background: rgba($link-color, 0.5)
+	opacity: 0
+	&:hover, &:focus
+		opacity: 1
+	&:before
+		content: ""
+		display: block
+		height: 50%
+		margin-bottom: em(-11, 14)
+
+.news-link-list-item
+	margin: em(12) 0
+	min-height: em(40)
+	&:hover
+		time:before
+			top: em(4, 10)
+		b
+			margin-top: 40px
+	time
+		position: relative
+		float: left
+		width: em(36, 10)
+		height: em(36, 10)
+		padding: em(3, 10) 0 0
+		overflow: hidden
+		font-size: em(10)
+		line-height: 1
+		color: $font-color-inverted
+		text-transform: uppercase
+		text-align: center
+		background: $highlight-color-dark
+		&:before
+			+icon("\e0dd", em(20, 10))
+			position: absolute
+			top: em(-10, 10)
+			left: em(4, 10)
+			+transition(top 0.2s ease-out)
+		b
+			display: block
+			font-size: em(18, 10)
+			font-weight: normal
+			+transition(margin 0.2s ease-out)
+		.-color-inverted &
+			background: $main-background
+			color: $font-color
+	a
+		display: block
+		line-height: em(20)
+	time + a
+		padding-left: em(50)
+
+.sidebar-news
+	> .block
+		margin-bottom: em(10, 14)
+		padding-bottom: em(10, 14)
+		border-bottom: 1px dotted $border-medium
+	.info
+		margin-bottom: 0
+	.sidebar &
+		.image_container
+			margin-top: 0
+		h2
+			margin: em(12, 14) 0 0
+		p
+			margin: em(6, 14) 0
+
+.mod_calendar
+	.main-content &
+		margin: em(24) 0
+	th
+		&.previous, &.next
+			a
+				&:after, &:before
+					display: none
+		&.current
+			border-right: 0
+			border-left: 0
+			text-align: center
+			&:before
+				+icon("\e037", 16px)
+				margin-right: 6px
+		&.previous
+			border-right: 0
+		&.next
+			border-left: 0
+			text-align: right
+		&.label
+			font-size: em(12)
+			text-align: center
+			text-transform: uppercase
+			letter-spacing: em(1, 14)
+			+mediaquery(mobile)
+				> span
+					display: none
+	td
+		vertical-align: top
+		width: col(1, 7)
+		+mediaquery(mobile)
+			text-align: center
+		&.today
+			font-weight: bold
+			background-color: $border-medium
+	.event
+		font-size: em(12)
+	.minicalendar
+		.label
+			padding-left: 0
+			padding-right: 0
+		td
+			padding: em(3)
+			text-align: center
+
+.mod_newsletterlist
+	ul
+		padding-left: 0
+		list-style-type: none
+		li
+			border-bottom: 1px solid $border-medium
+			padding: em(8) 0
+			&:before
+				+icon("\e0ce", em(30))
+				float: left
+				width: em(40, 30)
+				margin-top: em(4, 30)
+				color: $highlight-color
+		a
+			display: block
+			font-size: em(21)
+
+.mod_eventlist
+	margin-top: em(24)
+	> .header
+		font-weight: bold
+	.event
+		overflow: hidden
+		margin-bottom: em(48)
+		> h2
+			margin-top: 0
+			font-size: em(24)
+
+.mod_faqlist
+	ul
+		list-style: none
+		padding-left: 0
+	li
+		&:before
+			+icon("\e0f7")
+			margin-right: em(8)
+
+.mod_faqpage
+	section
+		margin: em(36) 0
+		padding-left: em(72)
+	h3
+		position: relative
+		margin: em(21, 21) 0
+		padding: em(10, 21) 0 em(15, 21)
+		border-bottom: 1px solid $border-light
+		font-size: em(21)
+		&:before, + *:before
+			content: "Q"
+			position: absolute
+			top: 0
+			left: em(-72, 28)
+			width: em(50, 28)
+			padding: em(10, 28) em(11, 28) em(12, 28)
+			border-radius: 100%
+			font-size: em(28, 21)
+			line-height: 1
+			color: $main-background
+			text-align: center
+			background: $highlight-color
+		+ *
+			position: relative
+			&:before
+				content: "A"
+				left: em(-60, 16)
+				font-size: em(16)
+	p
+		margin-top: em(12)
+		margin-bottom: em(12)
+	.info
+		font-size: em(13)
+		color: $font-color-light
+
+.mod_faqreader
+	.info
+		font-size: em(13)
+		color: $font-color-light
+
+.mod_search
+	margin: em(27) 0
+	.widget
+		display: inline
+	form
+		input
+			vertical-align: middle
+			&[type="search"]
+				width: col(11.9, 16)
+				margin: 0
+				padding-top: em(16)
+				padding-bottom: em(15)
+		button, input
+			&[type="submit"]
+				width: col(4, 16)
+				margin: 0 -2% 0 0
+				+mediaquery(mobile)
+					padding-right: 0
+					padding-left: 0
+	.relevance
+		float: right
+		margin-top: em(10, 14)
+		font-size: em(14, 24)
+	.header
+		padding-bottom: em(5)
+		border-bottom: 1px solid $border-medium
+		color: $font-color-light
+	.highlight
+		padding: 0 em(4)
+		font-weight: bold
+		background: mix($main-background, $link-color, 80%)
+	.url
+		padding-bottom: em(20, 14)
+		border-bottom: 1px dotted $border-medium
+		font-size: em(14)
+		color: $font-color-light
+		&:before
+			+icon("\e0b5")
+			margin-right: em(5, 14)
+		.filesize
+			font-size: em(12, 14)
+
+.comment_default
+	margin: em(27, 16) 0
+	padding: em(20, 16) col(1, 16) 0
+	border: 1px solid $border-medium
+	font-size: em(16)
+	background: $main-background
+	+background-image(linear-gradient(rgba($shadow-color, 0), rgba($shadow-color, 0.02)))
+	box-shadow: 0 0 5px rgba($shadow-color, 0.1)
+	.info
+		margin-top: 0
+		border-bottom: 1px solid $border-medium
+	.reply
+		margin-left: col(1, 15)
+		.info
+			font-weight: bold
+
+.ce_comments
+	.form
+		margin-top: em(36)
+		.widget
+			clear: none
+			margin-top: em(24)
+			&:nth-of-type(-n+4)
+				float: left
+				width: col(7, 15)
+				+mediaquery(mobile)
+					width: 100%
+			&:nth-of-type(-2n+4)
+				margin-right: -1%
+				margin-left: col(1, 15)
+				+mediaquery(mobile)
+					margin-right: 0
+					margin-left: 0
+			&:nth-of-type(5)
+				clear: both
+				padding-top: em(24)
+			input
+				width: 100%
+			textarea
+				width: 100%
+		.checkbox_container
+			margin: 0
+			border: 0
+			margin-top: em(-18)
+			padding: 0
+	h2 + .form, h2 + .form > form
+		margin-top: 0
+
+.mod_sitemap
+	ul
+		padding-left: 0
+		list-style-type: none
+		li
+			&:before
+				content: none
+			li
+				padding: em(3) 0 em(3) em(28)
+			li.submenu
+				ul
+					margin: 0
+	> ul > li
+		&:before
+			+icon("\e083")
+			margin-right: em(10)
+			color: $link-color
+	a:before
+		margin-right: em(8)
+
+.mod_subscribe, .mod_unsubscribe
+	.submit
+		padding-top: em(14, 14)
+		padding-bottom: em(11, 14)
+
+.mod_subscribe
+	&.-centered
+		text-align: center
+	.centered-wrapper &
+		input[type=text], input[type=email]
+			width: 30%
+			min-width: em(260)
+		.submit
+			width: auto
+	.sidebar &
+		input[type=text], input[type=email]
+			width: 100%
+			+mediaquery(mobile)
+				display: inline
+				margin: 0
+		.submit
+			width: 100%
+			margin-top: em(4)
+
+
+/* ===========================================
+ * Sidebar / Widgets
+ * ========================================
+
+.sidebar
+	position: relative
+	float: left
+	width: col(6, 32)
+	margin: em(40) 0 0 col(1, 32)
+	font-size: em(14)
+	+mediaquery(tablet)
+		float: none
+		clear: both
+		width: auto
+		margin-right: 0
+		margin-left: 0
+	+mediaquery(mobile)
+		margin-right: col(1, 24)
+		margin-left: col(1, 24)
+	.oneo-sidebar-right &
+		float: right
+		margin-right: col(1, 32)
+		margin-left: 0
+		+mediaquery(tablet)
+			float: none
+			margin-right: 0
+			margin-left: 0
+		+mediaquery(mobile)
+			margin-right: col(1, 24)
+			margin-left: col(1, 24)
+	.oneo-3-columns &
+		&.-right
+			left: col(17, 32)
+			margin-right: col(-6, 32)
+			+mediaquery(tablet)
+				left: auto
+				clear: none
+				margin-right: 0
+			+mediaquery(mobile)
+				margin-right: col(1, 24)
+	h1, h2, h3, h4, h5
+		margin: em(30, 14) 0 em(7, 14)
+		font-size: em(14, 14)
+		font-weight: bold
+		color: $font-color-light
+	p, ul, ol, table, blockquote, fieldset, form
+		margin: em(16) 0
+	ul, ol
+		padding: 0
+		list-style-type: none
+	> .block
+		margin: em(20) 0
+		+mediaquery(tablet)
+			float: left
+			width: col(10.5, 24)
+			margin-left: col(1, 24)
+		+mediaquery(mobile)
+			float: none
+			width: auto
+			margin-left: 0
+	.ce_youtube-wrapper, .ce_vimeo-wrapper
+		margin: em(12) 0
+	.media > figure,
+	.content-image > figure,
+	.image_container
+		margin: em(12) 0 0
+
+.sub-navigation
+	h3, h3 a
+		color: inherit
+	> ul
+		font-size: em(13, 14)
+	ul
+		a, strong, span.active, span.trail, span.forward
+			display: block
+			padding: em(5, 13) 0
+			color: inherit
+			&:before
+				margin-right: em(7, 13)
+		strong.active, strong.trail, span.active, span.trail
+			font-weight: bold
+		ul
+			margin: 0 0 0 em(20, 13)
+	li
+		&[data-icon], &[class^="icon-"], &[class*=" icon-"]
+			&:before
+				content: none
+
+/* ===========================================
+ * Footer
+ * ========================================
+
+.news-footer
+	margin: em(40) 0
+	> h1, > h2, > h3
+		@extend %inner-wrapper
+		margin-bottom: em(24, 36)
+		font-size: em(36)
+		font-weight: normal
+		letter-spacing: 0.1em
+		color: inherit
+		text-transform: uppercase
+		+mediaquery(mobile)
+			font-size: em(28)
+		&:after
+			content: ""
+			display: block
+			width: em(120, 36)
+			height: 2px
+			margin-top: em(24, 36)
+			background: $highlight-color
+	&.-centered
+		text-align: center
+		> h1:after, > h2:after, > h3:after
+			margin-right: auto
+			margin-left: auto
+
+.news-footer-item
+	h3
+		margin: 0
+		font-size: em(24)
+		font-weight: bold
+		color: inherit
+		text-transform: uppercase
+		+mediaquery(mobile)
+			font-size: em(20)
+	p
+		margin: em(2) 0 0
+		color: $font-color-light
+		+transition(color 0.4s linear)
+		.-color-inverted &
+			color: $font-color-light-inverted
+	> a
+		position: relative
+		display: block
+		color: inherit
+		+transition(color 0.4s linear)
+		&:before
+			content: ""
+			position: absolute
+			top: 50%
+			left: 0
+			width: 100%
+			height: 0
+			background: $link-color
+			+transition(top 0.6s ease-in, height 0.6s ease-in)
+		&:hover, &:focus
+			text-decoration: none
+			//background: $link-color
+			color: $font-color-inverted
+			+transition(color 0.1s linear)
+			&:before
+				top: 0
+				height: 100%
+				+transition(top 0.2s ease-out, height 0.2s ease-out)
+			p
+				color: $font-color-light-inverted
+				+transition(color 0.1s linear)
+
+.news-footer-item-inner
+	@extend %inner-wrapper
+	position: relative
+	padding-top: em(24)
+	padding-bottom: em(24)
+
+.icon-text-block
+	position: relative
+	padding-left: em(30)
+	> p
+		margin: em(15) 0
+	&:before
+		position: absolute
+		top: em(4, 15)
+		left: 0
+		color: $highlight-color
+
+.footer-links
+	float: right
+	margin: 0
+	padding: em(30, 14) 0
+	font-size: em(14)
+	color: $font-color-light
+	+mediaquery(tablet)
+		float: none
+		padding-top: 0
+	ul, li
+		display: inline
+		margin: 0
+		padding: 0
+	li
+		&:before
+			content: ""
+			display: inline-block
+			width: 1px
+			height: em(11, 14)
+			margin: 0 em(8, 14) 0 em(5, 14)
+			background: $font-color-light
+		&:first-child:before
+			content: none
+	a, strong, span.trail, span.active, span.forward
+		color: inherit
+
+.footer-top-link
+	position: relative
+	display: block
+	z-index: 1
+	clear: both
+	width: em(40)
+	height: em(50)
+	overflow: hidden
+	margin: em(-25) auto 0
+	color: $main-background
+	text-indent: -999em
+	+mediaquery(mobile)
+		margin-top: em(25)
+	&:after
+		+icon("\e01a", em(16))
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%
+		height: 100%
+		padding-top: em(17, 16)
+		text-align: center
+		background: $button-background-color
+	&:hover, &:focus
+		&:after
+			color: $button-background-color
+			background-color: mix($button-background-color, $main-background, 10%)
+
+.icon-links
+	.main-content &
+		padding-left: 0
+		list-style-type: none
+	li
+		padding-bottom: em(6)
+	a
+		text-decoration: none
+		&:hover span
+			text-decoration: underline
+
+.footer-icon-links
+	margin: em(40)
+	margin-right: var(--page-padding-right)
+	margin-left: var(--page-padding-left)
+	padding: 0
+	text-align: center
+	list-style: none
+	ul, li
+		display: inline
+		margin: 0
+		padding: 0
+	a
+		display: inline-block
+		margin: 0 em(8)
+		width: em(60)
+		height: em(60)
+		overflow: hidden
+		border: 2px solid $border-medium
+		border-radius: 99em
+		color: $font-color-light
+		&:hover, &:focus
+			color: $main-background
+			text-decoration: none
+			background: $border-medium
+		&:before
+			display: block
+			width: 100%
+			height: 100%
+			padding-top: em(16, 24)
+			font-size: em(24)
+
+.footer-navigation
+	margin: 0 em(40)
+	margin-right: var(--page-padding-right)
+	margin-left: var(--page-padding-left)
+	text-align: center
+	list-style: none
+	+mediaquery(mobile)
+		margin: em(20) col(1, 24)
+		margin-right: var(--page-padding-right)
+		margin-left: var(--page-padding-left)
+	ul, li
+		display: inline
+		margin: 0
+		padding: 0
+	li
+		&:before
+			/* disable icons
+			content: none
+			display: none
+	a, strong, span.trail, span.active, span.forward
+		display: inline-block
+		padding: em(10, 12) em(20, 12)
+		font-size: em(12)
+		letter-spacing: 0.1em
+		text-transform: uppercase
+		+mediaquery(mobile)
+			padding: em(6, 12) em(10, 12)
+
+.footer-copyright
+	margin: 0 em(40) em(40)
+	margin-right: var(--page-padding-right)
+	margin-left: var(--page-padding-left)
+	color: $font-color-light
+	text-align: center
+	a
+		color: inherit
+	.rocksolid-copyright
+		display: block
+		color: inherit
+		opacity: 0.75
+
+
+/* ===========================================
+ * Slider
+ * ========================================
+
+.main-slider
+	height: 600px
+	+mediaquery(600px, min-height)
+		@if $slider-full-height
+			height: 100vh
+		@else
+			height: calc(100vh - #{em(58)})
+		+mediaquery(tablet)
+			@if $slider-full-height
+			@else
+				height: calc(100vh - #{em(96)} - #{$logo-tablet-height})
+	+mediaquery(mobile)
+		height: auto
+		img
+			max-width: 100%
+			height: auto
+
+.rsts-skin-testimonials
+
+	.testimonial
+		margin: 0
+
+	&.rsts-main
+		position: relative
+		margin: em(27) 0
+		padding: em(32) 0 0 0
+
+	.rsts-header
+		margin-top: em(-32)
+		h1, h2, h3, h4, h5, h6
+			margin: 0 0 em(16)
+			padding: 0 em(80)
+			font-size: em(14)
+			font-weight: bold
+			color: $font-color-light
+			text-align: center
+
+	.rsts-prev, .rsts-next
+		position: absolute
+		top: em(-38)
+		right: em(22)
+		overflow: hidden
+		text-indent: -99em
+		line-height: 0
+		&:hover, &:focus
+			text-decoration: none
+		&:after
+			+icon("\e018", em(14))
+			display: block
+			padding: em(8, 14)
+			color: $border-medium
+		&:hover, &:focus
+			&:after
+				color: darken($border-medium, 9.9%)
+	.rsts-next
+		right: em(-9)
+		&:after
+			content: "\e019"
+	.rsts-nav
+		position: absolute
+		left: -4px
+		top: 0
+		line-height: 0
+		ul
+			margin: 0
+			padding: 0
+		li
+			display: inline
+		a
+			float: left
+			width: 18px
+			height: 18px
+			overflow: hidden
+			outline: none
+			padding: 5px
+			text-indent: -99em
+			&:after
+				content: ""
+				display: block
+				width: 6px
+				height: 6px
+				border: 1px solid $border-medium
+				border-radius: 100%
+				background: $border-medium
+				background: rgba($border-medium, 0.5)
+			&:hover, &.active
+				&:after
+					background-color: $border-medium
+	.rsts-nav-prev, .rsts-nav-next
+		display: none !important
+
+.rsts-skin-oneo
+
+	&.rsts-main
+		position: relative
+
+	.rsts-caption
+		padding: em(6) 0
+		color: $font-color-light
+		.-color-inverted &
+			color: $font-color-light-inverted
+
+	.rsts-prev, .rsts-next, .rsts-video-play, .rsts-video-stop
+		position: absolute
+		top: 50%
+		left: em(20)
+		left: calc(#{em(20)} + var(--safe-area-left))
+		overflow: hidden
+		margin-top: em(-26)
+		border: 2px solid $slider-control-color
+		border-radius: 99em
+		outline: none
+		line-height: 0
+		color: $slider-control-color
+		text-indent: -99em
+		background-color: rgba($slider-control-color, 0)
+		opacity: 0
+		+transition(opacity 0.2s)
+		&:hover, &:focus
+			text-decoration: none
+			background-color: rgba($slider-control-color, 0.25)
+		.sidebar &
+			bottom: em(6)
+		&:after
+			+icon("\e018", em(14))
+			display: block
+			padding: em(17, 14)
+	&:hover
+		.rsts-prev, .rsts-next, .rsts-nav
+			opacity: 1
+
+	.rsts-next
+		left: auto
+		right: em(20)
+		right: calc(#{em(20)} + var(--safe-area-right))
+		&:after
+			content: "\e019"
+
+	.oneo-fullwidth .tagline &
+		.rsts-prev
+			left: 0
+		.rsts-next
+			right: 0
+
+	.rsts-nav
+		position: absolute
+		left: 0
+		bottom: 5%
+		width: 100%
+		opacity: 0
+		+mediaquery(mobile)
+			bottom: 30px
+		ul
+			/* Setting height to zero to fix click area
+			height: 0
+			margin: 0
+			padding: 0
+			text-align: center
+		li
+			display: inline
+		a
+			display: inline-block
+			outline: none
+			margin: 3px
+			padding: 5px
+	.rsts-nav-bullets
+		a
+			overflow: hidden
+			width: 16px
+			height: 16px
+			margin: 0
+			padding: 4px
+			line-height: 0
+			text-indent: -99em
+			&:after
+				content: ""
+				display: block
+				width: 8px
+				height: 8px
+				border: 2px solid rgba($slider-control-color, 0)
+				border-radius: 100%
+				background-color: $slider-control-color
+				background-clip: padding-box
+			&:hover, &.active
+				&:after
+					border-color: $slider-control-color
+					background-color: rgba($slider-control-color, 0.25)
+	.rsts-nav-numbers, .rsts-nav-tabs
+		a
+			margin: 5px
+			border: 2px solid $slider-control-color
+			font-size: em(13)
+			line-height: em(8, 13)
+			color: $font-color-light
+			background-color: $slider-control-color
+			&:hover, &.active
+				color: $slider-control-color
+				background-color: $slider-control-color
+				text-decoration: none
+	.rsts-nav-thumbs
+		a
+			margin: 0
+			padding: 0
+	.rsts-nav-prev, .rsts-nav-next
+		display: none !important
+
+	.rsts-video-play, .rsts-video-stop
+		opacity: 1
+	.rsts-video-play
+		top: 50%
+		right: auto
+		bottom: auto
+		left: 50%
+		width: em(84)
+		height: em(84)
+		margin: em(-42) 0 0 em(-42)
+		border-width: 3px
+		+transition(background-color 0.3s)
+		&:after
+			content: "\25b6"
+			padding: 0
+			margin-left: em(6, 28)
+			font-size: em(28)
+			line-height: em(78, 28)
+			text-align: center
+	.rsts-video-stop
+		top: 20px
+		right: 20px
+		left: auto
+		margin-top: 0
+		&:after
+			content: "\d7"
+			padding: em(11, 14)
+	.rsts-video-youtube > .rsts-video-stop
+		top: 30px
+		right: 10px
+	.rsts-video-vimeo > .rsts-video-stop
+		top: 10px
+		right: auto
+		left: 10px
+	.rsts-video-ipad
+		> .rsts-video-iframe
+			padding-top: 38px
+		> .rsts-video-stop
+			top: 1px
+			right: 10px
+			left: auto
+
+	&.rsts-video-playing
+		.rsts-nav, .rsts-prev, .rsts-next
+			display: none
+	&.rsts-touch
+		.rsts-nav
+			opacity: 1
+
+	.rsts-progress
+		position: absolute
+		top: 0
+		right: 0
+		width: 100%
+		height: 2px
+		background-color: black
+		opacity: 0
+		+transition(opacity 0.2s linear)
+		div
+			height: 100%
+			background-color: white
+		&.rsts-progress-active
+			opacity: 0.3
+
+	&.rsts-invert-controls
+		.rsts-prev, .rsts-next, .rsts-video-play, .rsts-video-stop
+			border-color: $slider-control-color-inverted
+			color: $slider-control-color-inverted
+			&:hover, &:focus
+				background-color: rgba($slider-control-color-inverted, 0.25)
+		.rsts-nav-bullets
+			a
+				&:after
+					border-color: rgba($slider-control-color-inverted, 0)
+					background-color: $slider-control-color-inverted
+				&:hover, &.active
+					&:after
+						border-color: $slider-control-color-inverted
+						background-color: rgba($slider-control-color-inverted, 0.25)
+		.rsts-nav-numbers, .rsts-nav-tabs
+			a
+				border-color: $slider-control-color-inverted
+				color: $font-color-light-inverted
+				background-color: $slider-control-color-inverted
+				&:hover, &.active
+					color: $slider-control-color-inverted
+					background-color: $slider-control-color-inverted
+
+.rsts-skin-testimonials-centered, .rsts-skin-partner
+
+	&.rsts-main
+		position: relative
+		margin: em(36) 0
+	.rsts-view
+		padding: 0 em(60)
+		+mediaquery(mobile)
+			padding-right: em(30)
+			padding-left: em(30)
+
+	.rsts-nav
+		ul
+			height: 0
+			margin: 0
+
+	.rsts-prev, .rsts-next
+		position: absolute
+		top: 50%
+		left: 0
+		margin-top: em(-16)
+		border: 1px solid $border-light
+		overflow: hidden
+		text-indent: -99em
+		line-height: 0
+		background-color: $main-background
+		&:hover, &:focus
+			text-decoration: none
+		.sidebar &
+			bottom: em(6)
+		&:after
+			+icon("\e018", em(14))
+			display: block
+			padding: em(8, 14)
+			color: $font-color-light
+		&:hover, &:focus
+			&:after
+				color: darken($font-color-light, 10%)
+	.rsts-next
+		left: auto
+		right: 0
+		&:after
+			content: "\e019"
+	.rsts-nav-prev, .rsts-nav-next
+		display: none !important
+
+.rsts-skin-testimonials-centered, .rsts-skin-partner, .rsts-skin-mega-dropdown, .rsts-skin-carousel
+
+	.rsts-nav
+		line-height: 0
+		ul
+			padding: 0
+			text-align: center
+		.rsts-nav-item
+			display: inline
+			a
+				display: inline-block
+				vertical-align: middle
+				width: 18px
+				height: 18px
+				overflow: hidden
+				outline: none
+				padding: 5px
+				text-indent: -99em
+				&:after
+					content: ""
+					display: block
+					width: 6px
+					height: 6px
+					border: 1px solid $border-medium
+					border-radius: 100%
+					background: $border-medium
+					background: rgba($border-medium, 0.5)
+				&:hover, &.active
+					text-decoration: none
+					&:after
+						background-color: $border-medium
+
+.rsts-skin-partner
+	.rsts-nav
+		margin: em(24) 0
+
+.rsts-skin-mega-dropdown
+
+	&.rsts-main
+		margin: 0
+
+	.rsts-view
+		padding: 0
+
+	.rsts-prev, .rsts-next
+		position: absolute
+		top: 50%
+		overflow: hidden
+		margin-top: em(-50)
+		padding: em(20)
+		line-height: 0
+		color: inherit
+		text-indent: -99em
+		background: $dropdown-background
+		&:after
+			content: ""
+			display: block
+			width: em(28)
+			height: em(28)
+			border: 2px solid currentColor
+			border-top: 0
+			border-left: 0
+			text-indent: 0
+			+transform(rotate(135deg))
+		&:hover, &:focus
+			outline: none
+
+	.rsts-prev
+		right: col(31, 30)
+		@if $boxed-layout
+			right: auto
+			left: col(-1, 30)
+		.oneo-boxed &
+			right: auto
+			left: col(-1, 30)
+		+mediaquery(desktop)
+			&.rsts-prev
+				/* doubled class for specificity
+				right: auto
+				left: 0
+				margin-left: em(-20)
+		&:after
+			margin-right: em(-15)
+
+	.rsts-next
+		left: col(31, 30)
+		@if $boxed-layout
+			right: col(-1, 30)
+			left: auto
+		.oneo-boxed &
+			right: col(-1, 30)
+			left: auto
+		+mediaquery(desktop)
+			&.rsts-next
+				/* doubled class for specificity
+				right: 0
+				left: auto
+				margin-right: em(-20)
+		&:after
+			+transform(rotate(-45deg))
+			margin-left: em(-15)
+
+	.rsts-nav
+		text-align: center
+
+	.rsts-nav-prev, .rsts-nav-next
+		display: none !important
+
+.rsts-skin-carousel
+
+	.rsts-nav
+		ul
+			margin: em(6) 0
+
+	.rsts-prev, .rsts-next
+		display: none !important
+
+	.rsts-nav-prev, .rsts-nav-next
+		display: inline
+		margin-right: em(20)
+		a
+			display: inline-block
+			vertical-align: middle
+			overflow: hidden
+			text-indent: -99em
+			line-height: 0
+			&:after
+				+icon("\e018", em(16))
+				display: block
+				padding: em(8, 16)
+				color: $font-color-light
+				.-color-inverted &
+					color: $font-color-inverted
+			&:hover, &:focus
+				text-decoration: none
+				&:after
+					color: darken($font-color-light, 10%)
+					.-color-inverted &
+						color: darken($font-color-inverted, 10%)
+	.rsts-nav-next
+		margin-left: em(20)
+		margin-right: 0
+		a
+			&:after
+				content: "\e019"
+
+.rsts-skin-light
+	.rsts-nav
+		position: absolute
+		bottom: 20px
+		margin: 0
+		width: 100%
+
+.oneo-laptop-slider
+	position: relative
+	overflow: hidden
+	background: url('../img/laptop-background.png') 50% 50% no-repeat
+	background-size: 100% 100%
+	&:after
+		content: ""
+		position: absolute
+		top: 0.5%
+		right: 9.6%
+		z-index: 2
+		width: 30%
+		height: 0
+		padding-top: 48%
+		background: url('../img/laptop-reflection.png') 50% 50% no-repeat
+		background-size: 100% 100%
+		pointer-events: none
+	.rsts-view
+		margin-top: 3.5%
+		margin-right: 12%
+		margin-left: 12%
+		margin-bottom: 8.5%
+		// +transform(perspective(500px) rotateX(1.5deg))
+	.rsts-nav
+		bottom: 20%
+
+.slider-navigation
+	margin: em(36) 0 em(24)
+	text-align: center
+
+.slider-navigation-prev, .slider-navigation-next
+	display: inline-block
+	vertical-align: middle
+	overflow: hidden
+	padding: em(15)
+	line-height: 0
+	color: inherit
+	text-indent: -99em
+	&:after
+		content: ""
+		display: block
+		width: em(28)
+		height: em(28)
+		border: 2px solid currentColor
+		border-top: 0
+		border-left: 0
+		text-indent: 0
+		+transform(rotate(135deg))
+	&:hover, &:focus
+		outline: none
+
+.slider-navigation-prev
+	margin-right: em(90)
+	+mediaquery(mobile)
+		margin-right: em(20)
+
+.slider-navigation-next
+	margin-left: em(90)
+	+mediaquery(mobile)
+		margin-left: em(20)
+	&:after
+		+transform(rotate(-45deg))
+
+// ===========================================
+ * Grid (design + production helper)
+ * ========================================
+
+//.header-bar-inner
+	position: relative
+	&:before
+		content: ""
+		position: absolute
+		display: block
+		top: 0
+		left: 0
+		width: 100%
+		height: 6000px
+		z-index: 9999
+		pointer-events: none
+		+background-image(linear-gradient(left, rgba(red,1) col(1, 27), rgba(red,0) col(1, 27), rgba(red,0) col(2, 27), rgba(red,1) col(2, 27), rgba(red,1) col(3, 27), rgba(red,0) col(3, 27), rgba(red,0) col(4, 27), rgba(red,1) col(4, 27), rgba(red,1) col(5, 27), rgba(red,0) col(5, 27), rgba(red,0) col(6, 27), rgba(red,1) col(6, 27), rgba(red,1) col(7, 27), rgba(red,0) col(7, 27), rgba(red,0) col(8, 27), rgba(red,1) col(8, 27), rgba(red,1) col(9, 27), rgba(red,0) col(9, 27), rgba(red,0) col(10, 27), rgba(red,1) col(10, 27), rgba(red,1) col(11, 27), rgba(red,0) col(11, 27), rgba(red,0) col(12, 27), rgba(red,1) col(12, 27), rgba(red,1) col(13, 27), rgba(red,0) col(13, 27), rgba(red,0) col(14, 27), rgba(red,1) col(14, 27), rgba(red,1) col(15, 27), rgba(red,0) col(15, 27), rgba(red,0) col(16, 27), rgba(red,1) col(16, 27), rgba(red,1) col(17, 27), rgba(red,0) col(17, 27), rgba(red,0) col(18, 27), rgba(red,1) col(18, 27), rgba(red,1) col(19, 27), rgba(red,0) col(19, 27), rgba(red,0) col(20, 27), rgba(red,1) col(20, 27), rgba(red,1) col(21, 27), rgba(red,0) col(21, 27), rgba(red,0) col(22, 27), rgba(red,1) col(22, 27), rgba(red,1) col(23, 27), rgba(red,0) col(23, 27), rgba(red,0) col(24, 27), rgba(red,1) col(24, 27), rgba(red,1) col(25, 27), rgba(red,0) col(25, 27), rgba(red,0) col(26, 27), rgba(red,1) col(26, 27)))
+		opacity: .1
+		+mediaquery(tablet)
+			+background-image(linear-gradient(left, rgba(red,1) col(1, 18), rgba(red,0) col(1, 18), rgba(red,0) col(2, 18), rgba(red,1) col(2, 18), rgba(red,1) col(3, 18), rgba(red,0) col(3, 18), rgba(red,0) col(4, 18), rgba(red,1) col(4, 18), rgba(red,1) col(5, 18), rgba(red,0) col(5, 18), rgba(red,0) col(6, 18), rgba(red,1) col(6, 18), rgba(red,1) col(7, 18), rgba(red,0) col(7, 18), rgba(red,0) col(8, 18), rgba(red,1) col(8, 18), rgba(red,1) col(9, 18), rgba(red,0) col(9, 18), rgba(red,0) col(10, 18), rgba(red,1) col(10, 18), rgba(red,1) col(11, 18), rgba(red,0) col(11, 18), rgba(red,0) col(12, 18), rgba(red,1) col(12, 18), rgba(red,1) col(13, 18), rgba(red,0) col(13, 18), rgba(red,0) col(14, 18), rgba(red,1) col(14, 18), rgba(red,1) col(15, 18), rgba(red,0) col(15, 18), rgba(red,0) col(16, 18), rgba(red,1) col(16, 18), rgba(red,1) col(17, 18), rgba(red,0) col(17, 18)))
+		html:hover &
+			visibility: hidden

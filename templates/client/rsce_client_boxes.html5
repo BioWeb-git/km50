@@ -1,0 +1,57 @@
+<?php
+	$cssClasses = array(
+		$this->class,
+		$this->textAlign,
+	);
+	if ($this->boxed) {
+		$cssClasses[] = '-boxed';
+	}
+?>
+
+<section class="teaser-boxes rs-columns <?php echo implode(' ', $cssClasses) ?>"<?php echo $this->cssID ?>>
+
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+
+	<?php foreach ($this->boxes as $index => $box): ?>
+
+		<section class="teaser-boxes-item <?php echo $this->getColumnClassName($index) ?> <?php echo $box->class ?> <?php echo $this->textAlign ?>">
+
+			<?php if ($box->label): ?>
+				<div class="teaser-boxes-label"><?php echo $box->label ?></div>
+			<?php endif ?>
+			<?php if ($image = $this->getImageObject($box->image, $this->size)): ?>
+				<?php if ($box->imageLinkUrl || $box->openLightbox): ?>
+					<a class="teaser-boxes-image <?php if ($this->imageCircle): ?> -image-circle<?php endif ?><?php if ($this->activateHover): ?> -has-hover<?php endif ?>"<?php if($box->openLightbox): ?> data-lightbox="<?php echo $this->id ?>"<?php endif ?> href="<?php echo $box->imageLinkUrl ?: $this->getImageObject($box->image)->src ?>"<?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+				<?php else: ?>
+					<div class="teaser-boxes-image <?php if ($this->imageCircle): ?> -image-circle<?php endif ?><?php if ($this->activateHover): ?> -has-hover<?php endif ?>">
+				<?php endif ?>
+					<?php $this->insert('picture_default', $image->picture) ?>
+				<?php if ($box->imageLinkUrl || $box->openLightbox): ?>
+					</a>
+				<?php else: ?>
+					</div>
+				<?php endif ?>
+			<?php elseif($this->showPlaceholder): ?>
+				<span class="no-image"></span>
+			<?php endif ?>
+			<div class="teaser-boxes-content">
+				<?php if ($box->headline): ?>
+					<<?= $this->box_headline_tag ?> class="teaser-boxes-item-title"><?php echo $box->headline ?></<?= $this->box_headline_tag ?>>
+				<?php endif ?>
+				<?php if ($box->text): ?>
+					<?php echo $box->text ?>
+				<?php endif ?>
+				<?php if ($box->linkLabel): ?>
+					<a href="<?php echo $box->linkUrl ?>" class="<?php echo $this->linkVariation ?>"<?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php echo $box->linkLabel ?></a>
+				<?php endif ?>
+			</div>
+
+		</section>
+
+	<?php endforeach ?>
+
+</section>

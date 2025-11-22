@@ -1,0 +1,8 @@
+<?php
+    $temp = $GLOBALS['objPage']->pageTitle;
+    if (empty($GLOBALS['objPage']->pageTitle)){
+        $temp = $GLOBALS['objPage']->title;
+    }
+    $GLOBALS['objPage']->pageTitle = $GLOBALS['objPage']->rootPageTitle;
+    $GLOBALS['objPage']->rootPageTitle = $temp;
+?>

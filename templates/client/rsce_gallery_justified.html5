@@ -1,0 +1,95 @@
+<?php
+    if($this->margin){$gutter = $this->margin;}else{$gutter = 0;};
+    if($this->extrernalMargin){$extrernalMargin = $this->$extrernalMargin;}else{$extrernalMargin = 0;};
+    if($this->rowHeight){$rowHeight = $this->rowHeight;}else{$rowHeight = 200;};
+    if($this->maxRowHeight){$maxRowHeight = $this->maxRowHeight;}else{$maxRowHeight = '200%';};
+
+    if(str_contains($maxRowHeight, '%')){
+        $maxRowHeight = floatval(str_replace('%', '', $maxRowHeight));
+    	$thumbHeight = $maxRowHeight * ($rowHeight/100);
+    }else{
+    	$thumbHeight = $maxRowHeight;
+    }
+
+    if($this->maxRowsCount){$maxRowsCount = $this->maxRowsCount;}else{$maxRowsCount = '0';};
+    if($this->randomize){$randomize = 'true';}else{$randomize = 'false';};
+    if($this->captions){$captions = 'true';}else{$captions = 'false';};
+
+    if (!isset($GLOBALS['justified_gallery_lib']) || !$GLOBALS['justified_gallery_lib']) {
+        $GLOBALS['TL_JAVASCRIPT'][] = 'files/js/justifiedGallery/jquery.justifiedGallery.min.js';
+	    $GLOBALS['TL_CSS'][] = 'files/js/justifiedGallery/justifiedGallery.min.css';
+        $justified_gallery_lib = true;
+    }
+    if (!isset($GLOBALS['photoswipe_gallery_lib']) || !$GLOBALS['photoswipe_gallery_lib']) {
+	    $GLOBALS['TL_CSS'][] = 'files/js/photoswipe/photoswipe.css';
+        $photoswipe_gallery_lib = true;
+    }
+?>
+<?php
+    $imageFiles = array();
+    if (is_array($this->images)) {
+        foreach (Contao\FilesModel::findMultipleByUuids($this->images) as $file) {
+            if (
+                in_array(
+                    $file->extension,
+                    Contao\System::getContainer()->getParameter('contao.image.valid_extensions')
+                )
+            )
+            {
+                $imageFiles[] = $file;
+            }
+        }
+    }
+?>
+<div id="justified-gallery-<?php echo $this-> id ?>" class="photoswipe content-gallery <?php echo $this-> class ?>">
+    <?php foreach ($imageFiles as $image): ?>
+
+        <?php $image = $this->getImageObject($image->uuid, ['', $thumbHeight, 'box']) ?>
+            <a
+                href="<?= $image->singleSRC ?>"
+                data-pswp-width="<?= $image->width ?>"
+                data-pswp-height="<?= $image->height ?>"
+            >
+            <img
+                src="<?= $image->src ?>"
+                alt="<?= $image->alt ?>"
+                <?= $image->imgSize ?>
+                title="<?= $image->caption ?>">
+        </a>
+        <?php //var_dump($image); ?>
+    <?php endforeach; ?>
+</div>
+<?php  $GLOBALS['TL_BODY'][] = '
+    <script>
+        //http://miromannino.github.io/Justified-Gallery/options-and-events/
+        $(document).ready(function () {
+            $("#justified-gallery-' . $this->id . '").justifiedGallery({
+                selector: "a, figure:not(.spinner)",
+                rowHeight: "'. $rowHeight . '",
+                maxRowHeight: "'. $maxRowHeight . '",
+                lastRow: "' . $this->lastRow . '",
+                maxRowsCount: "' . $maxRowsCount . '",
+                margins: ' . $gutter . ',
+                border: ' . $extrernalMargin . ',
+                randomize: ' . $randomize . ',
+                captions: ' . $captions . ',
+                target: "' . $this->target . '",
+            });
+        });
+    </script>
+    <script type="module">
+        import PhotoSwipeLightbox from "./files/js/photoswipe/photoswipe-lightbox.esm.js";
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: "#justified-gallery-' . $this->id . '",
+            children: "a",
+            showHideAnimationType: "zoom",
+            bgOpacity: 0.9,
+            wheelToZoom: true,
+            pswpModule: () => import("./files/js/photoswipe/photoswipe.esm.js")
+        });
+        lightbox.init();
+    </script>
+
+'?>
+
+<?php //var_dump($imageFiles); ?>

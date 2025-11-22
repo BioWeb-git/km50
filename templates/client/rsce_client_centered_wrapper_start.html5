@@ -1,0 +1,162 @@
+<?php
+	$style = '';
+	$imageFiles = array();
+	$videoFiles = array();
+	$backgroundStyleTemp = '';
+	$cssClasses = array(
+		'centered-wrapper',
+		$this->class,
+		$this->backgroundVariation,
+	);
+	if ($this->borderTop) {
+		$cssClasses[] = '-border-top';
+	}
+	if ($this->borderBottom) {
+		$cssClasses[] = '-border-bottom';
+	}
+	if ($this->colorVariation) {
+		$cssClasses[] = $this->colorVariation;
+	}
+	if ($this->colorInverted) {
+		$cssClasses[] = '-color-inverted';
+	}
+	if ($this->widthCustom) {
+		$style .= "max-width : " . $this->widthCustom  . ';';
+	}
+	else if ($this->width) {
+		$cssClasses[] = $this->width;
+	}
+	if ($this->height) {
+		$cssClasses[] = $this->height;
+	}
+	if ($this->heightMobile)  {
+		$cssClasses[] = $this->heightMobile;
+	}
+	if ($this->maxHeightMobile)  {
+		$cssClasses[] = $this->maxHeightMobile;
+	}
+	if ($this->minHeightMobile)  {
+		$cssClasses[] = $this->minHeightMobile;
+	}
+	if ($this->verticalCentered) {
+		$cssClasses[] = '-vertical-centered';
+	}
+	if ($this->fadeIn) {
+		$cssClasses[] = 'is-animated';
+		$cssClasses[] = '-fade-in';
+	}
+	if ($this->doesRepeat) {
+		$cssClasses[] = 'does-repeat';
+	}
+	if ($this->noBackground) {
+		$cssClasses[] = $this->noBackground;
+	}
+
+	if (is_array($this->backgroundImage)) {
+		foreach (Contao\FilesModel::findMultipleByUuids($this->backgroundImage) as $file) {
+			if (in_array(
+				$file->extension,
+				Contao\System::getContainer()->getParameter('contao.image.valid_extensions')
+			)) {
+				$imageFiles[] = $file;
+			}
+			else {
+				$videoFiles[] = $file;
+			}
+		}
+	}
+	$backgroundStyle = '';
+	if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)) {
+		$backgroundStyle .= 'background-image: url("' . $image->src . '");';
+	}
+	if ($this->backgroundSize) {
+		$backgroundStyle .= 'background-size: ' . $this->backgroundSize . ';';
+	}
+	if ($this->backgroundPositionCustom) {
+		$backgroundStyle .= 'background-position: ' . $this->backgroundPositionCustom . ';';
+	}
+	else if ($this->backgroundPosition) {
+		$backgroundStyle .= 'background-position: ' . $this->backgroundPosition . ';';
+	}
+	if ($this->backgroundAbsolutePositionLeft) {
+		$backgroundStyle .= 'left: ' . $this->backgroundAbsolutePositionLeft . ';';
+	}
+	if ($this->backgroundAbsolutePositionRight) {
+		$backgroundStyle .= 'right: ' . $this->backgroundAbsolutePositionRight . ';';
+	}
+	if ($this->backgroundWidth) {
+		$backgroundStyle .= 'width: ' . $this->backgroundWidth . ';';
+	}
+	if ($this->backgroundRepeat) {
+		$backgroundStyle .= 'background-repeat: ' . $this->backgroundRepeat . ';';
+	}
+	if ($this->backgroundGrayscale && is_numeric($this->backgroundGrayscale) || $this->backgroundBrightness && is_numeric($this->backgroundBrightness) || $this->backgroundContrast && is_numeric($this->backgroundContrast) || $this->backgroundBlur && is_numeric($this->backgroundBlur)) {
+		if ($this->backgroundGrayscale) {
+			$backgroundStyleTemp .= 'grayscale(' . $this->backgroundGrayscale . ') ';
+		}
+		if ($this->backgroundBrightness) {
+			$backgroundStyleTemp .= 'brightness(' . $this->backgroundBrightness . ') ';
+		}
+		if ($this->backgroundContrast) {
+			$backgroundStyleTemp .= 'contrast(' . $this->backgroundContrast . ') ';
+		}
+		if ($this->backgroundBlur) {
+			$backgroundStyleTemp .= 'blur(' . $this->backgroundBlur . 'px) ';
+		}
+		$backgroundStyle .= 'filter:'. $backgroundStyleTemp  .';';
+		$backgroundStyle .= '-webkit-filter:'. $backgroundStyleTemp  .';';
+		$backgroundStyle .= '-ms-filter:'. $backgroundStyleTemp  .';';
+		$backgroundStyle .= '-o-filter:'. $backgroundStyleTemp  .';';
+		$backgroundStyle .= '-khtml-filter:'. $backgroundStyleTemp  .';';
+	}
+	if ($this->backgroundOpacity) {
+		$backgroundStyle .= 'opacity: ' . $this->backgroundOpacity . ';';
+	}
+	if (!count($videoFiles) && !count($imageFiles)) {
+		$style .= $backgroundStyle;
+	}
+	if ($this->backgroundColor) {
+		$style .= 'background-color: #' . $this->backgroundColor . ';';
+	}
+	if ($this->borderTopColor) {
+		$style .= 'border-top-color: #' . $this->borderTopColor . ';';
+	}
+	if (is_array($this->borderTopWidth) && $this->borderTopWidth['value']) {
+		$style .= 'border-top-width: ' . $this->borderTopWidth['value'] . $this->borderTopWidth['unit'] . ';';
+	}
+	if ($this->borderBottomColor) {
+		$style .= 'border-bottom-color: #' . $this->borderBottomColor . ';';
+	}
+	if ($this->outsideMargin) {
+		$style .= 'margin: ' . $this->outsideMargin . ';';
+	}
+	if (is_array($this->borderBottomWidth) && $this->borderBottomWidth['value']) {
+		$style .= 'border-bottom-width: ' . $this->borderBottomWidth['value'] . $this->borderBottomWidth['unit'] . ';';
+	}
+?>
+
+<?php //echo var_dump($this); ?>
+
+<div class="<?php echo $this->alignmentWrapper ?> <?php echo implode(' ', $cssClasses) ?> <?php if ($this->outsideMargin): ?> outsideMargin outsideMargin-<?= str_replace(' ', '', $this->outsideMargin) ?><?php endif ?>" <?php if ($style): ?> style="<?php echo htmlspecialchars($style) ?>"<?php endif ?><?php echo $this->cssID ?> >
+
+	<?php if ($this->backgroundColor2 || $this->backgroundColor2Position): ?>
+		<div class="centered-wrapper-gradient" style="<?php if ($this->backgroundColor2): ?>background-color: #<?php echo $this->backgroundColor2 ?>;<?php endif ?><?php if ($this->backgroundColor2Position): ?>top: <?php echo $this->backgroundColor2Position ?>;<?php endif ?>"></div>
+	<?php endif ?>
+	<?php if (count($videoFiles)): ?>
+		<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>">
+			<video class="no-mejs" autoplay loop muted playsinline webkit-playsinline <?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?> poster="<?php echo $image->src ?>"<?php endif ?>>
+				<?php foreach ($videoFiles as $video): ?>
+					<source src="<?php echo Contao\System::getContainer()->get('contao.assets.files_context')->getStaticUrl() . $video->path ?>" type="video/<?php echo $video->extension ?>">
+				<?php endforeach ?>
+				<?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
+					<?php $this->insert('picture_default', $image->picture) ?>
+				<?php endif ?>
+			</video>
+		</div>
+	<?php elseif (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
+		<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>" data-image-url="<?php echo $image->src ?>"></div>
+	<?php endif ?>
+	<?php if ($this->backgroundGradient): ?>
+		<div class="centered-wrapper-gradient" style="<?= $this->backgroundGradient ?>"></div>
+	<?php endif ?>
+	<div class="centered-wrapper-inner <?php echo $this->alignment ?><?php if ($this->insidePadding): ?> insidePadding insidePadding-<?= str_replace(' ', '', $this->insidePadding) ?><?php endif ?>" <?php if ($this->insidePadding): ?>style="padding:<?=$this->insidePadding ?>;"<?php endif ?>>

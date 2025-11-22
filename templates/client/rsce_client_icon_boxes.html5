@@ -1,0 +1,105 @@
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl ?>>
+		<?php echo $this->headline ?>
+	</<?php echo $this->hl ?>>
+<?php endif ?>
+<section class="icon-boxes is-animated does-repeat rs-columns <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<?php foreach ($this->boxes as $index => $box): ?>
+
+		<?php
+			$cssClasses = array(
+				'icon-boxes-item',
+				$this->getColumnClassName($index),
+				$this->textAlign,
+				$this->iconType,
+				$this->borderType,
+			);
+			$style = array();
+			$iconStyle = array();
+			if ($box->iconSize[2] == '') {
+				$iconSize = $this->iconGeneralSize;
+			}
+			else{
+				$iconSize = $box->iconSize;
+			}
+			if ($this->backgroundColor || $box->backgroundColor) {
+				$cssClasses[] = '-background-color';
+				$style[] = 'background-color: #' . ($box->backgroundColor ?: $this->backgroundColor) . ';';
+			}
+			if ($this->boxRadius){
+				$style[] = 'border-radius: ' . $this->boxRadius .';';
+			}
+			if ($this->boxPadding) {
+				$style[] = 'padding: ' . $this->boxPadding . ';';
+			}
+			if ($this->iconFontSize){
+				$iconStyle[] = 'font-size: ' . $this->iconFontSize .';';
+			}
+			if ($this->iconWidth){
+				$iconStyle[] = 'width: 100%; max-width: ' . $this->iconWidth .';';
+			}
+			if ($this->iconHeight){
+				$iconStyle[] = 'height: ' . $this->iconHeight .';';
+			}
+			if ($this->iconPadding){
+				$iconStyle[] = 'padding: ' . $this->iconPadding .';';
+			}
+			if ($this->iconRadius){
+				$iconStyle[] = 'border-radius: ' . $this->iconRadius .';';
+			}
+			if ($this->iconBorderColor){
+				$iconStyle[] = 'border-color: #' . $this->iconBorderColor .';';
+			}
+			if ($this->iconBorderWidth){
+				$iconStyle[] = 'border-width: ' . $this->iconBorderWidth .';';
+				$iconStyle[] = 'border-style: solid;';
+			}
+			if ($this->iconBackgroundColor){
+				$iconStyle[] = 'background: #' . $this->iconBackgroundColor .';';
+			}
+			if ($box->iconColor) {
+				$iconStyle[] = 'color: #' . $box->iconColor . ';';
+			}else if ($this->iconColor) {
+				$iconStyle[] = 'color: #' . $this->iconColor . ';';
+			}
+
+			if ($this->colorInverted) {
+				$cssClasses[] = '-color-inverted';
+			}
+		?>
+		<?php if ($box->url): ?>
+			<a class="<?php echo implode(' ', $cssClasses) ?>" style="<?php echo implode('', $style) ?>" href="<?php echo $box->url ?>"<?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+		<?php else: ?>
+			<div class="<?php echo implode(' ', $cssClasses) ?>" style="<?php echo implode('', $style) ?>">
+		<?php endif ?>
+			<?php if ($box->icon || $box->iconImage): ?>
+				<span
+					class="icon-boxes-item-icon"
+					style="<?php echo implode('', $iconStyle) ?>"
+					<?php if ($box->icon && $box->iconImage == ""): ?>
+						data-icon="&#x<?php echo $box->icon ?>;">
+					<?php else : ?>
+						>
+						<img class="icon-boxes-item-icon-img" src="<?= $this->getImageObject($box->iconImage,$iconSize)->src ?>" alt="Icône">
+					<?php endif ?>
+				</span>
+			<?php endif ?>
+			<?php if ($box->headline): ?>
+				<<?= $this->headlineTag ?> class="icon-boxes-item-title"><?php echo $box->headline ?></<?= $this->headlineTag ?>>
+			<?php endif ?>
+			<?php if ($box->text): ?>
+				<div class="icon-boxes-item-text"><?php echo $box->text ?></div>
+			<?php endif ?>
+			<?php if ($box->linkLabel): ?>
+				<p class="icon-boxes-item-link <?php echo $this->linkVariation ?>"><?php echo $box->linkLabel ?></p>
+			<?php endif ?>
+
+		<?php if ($box->url): ?>
+			</a>
+		<?php else: ?>
+			</div>
+		<?php endif ?>
+
+	<?php endforeach ?>
+
+</section>

@@ -1,0 +1,14 @@
+<?php
+	$cssClasses = array(
+		$this->class,
+		$this->buttonVariation,
+		$this->buttonSize,
+		$this->alignment,
+	);
+?>
+
+<div class="button-box <?php echo implode(' ', $cssClasses) ?>"<?php echo $this->cssID; ?>>
+	<a class="button <?php echo implode(' ', $cssClasses) ?>" <?php if ($this->icon): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?> href="<?php echo $this->buttonUrl ?>"<?php if ($this->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+		<?php echo $this->buttonLabel ?>
+	</a>
+</div>

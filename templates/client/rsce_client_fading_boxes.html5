@@ -1,0 +1,66 @@
+<?php
+	$cssClasses = array(
+		'fading-boxes-item'
+	);
+	if ($this->textShadow) {
+		$cssClasses[] = '-has-text-shadow';
+	}
+	$backgroundColor = $this->backgroundColor;
+	if ($backgroundColor && $backgroundColor !== 'transparent') {
+		$backgroundColor = '#' . $backgroundColor;
+	}
+?>
+
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl ?>>
+		<?php echo $this->headline ?>
+	</<?php echo $this->hl ?>>
+<?php endif ?>
+<section class="fading-boxes rs-columns <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+
+	<?php foreach ($this->boxes as $index => $box): ?>
+
+		<section class="<?php echo implode(' ', $cssClasses) ?><?php if ($box->linkLabel): ?> -with-link<?php endif ?> <?php echo $this->getColumnClassName($index) ?>">
+
+			<div class="fading-boxes-item-image"
+				<?php 
+					$image = $this->getImageObject($box->image, $this->size);
+					$hasStyle = $image || $backgroundColor;
+					?>
+					<?php if ($hasStyle): ?>
+					style="
+					    <?php if ($image): ?>
+					        background-image: url(&quot;<?php echo htmlspecialchars($image->src); ?>&quot;);
+					    <?php endif; ?>
+					    <?php if ($backgroundColor): ?>
+					        background-color: <?php echo htmlspecialchars($backgroundColor); ?>;
+					    <?php endif; ?>
+					"
+				<?php endif; ?>
+				<?php if ($box->icon): ?>
+					data-icon="&#x<?php echo $box->icon ?>;"
+				<?php endif ?>
+				<?php if ($box->headline): ?>
+					data-headline="<?php echo $box->headline ?>"
+				<?php endif ?>
+			>
+				<div class="fading-boxes-item-text">
+					<?php if ($box->headline): ?>
+						<<?= $this->headlineTag ?> class="fading-boxes-item-title"><?php echo $box->headline ?></<?= $this->headlineTag ?>
+					<?php endif ?>
+					<?php echo $box->text ?>
+				</div>
+			</div>
+
+			<?php if ($box->linkLabel): ?>
+				<div class="fading-boxes-item-link">
+					<a href="<?php echo $box->linkUrl ?: $this->getImageObject($box->image)->src ?>" class="button <?php echo $this->linkVariation ?>"<?php if($box->openLightbox): ?> data-lightbox="<?php echo $this->id ?>"<?php endif ?><?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php echo $box->linkLabel ?></a>
+				</div>
+			<?php endif ?>
+
+		</section>
+
+	<?php endforeach ?>
+
+</section>

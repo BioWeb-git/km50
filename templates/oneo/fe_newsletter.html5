@@ -1,0 +1,21 @@
+<?php
+	if (file_exists(__DIR__.'/../mail_oneo.html5')) {
+		$this->title = $this->pageTitle . ' - ' . $this->mainTitle;
+		$this->css = implode("\n", array(
+			'<base href="' . $this->base . '">',
+			$this->viewport,
+			$this->framework,
+			$this->stylesheets,
+			$this->mooScripts,
+			$this->head,
+			'<style type="text/css">',
+			'.mod_newsletterreader > * { display: none !important; }',
+			'.mod_newsletterreader > .newsletter { display: block !important; }',
+			'</style>',
+		));
+		$this->body = $this->main . "\n" . $this->mootools;
+		include __DIR__.'/../mail_oneo.html5';
+		return;
+	}
+	$this->extend('fe_page');
+?>

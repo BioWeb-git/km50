@@ -1,0 +1,13 @@
+
+<!-- indexer::stop -->
+<h1 class="<?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<a href="<?php echo $this->url ?>">
+		<?php if ($image = $this->getImageObject($this->image)): ?>
+			<?php $image->picture['alt'] = $this->alt ?: $image->picture['alt'] ?>
+			<?php $this->insert('picture_default', $image->picture) ?>
+		<?php else: ?>
+			<?php echo $this->alt ?>
+		<?php endif ?>
+	</a>
+</h1>
+<!-- indexer::continue -->

@@ -1,0 +1,17 @@
+<?php
+	dump($this->arrData);
+	$config = array(
+		'large' => array('-large-col-3-1 -large-first', '-large-col-3-1', '-large-col-3-1 -large-last'),
+		'medium' => array('-medium-col-2-1 -medium-first', '-medium-col-2-1 -medium-last'),
+		'small' => array('-small-col-1-1 -small-first -small-last'),
+	);
+	$classes = array('rs-column');
+	foreach ($config as $name => $media) {
+		$classes[] = $media[($this->count - 1) % count($media)];
+		if ($this->count - 1 < count($media)) {
+			$classes[] = '-' . $name . '-first-row';
+		}
+	}
+	$this->class .= ' ' . implode(' ', $classes);
+
+	include __DIR__ . '/news_portfolio_boxes_item.html5';

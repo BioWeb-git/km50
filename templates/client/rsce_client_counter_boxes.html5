@@ -1,0 +1,59 @@
+<div class="counter-boxes-master">
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+	<section class="counter-boxes rs-columns <?php if ($this->repeatCounter): ?> does-repeat<?php endif ?> <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+		<?php foreach ($this->boxes as $index => $box): ?>
+			<?php
+				if ($box->iconSize[2] == '') {
+					$iconSize = $this->iconGeneralSize;
+				}
+				else{
+					$iconSize = $box->iconSize;
+				}
+			?>
+			<?php if ($box->url): ?>
+				<a
+					href="<?= $box->url ?>"class="counter-boxes-item <?php echo $this->getColumnClassName($index) ?>"
+					<?php if ($box->newWindow): ?> target="_blank"<?php endif ?>
+			<?php else: ?>
+				<section
+			<?php endif ?>
+					class="counter-boxes-item<?php if($box->iconImage) : ?> icon-image <?php endif ?> <?php echo $this->getColumnClassName($index) ?>"
+					<?php if ($box->icon && $box->iconImage == ""): ?> data-icon="&#x<?php echo $box->icon ?>;"<?php endif ?>
+				>
+			<?php if ($box->url): ?>
+				<section>
+			<?php endif ?>
+				<?php if($box->iconImage) : ?>
+					<div
+						class="icon-wrapper"
+						<?php if ($this->iconWidth || $this->iconHeight || $this->iconPadding): ?>
+							style="
+								<?php if ($this->iconPadding): ?>padding: <?= $this->iconPadding ?>;<?php endif ?>
+								<?php if ($this->iconWidth): ?>width: <?= $this->iconWidth ?>;<?php endif ?>
+								<?php if ($this->iconHeight): ?>height: <?= $this->iconHeight ?>;<?php endif ?>
+							"
+						<?php endif ?>>
+						<img class="headline-box-icon" src="<?= $this->getImageObject($box->iconImage,$iconSize)->src ?>" alt="Icône">
+					</div>
+				<?php endif ?>
+				<?php if ($box->number): ?>
+					<p class="is-animated -counter <?php if ($this->deactivateCounter): ?> not-animated<?php endif ?>" data-animation-duration="<?php echo 500 + ($index * 300) ?>"><?php echo $box->number ?></p>
+				<?php endif ?>
+				<?php if ($box->name): ?>
+					<<?= $this->headlineTag ?> class="counter-boxes-item-title"><?php echo $box->name ?></<?= $this->headlineTag ?>>
+				<?php endif ?>
+
+			<?php if ($box->url): ?>
+					</section>
+				</a>
+			<?php else: ?>
+				</section>
+			<?php endif ?>
+
+		<?php endforeach ?>
+	</section>
+</div>

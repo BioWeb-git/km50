@@ -1,0 +1,29 @@
+{% extends "@Contao/content_element/download.html.twig" %}
+
+{#
+    Adjust how any blocks of parent or used component templates are rendered.
+    Try typing "block" or "use" to get autocompletion for available options.
+#}
+{% block content %}
+    {{ parent() }} 
+    <script type="module">
+        import PhotoSwipeLightbox from "./files/js/photoswipe/photoswipe-lightbox.esm.js";
+        document.querySelectorAll('.download-element figure a').forEach(link => {
+            const img = link.querySelector('img');
+            if (img) {
+                link.setAttribute('data-pswp-width', img.naturalWidth);
+                link.setAttribute('data-pswp-height', img.naturalHeight);
+            }
+        });
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: ".download-element figure",  // Sélectionner les éléments contenant les liens
+            children: "a",  // Associer les liens <a> dans chaque .download-element
+            showHideAnimationType: "zoom",
+            bgOpacity: 0.9,
+            wheelToZoom: true,
+            pswpModule: () => import("/files/js/photoswipe/photoswipe.esm.js"),
+        });
+        
+        lightbox.init();
+    </script>
+{% endblock %}

@@ -1,0 +1,9 @@
+<div class="news-link-list-item arc_<?php echo $this->archive->id ?> <?php echo $this->class ?>">
+	<?php if ($this->date): ?>
+		<time datetime="<?php echo $this->datetime ?>">
+			<b><?php echo Contao\Date::parse('d', $this->time) ?></b>
+			<?php echo Contao\Date::parse('M', $this->time) ?>
+		</time>
+	<?php endif ?>
+	<?php echo $this->linkHeadline ?>
+</div>

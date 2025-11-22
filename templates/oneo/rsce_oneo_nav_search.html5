@@ -1,0 +1,11 @@
+
+<!-- indexer::stop -->
+<div class="<?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<a href="<?php if ($this->search): ?>{{link_url::<?php echo $this->search ?>}}<?php endif ?>"><?php echo $this->buttonLabel ?></a>
+	<form action="<?php if ($this->search): ?>{{link_url::<?php echo $this->search ?>}}<?php endif ?>" method="get">
+		<label for="oneo-nav-search-<?= $this->id ?>"><?php echo $this->label ?></label>
+		<input id="oneo-nav-search-<?= $this->id ?>" type="search" name="keywords">
+		<button type="submit"><?php echo $this->buttonLabel ?></button>
+	</form>
+</div>
+<!-- indexer::continue -->

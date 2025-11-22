@@ -1,0 +1,22 @@
+<nav class="<?php echo $this->class ?>"<?php if ($this->changeUrl): ?> data-change-url="true"<?php endif ?><?php echo $this->cssID ?>>
+
+	<ul>
+		<?php foreach ($this->links as $link): ?>
+
+			<?php
+				$url = $link->url;
+				if (!$url) {
+					$url = '#top';
+				}
+				if (substr($url, 0, 1) === '#' || substr($url, 0, 5) === '&#35;') {
+					$url = '{{env::request}}' . $url;
+				}
+			?>
+			<li>
+				<a<?php if ($link->highlight): ?> class="highlight"<?php endif ?> href="<?php echo $url ?>"<?php if ($link->icon): ?> data-icon="&#x<?php echo $link->icon ?>;"<?php endif ?>><?php echo $link->label ?></a>
+			</li>
+
+		<?php endforeach ?>
+	</ul>
+
+</nav>

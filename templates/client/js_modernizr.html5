@@ -1,0 +1,4 @@
+<?php
+	// Add Modernizr to <head>
+	$GLOBALS['TL_JAVASCRIPT'][] = Contao\System::getContainer()->getParameter('contao.upload_path') . '/oneo/js/modernizr.min.js|static';
+?>

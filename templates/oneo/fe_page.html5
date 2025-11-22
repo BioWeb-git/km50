@@ -1,0 +1,55 @@
+<?php $this->extend('fe_page') ?>
+
+<?php $this->block('body') ?>
+
+	<?php $this->sections('top') ?>
+
+	<div class="page">
+
+		<?php if ($this->header): ?>
+			<header class="page-header">
+				<?php echo $this->header ?>
+			</header>
+		<?php endif ?>
+
+		<?php $this->sections('before') ?>
+
+		<div class="content-wrapper">
+
+			<main role="main" class="main-content">
+
+				<?php echo $this->main ?>
+
+				<?php $this->sections('main') ?>
+
+			</main>
+
+			<?php if ($this->left && $this->right): ?>
+				<aside class="sidebar">
+					<?php echo $this->left ?>
+				</aside>
+				<aside class="sidebar -right">
+					<?php echo $this->right ?>
+				</aside>
+			<?php elseif ($this->left || $this->right): ?>
+				<aside class="sidebar">
+					<?php echo $this->left ?>
+					<?php echo $this->right ?>
+				</aside>
+			<?php endif ?>
+
+		</div>
+
+		<?php $this->sections('after') ?>
+
+		<?php if ($this->footer): ?>
+			<footer class="page-footer">
+				<?php echo $this->footer ?>
+			</footer>
+		<?php endif ?>
+
+	</div>
+
+	<?php $this->sections('bottom') ?>
+
+<?php $this->endblock('body') ?>

@@ -1,0 +1,112 @@
+<div class="info-map <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<div class="info-map-gmap">
+		<?php if ($this->activateLinkLabel): ?>
+			<a href="https://maps.google.com/maps?q=<?php echo urlencode(html_entity_decode($this->mapAddress)) ?>"><?php echo $this->activateLinkLabel ?></a>
+		<?php endif ?>
+	</div>
+
+	<script>
+		(function() {
+			var mapElement = document.querySelectorAll && document.querySelectorAll('.info-map-gmap');
+			if (!mapElement || !mapElement.length) {
+				return;
+			}
+			mapElement = mapElement[mapElement.length - 1];
+			<?php if ($this->activateLinkLabel): ?>
+				mapElement.onclick = function () {
+					enableMap();
+					return false;
+				};
+				function enableMap() {
+			<?php endif ?>
+			window.rsce_oneo_info_map_queue = window.rsce_oneo_info_map_queue || [];
+			window.rsce_oneo_info_map_queue.push(function() {
+				var style = <?php
+					$style = array();
+					if ($this->hue) {
+						$style[] = array('hue' => '#' . $this->hue);
+					}
+					if ($this->invertLightness) {
+						$style[] = array('invert_lightness' => !!$this->invertLightness);
+					}
+					foreach (array('saturation', 'lightness', 'gamma') as $key) {
+						if ($this->$key) {
+							$style[] = array($key => (float)$this->$key);
+						}
+					}
+					echo json_encode($style);
+				?>;
+				var map = new google.maps.Map(mapElement, {
+					zoom: <?php echo json_encode($this->zoomLevel * 1) ?>,
+					scrollwheel: false,
+					mapTypeControl: false,
+					streetViewControl: false,
+					//scaleControl: false,
+					//overviewMapControl: false,
+					//panControl: false,
+					//rotateControl: false,
+					//zoomControl: false,
+					styles: [
+						{featureType: 'landscape', stylers: style},
+						{featureType: 'road.highway', stylers: style},
+						{featureType: 'road.arterial', stylers: style},
+						{featureType: 'road.local', stylers: style},
+						{featureType: 'water', stylers: style},
+						{featureType: 'poi', stylers: style}
+					]
+				});
+				<?php $address = html_entity_decode($this->mapAddress) ?>
+				<?php if (preg_match('/^\s*[\d\.]+\s*,\s*[\d\.]+\s*$/', $address)): ?>
+				var location = <?php echo json_encode(array(
+					'lat' => (float) trim(explode(',', $address)[0]),
+					'lng' => (float) trim(explode(',', $address)[1]),
+				)) ?>;
+				map.setCenter(location);
+				var marker = new google.maps.Marker({
+					map: map,
+					position: location
+				});
+				google.maps.event.addListener(marker, 'click', function() {
+					window.location.href = <?php echo json_encode('https://maps.google.com/maps?q='.urlencode($address)) ?>;
+				});
+				<?php else: ?>
+				var geocoder = new google.maps.Geocoder();
+				geocoder.geocode(
+					{address: <?php echo json_encode($address) ?>},
+					function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							map.setCenter(results[0].geometry.location);
+							var marker = new google.maps.Marker({
+								map: map,
+								position: results[0].geometry.location
+							});
+							google.maps.event.addListener(marker, 'click', function() {
+								window.location.href = <?php echo json_encode('https://maps.google.com/maps?q='.urlencode($address)) ?>;
+							});
+						}
+					}
+				);
+				<?php endif ?>
+			});
+			window.rsce_oneo_info_map_init = function () {
+				for (var i = 0; i < window.rsce_oneo_info_map_queue.length; i++) {
+					window.rsce_oneo_info_map_queue[i]();
+				}
+			};
+			if (!document.getElementById('rsce_oneo_info_map_script')) {
+				var scripts = document.getElementsByTagName('script');
+				var script = document.createElement('script');
+				script.id = 'rsce_oneo_info_map_script';
+				script.type = 'text/javascript';
+				script.async = true;
+				script.src = '//maps.googleapis.com/maps/api/js?key=<?php echo $this->apiKey ?>&callback=rsce_oneo_info_map_init';
+				scripts[0].parentNode.insertBefore(script, scripts[0]);
+			}
+			<?php if ($this->activateLinkLabel): ?>
+				}
+			<?php endif ?>
+		})();
+	</script>
+
+</div>

@@ -1,0 +1,22 @@
+# This file has been auto-generated during installation
+contao:
+  # The folder used by the file manager.
+  upload_path: files
+  image:
+    preview:
+      max_size: 2048
+  mailer:
+    transports:
+      mailtrap: ~
+      mailjet: ~
+framework:
+  mailer:
+    transports:
+      mailtrap: '%env(MAILER_TRANSPORT_MAILTRAP)%'
+      mailjet: '%env(MAILER_TRANSPORT_MAILJET)%'
+#markocupic_contao_altcha_antispam:
+  #hmac_key: 'csec_41bdca0fd16c0ae6142d1e5238862f3fed71b7d7ec8fba69' # required
+  #algorithm: 'SHA-256' # optional
+  #range_min: 10000 # optional
+  #range_max: 100000 # optional
+  #challenge_expiry: 3600 # optional

@@ -1,0 +1,138 @@
+<div class="icon-hr-container" <?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+    <?php if ($this->headline): ?>
+        <<?php echo $this->hl ?>
+                class="headline-hr<?php if ($this->icon || $this->iconImage): ?> -icon<?php endif ?> <?php echo $this->hrVariation . ' ' . $this->class . ' ' . $this->align ?>"
+                <?php echo $this->cssID ?>
+                <?php if ($this->iconImage): ?><?php else: ?><?php if ($this->icon): ?>data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?><?php endif ?>
+                <?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+            <?php echo $this->headline ?>
+        </<?php echo $this->hl ?>>
+    <?php else: ?>
+        <?php if ($this->icon || $this->iconImage): ?>
+            <span
+                class="icon-hr icon-hr-<?php echo $this->id ?> <?php if ($this->iconImage): ?>icon-image<?php endif ?> <?php echo $this->class ?> <?php echo $this->align ?>"
+                <?php if ($this->iconImage): ?><?php else: ?><?php if ($this->icon): ?>data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?><?php endif ?>"
+            >
+        <?php endif ?>
+            <hr
+                <?php if($this->hrVariation) :?>
+                    class="<?php echo $this->hrVariation . ' ' ?>"
+                <?php endif ?>
+                <?php echo $this->cssID ?>
+            >
+        <?php if ($this->iconImage): ?>
+        <?php else: ?>
+            <?php if ($this->icon): ?>
+                </span>
+            <?php endif ?>
+        <?php endif ?>
+    <?php endif ?>
+</div>
+<?php
+    //STYLES
+    $styleCSS = array();
+    $iconImageSizeDefault = "3rem";
+    if (!$this->iconImageSize){
+        $this->iconImageSize= $iconImageSizeDefault;
+    }
+    if($this->iconImage || $this->icon){
+        if($this->iconBackgroundWidth){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.':before{
+                    width:'.$this->iconBackgroundWidth.' !important;
+                }
+            ';
+        };
+        if($this->marginTop){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.'{
+                    margin-top:'.$this->marginTop.' !important;
+                }
+            ';
+        }else{
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.'{
+                    margin-top: -3rem !important;
+                }
+            ';
+        };
+        if($this->marginBottom){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.'{
+                    margin-bottom:'.$this->marginBottom.' !important;
+                }
+            ';
+        }else{
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.'{
+                    margin-bottom: 3rem !important;
+                }
+            ';
+        };
+        if($this->iconImagePadding){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.':before{
+                    padding:'.$this->iconImagePadding.';
+                }
+            ';
+        };
+        if($this->iconImagebackgroundColor){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.':before{
+                    background-color:#'.$this->iconImagebackgroundColor.';
+                }
+            ';
+        };
+        if($this->iconColor){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.':before{
+                    color:#'.$this->iconColor.';
+                }
+            ';
+        };
+        if($this->iconImageSize){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.':before{
+                    font-size:'.$this->iconImageSize.' !important;
+                }
+            ';
+        }
+        if($this->iconImage){
+            $styleCSS[] = '
+                .icon-hr-'.$this->id.'.icon-image:before{
+                    background-image: url("'.$this->getImageObject($this->iconImage)->singleSRC.'");
+                }
+            ';
+            if($this->iconImageHeight){
+	            $styleCSS[] = '
+	                .icon-hr-'.$this->id.':before{
+	                    height:'.$this->iconImageHeight.' !important;
+	                }
+	            ';
+	        }
+            if($this->iconImageWidth){
+	            $styleCSS[] = '
+	                .icon-hr-'.$this->id.':before{
+	                    width:'.$this->iconImageWidth.' !important;
+	                }
+	            ';
+	        }
+            if($this->iconImageBackgroundSize){
+                $styleCSS[] = '
+                    .icon-hr-'.$this->id.'.icon-image:before{
+                        background-size:'.$this->iconImageBackgroundSize.' !important;
+                    }
+                ';
+            };
+        };
+    };
+
+    if ($styleCSS){
+        $GLOBALS['TL_BODY'][] = '
+            <style>
+                /*rsce_headline_box*/
+                '.implode(' ', $styleCSS).'
+            </style>
+        ';
+    };
+?>

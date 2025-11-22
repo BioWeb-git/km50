@@ -1,0 +1,150 @@
+// ===========================================
+// Basic settings
+// ========================================
+
+$logo-top: 25% !default;
+$logo-bottom: 25% !default;
+$logo-left: 2.4em !default;
+$logo-tablet-height: 5em !default;
+$logo-mobile-height: 5em !default;
+
+// Font
+$font-family1: "Open Sans", sans-serif !default;
+$font-family: $font-family1 !default;
+$font-weight1: 400 !default;
+$font-family2: "Oswald", sans-serif !default;
+$font-weight2: 400 !default;
+
+$font-size: 15px !default;
+$font-size-mobile: 12px !default;
+$line-height: 1.6 !default;
+$letter-spacing: 0em !default;
+$line-height-heading: 1.1 !default;
+
+$headline-size-1: 1.86667em !default;
+$headline-size-2: 1.6em !default;
+$headline-size-3: 1.4em !default;
+$headline-size-4: 1.2em !default;
+$headline-size-5: 1em !default;
+$headline-size-6: 1em !default;
+$text-transform : "uppercase" !default;
+
+// Widths
+$max-width: 1280px !default;
+
+$slider-full-height: false !default;
+$fluid-content-images: true !default;
+$content-image-cols: 5 !default;
+$image-hover: true !default;
+
+// Responsive break points
+$breakpoint-desktopxl: 1400px !default;
+$breakpoint-desktop: $max-width !default;
+$breakpoint-tablet: 1000px !default;
+$breakpoint-mobile: 700px !default;
+$breakpoint-mobile-portrait: 600px !default;
+
+/* GUTTER */
+$gutter-width: 1rem !default;
+$gutter-col: 4% !default;
+
+// ===========================================
+// Layout
+// ========================================
+$sidebar-max-width: 20% !default;
+
+// ===========================================
+// Colors
+// ========================================
+
+// Colorset
+$black: black !default;
+$black-light: #242424 !default;
+$grey-ultra-dark: #353d47 !default;
+$grey-dark: #717c8e !default;
+$grey: #98a0ab !default;
+$grey-medium: #cecece !default;
+$off-white: whitesmoke !default;
+$grey-light: #e3e3e3 !default;
+$white: white !default;
+$blue-ultra-dark: #126498 !default;
+$blue-dark: #3685ab !default;
+$blue: #33b1ec !default;
+$purple: #855dc9 !default;
+$green: #83cb19 !default;
+$red: #d91c1c !default;
+
+$color1: $blue-dark !default;
+$color2: $purple !default;
+$color3: $green !default;
+$color4: $red !default;
+
+// Content colors
+$selection-color: $color1 !default;
+$font-color: $black-light !default;
+$font-color-light: $grey !default;
+$font-color-inverted: $white !default;
+$font-color-light-inverted: $grey-medium !default;
+$headline-color-1: $black-light !default;
+$headline-color-2: $black-light !default;
+$highlight-color: $color1 !default;
+$highlight-color-dark: darken($color1, 10%) !default;
+$confirmation: $green !default;
+$information: $blue !default;
+$warning: $red !default;
+
+// Links & Navigation
+$link-color: $color1 !default;
+$nav-color: $black-light !default;
+$nav-hover-color: $color1 !default;
+$nav-active-color: $color1 !default;
+$dropdown-color: $black-light !default;
+$dropdown-hover-color: $color1 !default;
+$dropdown-active-color: $grey-dark !default;
+$header-dropdown-color: $color1 !default;
+$nav-mobile-color: $white !default;
+$slider-control-color: $grey-dark !default;
+$slider-control-color-inverted: $white !default;
+$main-navigation-margin: .5em !default;
+$secondary-navigation-color: $grey !default;
+$secondary-navigation-margin: 3.7em !default;
+$secondary-navigation-padding: 1em !default;
+$header-color: $grey !default;
+$button-color: $white !default;
+
+// Border
+$border-light: $grey-light !default;
+$border-medium: $grey-medium !default;
+$border-dark: $grey-dark !default;
+$nav-border-color: $grey-medium !default;
+$dropdown-border: $grey-medium !default;
+$border-nav-mobile: $black !default;
+$border-radius: 5px !default;
+$header-background-color: $white !default;
+// Shadows
+$shadow-color: $black !default;
+
+// Backgrounds
+$boxed-layout: false !default;
+$background-image: none !default;
+$background-repeat: no-repeat !default;
+$background-position: 50% 0 !default;
+$background-attachment: scroll !default;
+$background-size: auto !default;
+$background-color: $white !default;
+$main-background: $white !default;
+$page-background: $white !default;
+$content-wrapper-background: $white !default;
+$nav-background-color: $white !default;
+$dropdown-background: $white !default;
+$subnav-background-color: $grey-light !default;
+$nav-mobile-background-color: $black-light !default;
+$placeholder-background: $grey-dark !default;
+$background-color-inverted: $grey-ultra-dark !default;
+$background-color-1: $grey-ultra-dark !default;
+$background-color-2: $off-white !default;
+$button-background-color: $blue-dark !default;
+$header-dropdown-background: $white !default;
+
+//Box text excerpt
+$max-lines: 3 !default;

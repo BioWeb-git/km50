@@ -1,0 +1,28 @@
+<section class="counter-boxes<?php if ($this->repeatCounter): ?> does-repeat<?php endif ?> <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<?php foreach ($this->boxes as $index => $box): ?>
+
+		<?php if ($box->url): ?>
+			<a class="counter-boxes-item <?php echo $this->getColumnClassName($index) ?>" href="<?php echo $box->url ?>"<?php if ($box->icon): ?> data-icon="&#x<?php echo $box->icon ?>;"<?php endif ?><?php if ($box->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+				<section>
+		<?php else: ?>
+			<section class="counter-boxes-item <?php echo $this->getColumnClassName($index) ?>"<?php if ($box->icon): ?> data-icon="&#x<?php echo $box->icon ?>;"<?php endif ?>>
+		<?php endif ?>
+
+			<?php if ($box->number): ?>
+				<p class="is-animated -counter <?php if ($this->deactivateCounter): ?> not-animated<?php endif ?>" data-animation-duration="<?php echo 500 + ($index * 300) ?>"><?php echo $box->number ?></p>
+			<?php endif ?>
+			<?php if ($box->name): ?>
+				<h3><?php echo $box->name ?></h3>
+			<?php endif ?>
+
+		<?php if ($box->url): ?>
+				</section>
+			</a>
+		<?php else: ?>
+			</section>
+		<?php endif ?>
+
+	<?php endforeach ?>
+
+</section>

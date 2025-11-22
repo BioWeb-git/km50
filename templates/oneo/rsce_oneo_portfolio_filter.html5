@@ -1,0 +1,82 @@
+<?php
+	// Add filter JS to <head>
+	$GLOBALS['TL_JAVASCRIPT'][] = Contao\System::getContainer()->getParameter('contao.upload_path') . '/oneo/js/jquery.animated-filter.js';
+?>
+
+<nav class="filter-navigation <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+
+	<ul>
+		<?php foreach ($this->links as $link): ?>
+			<li>
+				<a href="{{env::request}}#" data-group="<?php echo $link->tag ?>"<?php if ($link->icon): ?> data-icon="&#x<?php echo $link->icon ?>;"<?php endif ?>><?php echo $link->label ?></a>
+			</li>
+		<?php endforeach ?>
+	</ul>
+
+</nav>
+
+<script>
+	(function($) {
+		var filter = $('.filter-navigation').last();
+		var activeGroups = [];
+		$(function() {
+			var grid = filter.nextAll('.portfolio-tiles').first();
+			filter.find('a').on('click', function(event) {
+				event.preventDefault();
+			<?php if ($this->multipleSelection): ?>
+				var group = $(this).attr('data-group');
+				if (activeGroups.indexOf(group) === -1) {
+					activeGroups.push(group);
+					$(this).addClass('active');
+				}
+				else {
+					activeGroups = $.grep(activeGroups, function(value) {
+						return value !== group;
+					});
+					$(this).removeClass('active');
+				}
+				grid.animatedFilter(function() {
+					var $this = $(this);
+					if (!activeGroups.length || !$this.is('.portfolio-tiles-item')) {
+						return true;
+					}
+					var filterPassed = false;
+					$.each(activeGroups, function(i, group) {
+						if ($this.data('groups').indexOf(group) !== -1) {
+							filterPassed = true;
+						}
+					});
+					return filterPassed;
+				});
+			<?php else: ?>
+				var group;
+				if ($(this).hasClass('active')) {
+					$(this).removeClass('active');
+				}
+				else {
+					filter.find('a').removeClass('active');
+					$(this).addClass('active');
+					group = $(this).attr('data-group');
+				}
+				grid.animatedFilter(function() {
+					var $this = $(this);
+					if (
+						!group
+						|| !$this.is('.portfolio-tiles-item')
+						|| $this.data('groups').indexOf(group) !== -1
+					) {
+						return true;
+					}
+					return false;
+				});
+			<?php endif ?>
+			});
+		});
+	})(jQuery);
+</script>

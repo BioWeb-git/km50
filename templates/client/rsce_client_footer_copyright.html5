@@ -1,0 +1,6 @@
+
+<!-- indexer::stop -->
+<div class="footer-copyright <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<span><?php echo $this->text ?></span>
+</div>
+<!-- indexer::continue -->

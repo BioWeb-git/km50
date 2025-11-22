@@ -1,0 +1,38 @@
+<div class="timeline <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<?php foreach ($this->events as $event): ?>
+
+		<section class="timeline-item is-animated does-repeat"<?php if ($event->icon): ?> data-icon="&#x<?php echo $event->icon ?>;"<?php endif ?>>
+
+			<?php if ($event->headline): ?>
+				<h3><?php echo $event->headline ?></h3>
+			<?php endif ?>
+
+			<div class="timeline-item-text">
+
+				<?php if ($event->headline2): ?>
+					<h4><?php echo $event->headline2 ?></h4>
+				<?php endif ?>
+
+				<?php if ($image = $this->getImageObject($event->image, $event->imageSize)): ?>
+					<figure class="image_container">
+						<?php if ($event->imageLinkUrl || $event->openLightbox): ?>
+							<a class="image-wrapper"<?php if($event->openLightbox): ?> data-lightbox="<?php echo $this->id ?>"<?php endif ?> href="<?php echo $event->imageLinkUrl ?: $this->getImageObject($event->image)->src ?>">
+						<?php endif ?>
+						<?php $this->insert('picture_default', $image->picture) ?>
+						<?php if ($event->imageLinkUrl || $event->openLightbox): ?>
+							</a>
+						<?php endif ?>
+						<figcaption class="caption"><?php echo $event->imageCaption ?></figcaption>
+					</figure>
+				<?php endif ?>
+
+				<?php echo $event->text ?>
+
+			</div>
+
+		</section>
+
+	<?php endforeach ?>
+
+</div>

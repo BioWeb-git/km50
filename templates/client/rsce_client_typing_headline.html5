@@ -1,0 +1,56 @@
+<?php
+	$cssClasses = array(
+		'typing-headline',
+		'is-animated',
+		$this->class,
+		$this->textAlign,
+		$this->headlineSize,
+		$this->buttonVariation,
+	);
+
+	$style = '';
+	$headlineColor = '';
+	$subHeadlineColor = '';
+	$textColor = '';
+	if ($this->headlineColor) {
+		$headlineColor .= 'color: #' . $this->headlineColor . ';';
+	}
+	if ($this->subHeadlineColor) {
+		$subHeadlineColor .= 'color: #' . $this->subHeadlineColor . ';';
+	}
+	if ($this->textColor) {
+		$textColor .= 'color: #' . $this->textColor . ';';
+	}
+	if ($this->doesRepeat) {
+		$cssClasses[] = 'does-repeat';
+	}
+	if ($this->notBold) {
+		$cssClasses[] = '-not-bold';
+	}
+
+	$buttonCssClasses = array(
+		'button',
+		'-single',
+		$this->buttonVariation,
+	);
+	if ($this->smallButton) {
+		$buttonCssClasses[] = '-small';
+	}
+?>
+
+<div class="<?php echo implode(' ', $cssClasses) ?>"<?php if ($this->style): ?> style="<?php echo $this->style ?>"<?php endif ?><?php echo $this->cssID ?>>
+	<?php if ($this->headline): ?>
+		<h2<?php if ($this->headlineColor): ?> style="<?php echo htmlspecialchars($headlineColor) ?>"<?php endif ?>><span class="typing-headline-dummy"><?php echo $this->headline ?></span></h2>
+	<?php endif ?>
+	<?php if ($this->subheadline): ?>
+		<h3<?php if ($this->subHeadlineColor): ?> style="<?php echo htmlspecialchars($subHeadlineColor) ?>"<?php endif ?>><span class="typing-headline-dummy"><?php echo $this->subheadline ?></span></h3>
+	<?php endif ?>
+	<?php if ($this->text): ?>
+		<p<?php if ($this->textColor): ?> style="<?php echo htmlspecialchars($textColor) ?>"<?php endif ?>><?php echo $this->text ?></p>
+	<?php endif ?>
+	<?php if ($this->buttonLabel): ?>
+		<a class="<?php echo implode(' ', $buttonCssClasses) ?>" <?php if ($this->icon): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?><?php if ($this->newWindow): ?> target="_blank" rel="noopener"<?php endif ?> href="<?php echo $this->buttonUrl ?>">
+			<?php echo $this->buttonLabel ?>
+		</a>
+	<?php endif ?>
+</div>

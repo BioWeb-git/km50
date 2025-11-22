@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: "mariadb:10.6.12"
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_DATABASE: "contao5"
+      MARIADB_ROOT_PASSWORD: "HIPHOP"
+volumes:
+  mysql_storage:
+

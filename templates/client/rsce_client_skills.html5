@@ -1,0 +1,30 @@
+<div class="skills <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<?php foreach ($this->skills as $skill): ?>
+
+		<section class="skills-item is-animated does-repeat">
+
+			<?php if ($skill->url): ?>
+				<a href="<?php echo $skill->url ?>"<?php if ($skill->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+			<?php endif ?>
+
+			<?php if ($skill->label): ?>
+				<h3><?php echo $skill->label ?></h3>
+			<?php endif ?>
+
+			<?php if ($skill->value): ?>
+				<h4><?php echo $skill->value ?></h4>
+			<?php endif ?>
+
+			<div class="skills-item-meter">
+				<div class="skills-item-meter-inner" style="width: <?php echo number_format((float)$skill->size, 2, '.', '') ?>%;<?php if ($skill->color): ?> color: #<?php echo $skill->color ?>;<?php endif ?>"></div>
+			</div>
+
+			<?php if ($skill->url): ?>
+				</a>
+			<?php endif ?>
+		</section>
+
+	<?php endforeach ?>
+
+</div>

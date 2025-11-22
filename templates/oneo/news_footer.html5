@@ -1,0 +1,27 @@
+<article class="news-footer-item arc_<?php echo $this->archive->id ?> <?php echo $this->class ?>">
+
+	<?php if ($this->link): ?>
+		<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?>>
+	<?php endif ?>
+
+	<div class="news-footer-item-inner">
+
+		<h3><?php echo $this->headline ?></h3>
+
+		<p>
+			<?php if ($this->date): ?>
+				<time datetime="<?php echo $this->datetime ?>">
+					<?php echo Contao\Date::parse($GLOBALS['objPage']->dateFormat, $this->time) ?>
+				</time>
+			<?php endif ?>
+			<?php echo $this->author ?>
+			<?php echo $this->commentCount ?>
+		</p>
+
+	</div>
+
+	<?php if ($this->link): ?>
+		</a>
+	<?php endif ?>
+
+</article>

@@ -1,0 +1,14 @@
+
+<!-- indexer::stop -->
+<?php global $objPage;?>
+<<?php if($objPage->id == 226): ?>h1<?php else:?>div<?php endif; ?> class="<?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<<?php if($objPage->id == 226): ?>span<?php else:?>a href="<?php echo $this->url ?>"<?php endif; ?>>
+		<?php if ($image = $this->getImageObject($this->image)): ?>
+			<?php $image->picture['alt'] = $this->alt ?: $image->picture['alt'] ?>
+			<?php $this->insert('picture_default', $image->picture) ?>
+		<?php else: ?>
+			<?php echo $this->alt ?>
+		<?php endif ?>
+	</<?php if($objPage->id == 226): ?>span<?php else:?>a<?php endif; ?>>
+</<?php if($objPage->id == 226): ?>h1<?php else:?>div<?php endif; ?>>
+<!-- indexer::continue -->

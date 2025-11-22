@@ -1,0 +1,10 @@
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl ?> class="headline-hr <?php echo $this->hrVariation . ' ' . $this->class . ' ' . $this->align ?>"<?php echo $this->cssID ?><?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>><?php if ($this->icon): ?><span data-icon="&#x<?php echo $this->icon ?>;"><?php endif ?>
+		<?php echo $this->headline ?>
+	<?php if ($this->icon): ?></span><?php endif ?></<?php echo $this->hl ?>>
+<?php else: ?>
+	<?php if ($this->icon): ?><span class="icon-hr <?php echo $this->align ?>" data-icon="&#x<?php echo $this->icon ?>;"<?php if ($this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>><?php endif ?>
+		<hr class="<?php echo $this->hrVariation . ' ' . $this->class ?>"<?php echo $this->cssID ?><?php if (!$this->icon && $this->style): ?> style="<?php echo $this->style; ?>"<?php endif; ?>>
+	<?php if ($this->icon): ?></span><?php endif ?>
+<?php endif ?>
+

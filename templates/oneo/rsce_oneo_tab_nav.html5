@@ -1,0 +1,30 @@
+<?php
+	$cssClasses = array(
+		'tab-navigation',
+		'-columns-' . count($this->tabs),
+		$this->class,
+	);
+	if ($this->imageTabs) {
+		$cssClasses[] = '-image-tabs';
+	}
+	if ($this->tabBorder) {
+		$cssClasses[] = '-tab-border';
+	}
+?>
+
+<nav class="<?php echo implode(' ', $cssClasses) ?>"<?php echo $this->cssID ?>>
+
+	<ul>
+		<?php foreach ($this->tabs as $tab): ?>
+			<li class="tab-navigation-item">
+				<a href="{{env::request}}#<?php echo $tab->tabId ?>"<?php if ($tab->icon): ?> data-icon="&#x<?php echo $tab->icon ?>;"<?php endif ?>>
+					<?php if ($image = $this->getImageObject($tab->image, $tab->imageSize)): ?>
+						<?php $this->insert('picture_default', $image->picture) ?>
+					<?php endif ?>
+					<?php echo $tab->label ?>
+				</a>
+			</li>
+		<?php endforeach ?>
+	</ul>
+
+</nav>

@@ -1,0 +1,24 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->activeCategories): ?>
+    <div class="active-categories">
+        <div>Catégorie(s) active(s)</div>
+        <?= $this->activeCategories ?>
+    </div>
+<?php endif; ?>
+
+<?php if ($this->inactiveCategories): ?>
+    <div class="inactive-categories">
+        <?= $this->inactiveCategories ?>
+    </div>
+<?php endif; ?>
+
+<?php if (null !== $this->resetUrl): ?>
+    <div class="reset-link">
+        <a href="<?= Contao\StringUtil::ampersand($this->resetUrl) ?>" class="reset" title="<?= Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['resetCategoriesCumulative'][1]) ?>"><?= $GLOBALS['TL_LANG']['MSC']['resetCategoriesCumulative'][0] ?></a>
+    </div>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

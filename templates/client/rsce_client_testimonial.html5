@@ -1,0 +1,19 @@
+<blockquote class="testimonial <?php echo $this->size ?> <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<div class="testimonial-text">
+		<?php echo $this->text ?>
+	</div>
+	<?php if ($this->author): ?>
+		<div class="testimonial-author">
+			<?php if ($image = $this->getImageObject($this->authorAvatar, array(50, 50))): ?>
+				<?php $this->insert('picture_default', $image->picture) ?>
+			<?php endif ?>
+			<small>
+				<?php if ($this->authorUrl): ?><a href="<?php echo $this->authorUrl ?>"<?php if ($this->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>><?php endif ?>
+				<?php echo $this->author ?><?php if ($this->authorPosition): ?>,
+					<?php echo $this->authorPosition ?>
+				<?php endif ?>
+				<?php if ($this->authorUrl): ?></a><?php endif ?>
+			</small>
+		</div>
+	<?php endif ?>
+</blockquote>

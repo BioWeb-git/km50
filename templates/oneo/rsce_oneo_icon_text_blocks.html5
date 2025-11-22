@@ -1,0 +1,8 @@
+<?php if ($this->headline): ?>
+	<<?php echo $this->hl ?>>
+		<?php echo $this->headline ?>
+	</<?php echo $this->hl ?>>
+<?php endif ?>
+<div class="icon-text-block <?php echo $this->class ?>"<?php echo $this->cssID ?><?php if ($this->icon): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?>>
+	<?php if ($this->text): ?><?php echo $this->text ?><?php endif ?>
+</div>

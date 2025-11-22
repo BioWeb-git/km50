@@ -1,0 +1,119 @@
+<?php
+	$cookieName = json_encode('fixed-note-' . $this->id);
+	$cookieValue = json_encode((string) $this->tstamp);
+?>
+<!-- indexer::stop -->
+<div class="fixed-note <?php echo $this->class ?>"<?php echo $this->cssID ?><?php if ($this->icon): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?>>
+
+	<div class="fixed-note-column">
+		<?php echo $this->text ?>
+	</div>
+	<?php if ($this->linkLabel): ?>
+		<div class="fixed-note-column">
+			<a href="<?php echo $this->linkUrl ?>" class="fixed-note-link"<?php if ($this->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+				<?php echo $this->linkLabel ?>
+			</a>
+		</div>
+	<?php endif ?>
+	<div class="fixed-note-column">
+		<button class="fixed-note-button"><?php echo $this->buttonLabel ?></button>
+	</div>
+
+</div>
+
+<?php if ($this->allowReopen): ?>
+	<a class="fixed-note-closed" href="{{env::request}}#"><span>Info</span></a>
+<?php endif ?>
+<!-- indexer::continue -->
+
+<script>
+(function() {
+
+	var getCookie = function() {
+		var data;
+		if (
+			!window.localStorage
+			|| !window.JSON
+			|| !(data = localStorage[<?= $cookieName ?>])
+			|| !(data = JSON.parse(data))
+		) {
+			return;
+		}
+		if (data.expires < Date.now()) {
+			removeCookie();
+			return null;
+		}
+		return data.value || null;
+	};
+
+	var setCookie = function() {
+		if (!window.localStorage || !window.JSON) {
+			return;
+		}
+		localStorage[<?= $cookieName ?>] = JSON.stringify({
+			value: <?= $cookieValue ?>,
+			expires: Date.now() + <?php echo number_format(($this->cookieDays ?: 30) * 24 * 60 * 60 * 1000, 0, '', '') ?>,
+		});
+	};
+
+	var removeCookie = function() {
+		delete localStorage[<?= $cookieName ?>];
+	};
+
+	var resize = function() {
+		var style = window.getComputedStyle(note);
+		if (style.position === 'fixed' && style.display !== 'none') {
+			document.documentElement.style.paddingBottom = note.offsetHeight + 'px';
+		}
+		else {
+			document.documentElement.style.paddingBottom = '';
+		}
+	};
+
+	var close = function() {
+		note.style.display = 'none';
+		<?php if ($this->allowReopen): ?>
+			noteClosed.style.display = '';
+		<?php endif ?>
+		resize();
+	};
+
+	var open = function() {
+		note.style.display = '';
+		<?php if ($this->allowReopen): ?>
+			noteClosed.style.display = 'none';
+		<?php endif ?>
+		resize();
+	};
+
+	var note = document.querySelectorAll('.fixed-note');
+	note = note[note.length - 1];
+	var button = note.querySelector('.fixed-note-button');
+
+	<?php if ($this->allowReopen): ?>
+		var noteClosed = document.querySelectorAll('.fixed-note-closed');
+		noteClosed = noteClosed[noteClosed.length - 1];
+
+		noteClosed.addEventListener('click', function(event) {
+			open();
+			removeCookie();
+			event.preventDefault();
+		});
+	<?php endif ?>
+
+	button.addEventListener('click', function() {
+		close();
+		setCookie();
+	});
+
+	if (getCookie() === <?= $cookieValue ?>) {
+		close();
+	}
+	else {
+		open();
+	}
+
+	window.addEventListener('resize', resize);
+
+})();
+</script>

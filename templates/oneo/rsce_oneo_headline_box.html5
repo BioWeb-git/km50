@@ -1,0 +1,23 @@
+<?php
+	$cssClasses = array(
+		'headline-box',
+		$this->textAlign,
+		$this->class,
+		$this->headlineSize,
+	);
+	if ($this->headlineTracking) {
+		$cssClasses[] = '-no-tracking';
+	}
+	if ($this->headlineUnderline) {
+		$cssClasses[] = '-no-underline';
+	}
+?>
+
+<div class="<?php echo implode(' ', $cssClasses) ?>"<?php echo $this->cssID; ?><?php if ($this->icon): ?> data-icon="&#x<?php echo $this->icon ?>;"<?php endif ?>>
+	<?php if ($this->subheadline): ?>
+		<h3 class="<?php echo $this->headlineSize ?>"<?php if($this->subHeadlineColor): ?> style="color: #<?php echo $this->subHeadlineColor ?>"<?php endif ?>><?php echo $this->subheadline ?></h3>
+	<?php endif ?>
+	<?php if ($this->headline): ?>
+		<h2 class="<?php echo $this->headlineSize ?> <?php if ($this->headlineBold): ?> -bold<?php endif ?>"<?php if($this->headlineColor): ?> style="color: #<?php echo $this->headlineColor ?>"<?php endif ?>><?php echo $this->headline ?></h2>
+	<?php endif ?>
+</div>

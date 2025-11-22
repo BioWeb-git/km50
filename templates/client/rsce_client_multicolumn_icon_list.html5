@@ -1,0 +1,37 @@
+<div class="multicolumn-icon-lists -columns-<?php echo count($this->lists) ?> <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+
+	<?php if ($this->headline): ?>
+		<<?php echo $this->hl ?>>
+			<?php echo $this->headline ?>
+		</<?php echo $this->hl ?>>
+	<?php endif ?>
+
+	<?php foreach ($this->lists as $list): ?>
+		<div class="multicolumn-icon-list">
+			<?php if ($list->headline): ?>
+				<h2><?php echo $list->headline ?></h2>
+			<?php endif ?>
+			<ul>
+				<?php foreach ($list->items as $item): ?>
+					<li<?php if ($item->icon || $list->icon): ?> data-icon="&#x<?php echo $item->icon ?: $list->icon ?>;"<?php endif ?>>
+
+						<?php if ($item->label): ?>
+							<strong><?php echo $item->label ?></strong>
+						<?php endif ?>
+
+						<?php if ($item->url): ?>
+							<a href="<?php echo $item->url ?>"<?php if ($item->newWindow): ?> target="_blank" rel="noopener"<?php endif ?>>
+						<?php endif ?>
+
+							<?php echo $item->text ?>
+
+						<?php if ($item->url): ?>
+							</a>
+						<?php endif ?>
+					</li>
+				<?php endforeach ?>
+			</ul>
+		</div>
+	<?php endforeach ?>
+
+</div>

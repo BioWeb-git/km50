@@ -1,0 +1,12 @@
+
+<!-- indexer::stop -->
+<div class="google-map <?php echo $this->class ?>"<?php if ($this->mapRatio): ?> style="padding-bottom: <?php $ratio = explode('x', $this->mapRatio); echo 100 / $ratio[0] * $ratio[1] . '%' ?>"<?php endif ?><?php echo $this->cssID ?>>
+	<iframe <?php if ($this->activateLinkLabel): ?>data-<?php endif ?>src="https://maps.google.com/maps?key=<?php echo $this->apiKey ?>&amp;q=<?php echo urlencode($this->mapAddress) ?>&amp;z=<?php echo $this->zoomLevel ?>&amp;output=embed&amp;iwloc=near" frameborder="0" scrolling="no"></iframe>
+	<?php if ($this->activateLinkLabel): ?>
+		<a
+			href="https://www.google.com/maps?q=<?php echo urlencode($this->mapAddress) ?>"
+			onclick="this.parentNode.querySelector('iframe').src = this.parentNode.querySelector('iframe').getAttribute('data-src'); this.parentNode.removeChild(this); return false;"
+		><?php echo $this->activateLinkLabel ?></a>
+	<?php endif ?>
+</div>
+<!-- indexer::continue -->

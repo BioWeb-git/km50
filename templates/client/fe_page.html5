@@ -1,0 +1,104 @@
+<?php $this->extend('fe_page') ?>
+<?php
+	//Script de redirection vers ancres
+	global $objPage;
+	if (str_contains($objPage->cssClass, 'menu-anchor')) :
+		$GLOBALS['TL_HEAD'][] = sprintf('
+			<script>
+				$(document).ready(function () {
+					// Assign the HTML, Body as a variable...
+					$viewport = $("html, body");
+					$(".page-%s .main-navigation .type-redirect.onhome").click(function (event) {
+						//prevent the default action for the click event
+						event.preventDefault();
+
+						//get the full url - like mysitecom/index.htm#home
+						var full_url = this.href;
+
+						//split the url by # and get the anchor target name - home in mysitecom/index.htm#home
+						var parts = full_url.split("#");
+						var trgt = parts[1];
+
+						//get the top offset of the target anchor
+						var offset_value = $(".header-navigation").outerHeight() - 1;
+						var target_offset = $("#" + trgt).offset();
+						var target_top = target_offset.top - offset_value;
+
+						//goto that anchor by setting the body scroll top to anchor top
+						// EASES CURVES > https://jqueryui.com/resources/demos/effect/easing.html
+						$viewport.animate({scrollTop: target_top}, 500, "swing");
+
+						$viewport.bind("scroll mousedown DOMMouseScroll mousewheel keyup", function () {
+							$viewport.stop();
+						});
+					});
+				});
+			</script>
+			',$objPage->id);
+	endif;
+?>
+
+<?php // additional body classes
+	global $objPage;
+
+	$arrClasses = array();
+	// levels
+	$level = count($objPage->trail) - 1;
+	$arrClasses[] = 'level-' . $level;
+	// page id
+	$arrClasses[] = 'page-' . $objPage->id;
+	// append body class
+	$this->class .= ' '.implode(' ',$arrClasses);
+?>
+<?php $this->block('body') ?>
+	<?php $this->sections('top') ?>
+
+	<div class="page">
+
+		<?php if ($this->header): ?>
+			<header class="page-header">
+				<?php echo $this->header ?>
+			</header>
+		<?php endif ?>
+
+		<?php $this->sections('before') ?>
+
+		<div class="content-wrapper">
+
+			<main role="main" class="main-content">
+
+				<?php echo $this->main ?>
+
+				<?php $this->sections('main') ?>
+
+			</main>
+
+			<?php if ($this->left && $this->right): ?>
+				<aside class="sidebar">
+					<?php echo $this->left ?>
+				</aside>
+				<aside class="sidebar -right">
+					<?php echo $this->right ?>
+				</aside>
+			<?php elseif ($this->left || $this->right): ?>
+				<aside class="sidebar">
+					<?php echo $this->left ?>
+					<?php echo $this->right ?>
+				</aside>
+			<?php endif ?>
+
+		</div>
+
+		<?php $this->sections('after') ?>
+
+		<?php if ($this->footer): ?>
+			<footer class="page-footer">
+				<?php echo $this->footer ?>
+			</footer>
+		<?php endif ?>
+
+	</div>
+
+	<?php $this->sections('bottom') ?>
+
+<?php $this->endblock('body') ?>

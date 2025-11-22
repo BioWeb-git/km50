@@ -1,0 +1,76 @@
+<?php if( $this->tags ): ?>
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+    <?php
+        $hasActive = false;
+        $allActive = true; // Assume all are active initially
+
+        foreach ($this->tags as $t) {
+            if ($t['active']) {
+                $hasActive = true;
+            } else {
+                $allActive = false; // If one is not active, all cannot be active
+            }
+            // If we've found one active and confirmed one inactive, we can break early
+            if ($hasActive && !$allActive) {
+                break;
+            }
+        }
+    ?>
+    <ul>
+        <?php if ($hasActive && $allActive): ?>
+            <div>Tags actifs&nbsp;:</div>
+        <?php elseif ($hasActive): ?>
+            <div>Tags actifs&nbsp;:</div>
+        <?php else: ?>
+        <?php endif; ?>
+        <?php foreach( $this->tags as $t ): ?>
+            <?php if($t['active']): ?>
+
+                <li class="active">
+
+                    <?php if( $this->selectMultiple ): ?>
+                        <a href="<?= $t['href']; ?>" class="<?= $t['class'] ?>" rel="noindex nofollow">
+                    <?php endif; ?>
+                        <strong class="<?= $t['class'] ?>">
+                            <?= $t['label']; ?> <span class="count">(<?= $t['count']; ?>)</span>
+                        </strong>
+                    <?php if( !$t['active'] || $this->selectMultiple ): ?>
+                        </a>
+                    <?php endif; ?>
+
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <?php if ($hasActive && $allActive): ?>
+        <?php elseif ($hasActive): ?>
+            <div>Ajouter un autre tag&nbsp;:</div>
+        <?php else: ?>
+            <div>Sélectionnez un tag ou plusieurs tags pour filtrer</div>
+        <?php endif; ?>
+        <?php foreach( $this->tags as $t ): ?>
+            <?php if($t['active'] == false && $this->selectMultiple): ?>
+                <li>
+                    <a href="<?= $t['href']; ?>" class="<?= $t['class'] ?>" rel="noindex nofollow">
+                        <?= $t['label']; ?> <span class="count">(<?= $t['count']; ?>)</span>
+                    </a>
+                </li>
+            <?php elseif($t['active'] == false && $this->selectMultiple == false): ?>
+                <li>
+                    <span>
+                        <?= $t['label']; ?> <span class="count">(<?= $t['count']; ?>)</span>
+                    </span>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
+
+    <?php if( $this->resetHref ): ?>
+    <a class="reset" href="<?= $this->resetHref; ?>">
+        <small><?= $this->trans('mod_tag_cloud.reset_filter'); ?></small>
+    </a>
+    <?php endif; ?>
+
+<?php $this->endblock(); ?>
+<?php endif; ?>

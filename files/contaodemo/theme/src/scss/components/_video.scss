@@ -1,0 +1,20 @@
+.content-youtube,
+.content-vimeo {
+  figure {
+    margin: 0;
+
+    &.aspect {
+      position: relative;
+      width: 100%;
+
+      iframe {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  }
+}

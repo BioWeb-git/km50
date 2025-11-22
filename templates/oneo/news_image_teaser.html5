@@ -1,0 +1,41 @@
+<article class="news-image-teaser <?php echo $this->class ?>">
+
+	<?php if($this->addImage): ?>
+		<div class="news-image-teaser-image">
+			<?php if ($this->href): ?>
+				<a href="<?php echo $this->href ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+			<?php endif ?>
+			<?php $this->insert('picture_default', $this->picture) ?>
+			<?php if ($this->href): ?>
+				</a>
+			<?php endif ?>
+		</div>
+	<?php endif ?>
+
+	<p class="news-image-teaser-info">
+		<?php if ($this->author): ?>
+			<?php echo mb_strtoupper(mb_substr($this->author, 0, 1, 'UTF-8'), 'UTF-8') . mb_substr($this->author, 1, mb_strlen($this->author, 'UTF-8'), 'UTF-8') ?><?php if ($this->commentCount): ?>, <?php endif ?>
+		<?php endif ?>
+		<?php echo $this->commentCount ?>
+	</p>
+
+	<?php if ($this->date): ?>
+		<time class="news-image-teaser-date" datetime="<?php echo $this->datetime ?>">
+			<?php echo Contao\Date::parse('d', $this->time) ?>
+			<b><?php echo Contao\Date::parse('M', $this->time) ?></b>
+		</time>
+	<?php endif ?>
+
+	<h2>
+		<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?> title="<?php echo $this->alt ?>">
+			<?php echo $this->newsHeadline ?>
+		</a>
+	</h2>
+
+	<?php echo $this->teaser ?>
+
+	<?php if ($this->more): ?>
+		<p class="news-image-teaser-more"><?php echo $this->more ?></p>
+	<?php endif ?>
+
+</article>

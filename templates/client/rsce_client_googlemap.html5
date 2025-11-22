@@ -1,0 +1,34 @@
+<?php
+    $style = '';
+    if ($this->mapRatio) {
+        $style .= 'aspect-ratio:' . $this->mapRatio . ';';
+    }
+    else {
+        $style .= 'aspect-ratio: 16/9;';
+    }
+    if ($this->maxHeight) {
+        $style .= 'max-height: ' . $this->maxHeight . ';';
+    }
+    else {
+        $style .= 'max-height: 600px;';
+    }
+    if ($this->minHeight) {
+        $style .= 'min-height: ' . $this->minHeight . ';';
+    }
+    else {
+        $style .= 'min-height: 400px;';
+    }
+?>
+<!-- indexer::stop -->
+<div class="googlemap-container">
+    <div class="responsive"<?php if ($style): ?> style="<?php echo htmlspecialchars($style) ?>"<?php endif ?>>
+        <iframe
+            src="<?= $this->mapSrc?>"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</div>
+<!-- indexer::continue -->

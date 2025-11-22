@@ -1,0 +1,6 @@
+
+<!-- indexer::stop -->
+<a href="{{env::request}}#top" class="footer-top-link <?php echo $this->class ?>"<?php echo $this->cssID ?>>
+	<?php echo $this->text ?>
+</a>
+<!-- indexer::continue -->
