@@ -1,0 +1,143 @@
+<?php
+// =========================================================================================
+// SÉCURISATION DE L'ID DE PAGE : On utilise une variable temporaire pour l'ID de la page
+$currentPageId = 0;
+if (isset($GLOBALS['objPage']) && is_object($GLOBALS['objPage'])) {
+    $currentPageId = $GLOBALS['objPage']->id;
+}
+// Logique PHP
+// La logique de cette section est de préparer toutes les variables nécessaires
+// en s'assurant que les valeurs 'custom' priment sur les valeurs 'select'
+// et que le mode d'affichage est correctement défini.
+
+// Détermination de la Marque finale : On prend la valeur custom si elle est définie, sinon la valeur du select.
+$marque = $this->marque_custom ?: $this->marque_select;
+
+// Détermination de la Thématique finale
+$thematique = $this->thematique_custom ?: $this->thematique_select;
+
+// Détermination de la Région finale
+$region = $this->region_custom ?: $this->region_select;
+
+$photoUuid = null;
+if (is_array($this->photo) && !empty($this->photo[0])) {
+    $photoUuid = $this->photo[0];
+} elseif (is_string($this->photo) && !empty($this->photo)) {
+    $photoUuid = $this->photo;
+}
+$categorieClass = $this->categorie_sejour ?: 'échappée';
+?>
+
+<div class="voyage-wrapper">
+	<div class="voyage-content">
+		
+		<div class="voyage-content-wrapper">
+			<div class="voyage-top-infos">
+				<div class="voyage-region">{{fa::map-marker-alt}} <?php echo $region ?></div>
+				<div class="voyage-duree bb">{{fa::clock}} <?php echo $this->duree ?></div>
+			</div>
+			<?php if ($marque): ?>
+				<div class="brand bb"><strong>Marque&nbsp;: </strong><?php echo $marque ?></div>
+			<?php endif ?>
+			<?php if ($thematique): ?>
+				<div class="thematique bb"><strong>Thème&nbsp;: </strong><?php echo $thematique ?></div>
+			<?php endif ?>
+				
+			<div class="voyage-dates bb">
+				<strong>Dates&nbsp;:</strong>
+				<ul class="voyage-dates-liste">
+					<?php if (is_array($this->dates_liste) && count($this->dates_liste)): ?>
+						<?php foreach ($this->dates_liste as $index => $date): ?>
+							<li>
+								<?php 
+									$date = (array) $date; 
+									echo $date['date_range'];
+								?>
+							</li>
+						<?php endforeach ?>
+					<?php else: ?>
+						Date non spécifiée
+					<?php endif ?>
+				</ul>
+			</div>
+			<!-- Informations supplémentaires -->
+			<div class="voyage-prix bb"><strong>Prix&nbsp;:</strong> <?php echo $this->prix_liste ?>&nbsp;€&nbsp;TTC</div>
+			<div class="voyage-logement bb"><strong>Logement&nbsp;:</strong> <?php echo $this->logement ?></div>
+			<div class="voyage-participants bb"><strong>Participants&nbsp;:</strong> <?php echo $this->participants ?></div>
+		</div>
+	</div>
+	<?php if ($currentPageId == 306): ?>
+		<div class="voyage-detail">
+			<div class="voyage-description">
+				<h2>Description</h2>
+				<div class="voyage-description-text">
+					<?php echo $this->description_liste ?>
+				</div>
+			</div>
+
+			<section class="voyage-introduction">
+				<h2>Présentation</h2>
+				<?php echo $this->description_fiche ?>
+			</section>
+
+			<section class="voyage-programme">
+				<h2>Programme du Voyage</h2>
+				<?php if ($this->programme && is_array($this->programme)): ?>
+					<?php foreach ($this->programme as $index => $jour): ?>
+						<?php $jour = (array) $jour;?>
+						<article class="programme-jour">
+							<h3>Jour <?php echo $index + 1 ?>&nbsp;: <?php echo $jour['titre_jour'] ?></h3>
+							<div class="description-jour">
+								<?php echo $jour['description_jour'] ?>
+							</div>
+						</article>
+					<?php endforeach ?>
+				<?php endif ?>
+			</section>
+
+			<section class="voyage-prix-inclusions">
+				<h2>Détails et Tarifs</h2>
+				<div class="prix-box">
+					<h3>Prix Détaillé</h3>
+					<p><?php echo nl2br($this->prix_detaille) ?></p>
+				</div>
+				
+				<div class="inclusions-box">
+					<h3>Ce prix comprend</h3>
+					<?php echo $this->ce_prix_comprend ?>
+				</div>
+				
+				<div class="exclusions-box">
+					<h3>Ce prix ne comprend pas</h3>
+					<?php echo $this->ce_prix_ne_comprend_pas ?>
+				</div>
+			</section>
+
+			<section class="voyage-documents">
+				<h2>Documents Indispensables</h2>
+				<p><?php echo nl2br($this->documents_indispensables) ?></p>
+			</section>
+
+			<section class="voyage-galerie">
+				<h2>Photos du Séjour</h2>
+				<?php if ($this->photos_fiche && is_array($this->photos_fiche)): ?>
+					<div class="gallery-container">
+						<?php foreach ($this->photos_fiche as $uuid): ?>
+							<figure class="gallery-item">
+								<!-- Rendu des images de la galerie (ex: en 800px de large, hauteur auto) -->
+								{{image::<?= $uuid ?>?width=800&alt=<?= htmlspecialchars($this->titre_liste) ?> - Photo}}
+							</figure>
+						<?php endforeach ?>
+					</div>
+				<?php else: ?>
+					<div class="gallery-placeholder">
+						Aucune image pour la galerie.
+					</div>
+				<?php endif ?>
+			</section>
+
+		</div>
+		
+	<?php endif;?>
+
+</div>

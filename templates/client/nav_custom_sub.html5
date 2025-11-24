@@ -16,7 +16,7 @@
 
             <?php if ($item['isActive']): ?>
                 <strong class="<?= $item['class'] ?>"<?php if (!empty($item['subitems'])) echo ' aria-haspopup="true"'; ?>>
-                    <?= $item['link'] ?>test
+                    <?= $item['link'] ?>
                 </strong>
                 <?php echo $item['subitems'] ?? '' ?>
             <?php else: ?>

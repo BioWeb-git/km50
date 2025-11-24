@@ -1015,7 +1015,7 @@ button, .button, input[type="submit"]{
             li:before{
                 content : none;
             }
-            a, strong.active, span.trail, span.active, span.forward{
+            a, strong.active, span.trail, span.active, span.forward, .nolink > strong{
                 display         : block;
                 padding         : em(4, 13) em(20, 13);
                 color           : inherit;

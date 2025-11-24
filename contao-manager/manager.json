@@ -1,6 +1,6 @@
 {
-    "php_cli": "D:\\wamp64\\bin\\php\\php8.3.0\\php.exe",
-    "last_update": "2025-11-21T19:44:42+00:00",
+    "php_cli": "\/usr\/bin\/php8.3",
+    "last_update": "2025-11-24T09:22:32+00:00",
     "latest_version": "1.10.6",
     "latest_requires": {
         "php": "^8.1"

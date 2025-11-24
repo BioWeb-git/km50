@@ -1,0 +1,41 @@
+<div class="voyages-master block<?= $this->class ?>">
+	<?php if ($this->addImage && $this->src): ?>
+		<?php if ($this->link): ?>
+			<a class="voyage-image" href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+		<?php else: ?>
+			<div class="voyage-image">
+		<?php endif ?>
+			<?php $this->insert('picture_default', $this->picture) ?>
+		<?php if ($this->link): ?>
+			</a>
+		<?php else: ?>
+			</div>
+		<?php endif ?>
+	<?php endif ?>
+    <div class="voyage-archive">
+        <?= $this->archive->title; ?>
+    </div>
+	<h2 class="voyage-title">
+		<?php if ($this->link): ?>
+			<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+		<?php endif ?>
+			<?php echo $this->newsHeadline ?>
+		<?php if ($this->link): ?>
+			</a>
+		<?php endif ?>
+	</h2>
+	<?php if ($this->hasSubHeadline): ?>
+		<div class="voyage-subtitle"><?= $this->subHeadline ?></div>
+	<?php endif; ?>
+	<?php if ($this->hasText): ?>
+		<div class="voyage-content">
+			<?= $this->text ?>
+		</div>
+	<?php endif; ?>
+	<?php if ($this->link): ?>
+		<a class="button" href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+			Afficher le voyage
+		</a>
+	<?php endif ?>
+	<?php // dump($this); ?>
+</div>

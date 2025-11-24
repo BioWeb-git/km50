@@ -3,13 +3,13 @@
  * ======================================== */
 
 @include font-face("RockSolid Icons", font-files("rocksolid-icons.woff", woff, "rocksolid-icons.ttf", truetype, "rocksolid-icons.svg", svg), "rocksolid-icons.eot", normal, normal);
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Quicksand:wght@300..700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Oswald:300,400,700');
 
 @mixin font1() { font: #{$font-weight1} #{$font-size}/#{$line-height} #{$font-family1}; }
 @mixin font1-family() { font-family: #{$font-family1} !important; }
-@mixin font2() { font: #{$font-weight2} #{$font-size}/#{$line-height-heading} #{$font-family2}; }
-@mixin font2-family() { font-family: #{$font-family2} !important; }
+@mixin font2() { font: #{$font-weight2} #{$font-size}/#{$line-height-heading} #{$font-family1}; }
+@mixin font2-family() { font-family: #{$font-family1} !important; }
 .font1{
     @include font1-family;
 }

@@ -138,25 +138,25 @@
 <?php //echo var_dump($this); ?>
 
 <div class="<?php echo $this->alignmentWrapper ?> <?php echo implode(' ', $cssClasses) ?> <?php if ($this->outsideMargin): ?> outsideMargin outsideMargin-<?= str_replace(' ', '', $this->outsideMargin) ?><?php endif ?>" <?php if ($style): ?> style="<?php echo htmlspecialchars($style) ?>"<?php endif ?><?php echo $this->cssID ?> >
-
-	<?php if ($this->backgroundColor2 || $this->backgroundColor2Position): ?>
-		<div class="centered-wrapper-gradient" style="<?php if ($this->backgroundColor2): ?>background-color: #<?php echo $this->backgroundColor2 ?>;<?php endif ?><?php if ($this->backgroundColor2Position): ?>top: <?php echo $this->backgroundColor2Position ?>;<?php endif ?>"></div>
-	<?php endif ?>
-	<?php if (count($videoFiles)): ?>
-		<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>">
-			<video class="no-mejs" autoplay loop muted playsinline webkit-playsinline <?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?> poster="<?php echo $image->src ?>"<?php endif ?>>
-				<?php foreach ($videoFiles as $video): ?>
-					<source src="<?php echo Contao\System::getContainer()->get('contao.assets.files_context')->getStaticUrl() . $video->path ?>" type="video/<?php echo $video->extension ?>">
-				<?php endforeach ?>
-				<?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
-					<?php $this->insert('picture_default', $image->picture) ?>
-				<?php endif ?>
-			</video>
-		</div>
-	<?php elseif (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
-		<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>" data-image-url="<?php echo $image->src ?>"></div>
-	<?php endif ?>
-	<?php if ($this->backgroundGradient): ?>
-		<div class="centered-wrapper-gradient" style="<?= $this->backgroundGradient ?>"></div>
-	<?php endif ?>
-	<div class="centered-wrapper-inner <?php echo $this->alignment ?><?php if ($this->insidePadding): ?> insidePadding insidePadding-<?= str_replace(' ', '', $this->insidePadding) ?><?php endif ?>" <?php if ($this->insidePadding): ?>style="padding:<?=$this->insidePadding ?>;"<?php endif ?>>
+	<div class="master-wrapper">
+		<?php if ($this->backgroundColor2 || $this->backgroundColor2Position): ?>
+			<div class="centered-wrapper-gradient" style="<?php if ($this->backgroundColor2): ?>background-color: #<?php echo $this->backgroundColor2 ?>;<?php endif ?><?php if ($this->backgroundColor2Position): ?>top: <?php echo $this->backgroundColor2Position ?>;<?php endif ?>"></div>
+		<?php endif ?>
+		<?php if (count($videoFiles)): ?>
+			<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>">
+				<video class="no-mejs" autoplay loop muted playsinline webkit-playsinline <?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?> poster="<?php echo $image->src ?>"<?php endif ?>>
+					<?php foreach ($videoFiles as $video): ?>
+						<source src="<?php echo Contao\System::getContainer()->get('contao.assets.files_context')->getStaticUrl() . $video->path ?>" type="video/<?php echo $video->extension ?>">
+					<?php endforeach ?>
+					<?php if (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
+						<?php $this->insert('picture_default', $image->picture) ?>
+					<?php endif ?>
+				</video>
+			</div>
+		<?php elseif (count($imageFiles) && $image = $this->getImageObject($imageFiles[0]->uuid, $this->backgroundImageSize)): ?>
+			<div class="centered-wrapper-background" style="<?php echo htmlspecialchars($backgroundStyle) ?>" data-image-url="<?php echo $image->src ?>"></div>
+		<?php endif ?>
+		<?php if ($this->backgroundGradient): ?>
+			<div class="centered-wrapper-gradient" style="<?= $this->backgroundGradient ?>"></div>
+		<?php endif ?>
+		<div class="centered-wrapper-inner <?php echo $this->alignment ?><?php if ($this->insidePadding): ?> insidePadding insidePadding-<?= str_replace(' ', '', $this->insidePadding) ?><?php endif ?>" <?php if ($this->insidePadding): ?>style="padding:<?=$this->insidePadding ?>;"<?php endif ?>>

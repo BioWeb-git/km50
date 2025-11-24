@@ -26,7 +26,7 @@
         "source": "https://github.com/contao/contao-demo",
         "docs": "https://docs.contao.org"
     },
-    "repositories": [
+    "_repositories": [
         {
             "type": "git",
             "url": "https://github.com/BioWeb-git/bioweb-bundle.git"

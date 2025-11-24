@@ -43,3 +43,6 @@ Thumbs.db
 /files/public/**
 !/files/public/**/
 !/**/*.public
+
+# Windows Security Metadata (Zone.Identifier)
+*:Zone.Identifier
