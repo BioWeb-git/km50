@@ -153,6 +153,9 @@ h6 {
         }
 
         .main-navigation {
+            @include mediaquery-min(tablet) {
+                padding: 0;
+            }
             >ul {
                 >li {
                     &.home {
@@ -234,13 +237,13 @@ h6 {
     // --- Génération des classes spécifiques ---
 
     // On crée une boucle qui va de 1 "through" (jusqu'à) 10
-    @for $i from 1 through 10 {
+    @for $i from 1 through 20 {
         // Le sélecteur est généré : &.mask1, &.mask2, etc.
         // La variable #{$i} est interpolée pour devenir le chiffre
         &.mask#{$i} {
             img {
-                // L'URL du masque est générée de la même manière
-                mask-image: url("/files/images/common/mask#{$i}.png");
+                // L'URL du masque est générée de la même manière 
+                mask-image: url("/files/images/masks/mask#{$i}.png");
             }
         }
     }

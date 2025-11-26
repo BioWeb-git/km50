@@ -5,7 +5,7 @@
  * HTML5 display definitions
  * ========================================================================== */
 /* Corrects block display not defined in IE6/7/8/9 & FF3 */
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Quicksand:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Oswald:300,400,700");
 article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
   display: block;
@@ -17341,7 +17341,12 @@ html {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: Comfortaa, sans-serif !important;
 }
 
@@ -17735,6 +17740,11 @@ h6 {
     margin-top: 0;
   }
 }
+@media screen and (min-width: 1001px) {
+  .home .page-header .main-navigation {
+    padding: 0;
+  }
+}
 .home .page-header .main-navigation > ul > li.home {
   display: none;
 }
@@ -17798,34 +17808,64 @@ h6 {
   mask-mode: luminance;
 }
 .mask.mask1 img {
-  mask-image: url("/files/images/common/mask1.png");
+  mask-image: url("/files/images/masks/mask1.png");
 }
 .mask.mask2 img {
-  mask-image: url("/files/images/common/mask2.png");
+  mask-image: url("/files/images/masks/mask2.png");
 }
 .mask.mask3 img {
-  mask-image: url("/files/images/common/mask3.png");
+  mask-image: url("/files/images/masks/mask3.png");
 }
 .mask.mask4 img {
-  mask-image: url("/files/images/common/mask4.png");
+  mask-image: url("/files/images/masks/mask4.png");
 }
 .mask.mask5 img {
-  mask-image: url("/files/images/common/mask5.png");
+  mask-image: url("/files/images/masks/mask5.png");
 }
 .mask.mask6 img {
-  mask-image: url("/files/images/common/mask6.png");
+  mask-image: url("/files/images/masks/mask6.png");
 }
 .mask.mask7 img {
-  mask-image: url("/files/images/common/mask7.png");
+  mask-image: url("/files/images/masks/mask7.png");
 }
 .mask.mask8 img {
-  mask-image: url("/files/images/common/mask8.png");
+  mask-image: url("/files/images/masks/mask8.png");
 }
 .mask.mask9 img {
-  mask-image: url("/files/images/common/mask9.png");
+  mask-image: url("/files/images/masks/mask9.png");
 }
 .mask.mask10 img {
-  mask-image: url("/files/images/common/mask10.png");
+  mask-image: url("/files/images/masks/mask10.png");
+}
+.mask.mask11 img {
+  mask-image: url("/files/images/masks/mask11.png");
+}
+.mask.mask12 img {
+  mask-image: url("/files/images/masks/mask12.png");
+}
+.mask.mask13 img {
+  mask-image: url("/files/images/masks/mask13.png");
+}
+.mask.mask14 img {
+  mask-image: url("/files/images/masks/mask14.png");
+}
+.mask.mask15 img {
+  mask-image: url("/files/images/masks/mask15.png");
+}
+.mask.mask16 img {
+  mask-image: url("/files/images/masks/mask16.png");
+}
+.mask.mask17 img {
+  mask-image: url("/files/images/masks/mask17.png");
+}
+.mask.mask18 img {
+  mask-image: url("/files/images/masks/mask18.png");
+}
+.mask.mask19 img {
+  mask-image: url("/files/images/masks/mask19.png");
+}
+.mask.mask20 img {
+  mask-image: url("/files/images/masks/mask20.png");
 }
 
 .icon-boxes .icon-boxes-item .icon-boxes-item-text {
