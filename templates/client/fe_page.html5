@@ -2,6 +2,7 @@
 <?php
 	//Script de redirection vers ancres
 	global $objPage;
+	$GLOBALS['TL_CSS'][] = 'files/client/css/imports.css';
 	if (str_contains($objPage->cssClass, 'menu-anchor')) :
 		$GLOBALS['TL_HEAD'][] = sprintf('
 			<script>
