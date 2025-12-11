@@ -26,7 +26,7 @@
         "source": "https://github.com/contao/contao-demo",
         "docs": "https://docs.contao.org"
     },
-    "repositories": [
+    "_repositories": [
         {
             "type": "git",
             "url": "https://github.com/BioWeb-git/bioweb-bundle.git"
@@ -36,15 +36,15 @@
         "codefog/contao-haste": "^5.2",
         "codefog/contao-news_categories": "^4.0",
         "contao-themes-net/font-awesome-inserttag-bundle": "^1.1",
-        "contao/calendar-bundle": "5.5.*",
-        "contao/comments-bundle": "5.5.*",
+        "contao/calendar-bundle": "5.6.*",
+        "contao/comments-bundle": "5.6.*",
         "contao/conflicts": "*@dev",
-        "contao/faq-bundle": "5.5.*",
+        "contao/faq-bundle": "5.6.*",
         "contao/imagine-svg": "^1.0",
-        "contao/listing-bundle": "5.5.*",
-        "contao/manager-bundle": "5.5.*",
-        "contao/news-bundle": "5.5.*",
-        "contao/newsletter-bundle": "5.5.*",
+        "contao/listing-bundle": "5.6.*",
+        "contao/manager-bundle": "5.6.*",
+        "contao/news-bundle": "5.6.*",
+        "contao/newsletter-bundle": "5.6.*",
         "fritzmg/contao-newslist-extended": "^2.1",
         "fritzmg/contao-sharebuttons": "^2.2",
         "fritzmg/contao-swiper": "^4.3",
