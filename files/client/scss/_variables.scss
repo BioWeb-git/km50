@@ -46,7 +46,7 @@ $breakpoint-mobile-portrait: 600px !default;
 
 /* GUTTER */
 $gutter-width: 1rem !default;
-$gutter-col: 4% !default;
+$gutter-col: 1% !default;
 
 // ===========================================
 // Layout
@@ -118,7 +118,7 @@ $border-medium: $grey-medium !default;
 $border-dark: $grey-dark !default;
 $nav-border-color: $grey-medium !default;
 $dropdown-border: $grey-medium !default;
-$border-nav-mobile: $black !default;
+$border-nav-mobile: rgba($white, .1) !default;
 $border-radius: 5px !default;
 $header-background-color: $white !default;
 // Shadows
@@ -138,7 +138,7 @@ $content-wrapper-background: $white !default;
 $nav-background-color: $white !default;
 $dropdown-background: $white !default;
 $subnav-background-color: $grey-light !default;
-$nav-mobile-background-color: $black-light !default;
+$nav-mobile-background-color: $color1 !default;
 $placeholder-background: $grey-dark !default;
 $background-color-inverted: $grey-ultra-dark !default;
 $background-color-1: $grey-ultra-dark !default;

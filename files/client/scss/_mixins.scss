@@ -118,17 +118,29 @@
 }
 
 @mixin column-classes($gutter-width, $max-columns, $class-name) {
-	@for $cols from 1 through $max-columns {
-		$colWidth: (1 - $gutter-width * ($cols - 1)) / $cols;
-		@for $span from 1 through $cols {
-			&.-#{unquote($class-name)}-col-#{$cols}-#{$span} {
-				//width: ($colWidth * $span + $gutter-width * ($span - 1)) * 100%;
-				width: percentage($span/$cols) - ($gutter-width / 2 );
-				//width: percentage(1/$cols);
-				//width: (100% - ($gutter-width * 2)) /$cols;
-			}
-		}
-	}
+    @for $cols from 1 through $max-columns {
+        @for $span from 1 through $cols {
+            &.-#{unquote($class-name)}-col-#{$cols}-#{$span} {
+                $col-fraction: $span / $cols;
+                
+                $safe-basis: 100%; // Valeur par défaut pour N=1
+
+                @if $cols > 1 {
+                    // Formule pour N > 1 colonne : Largeur fractionnaire - Gouttière + Marge de sécurité
+                    $safe-basis: calc((#{$col-fraction} * 100%) - #{$gutter-col} - 0.01%); 
+                } @else {
+                    // Formule pour N = 1 colonne (cas où $span = 1 et $cols = 1)
+                    $safe-basis: 100%;
+                }
+                
+                // --- Application des propriétés ---
+                width: $safe-basis; // Ajout du !important pour la spécificité
+                flex-basis: $safe-basis;
+                flex-grow: 0;  // Interdit d'étirer (grille rigide)
+                flex-shrink: 0; // Interdit de compresser (grille rigide)
+            } 
+        }
+    }
 }
 
 @mixin mediaquery($breakpoint, $property: max-width) {

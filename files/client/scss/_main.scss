@@ -110,158 +110,95 @@ body{
     @include box-sizing(inherit);
 }
 .rs-columns-master{
-    container-type : inline-size;
+    container-type : inline-size; // Gardé, mais attention au support
 }
 .rs-columns{
     clear           : both;
-    //display: inline-block;
-    //vertical-align: top;
     width           : 100%;
     display         : flex;
-    flex-wrap       : wrap;
-    flex-direction  : column;
+    flex-wrap       : wrap; // Essentiel pour le wrapping des colonnes
+    flex-direction  : column; // Mobile-first : Colonnes empilées
     justify-content : normal;
+    gap             : $gutter-width $gutter-col; // Gère les espacements (horizontaux ET verticaux)
+    
     .rs-column{
-        //float: left;
-        width      : 100%;
-        margin-top : col(1, 20);
-        //margin-right: col(1, 20);
-        &.-large-first{
-            clear : left;
-        }
-        &.-large-last{
-            //margin-right: -5px;
-        }
-        &.-large-first-row{
-            margin-top : 0;
-        }
-        @include column-classes($gutter-col, 7, large);
+        width       : 100%; 
+        flex-grow   : 1; // Permet aux éléments de l'espace libre de s'étirer en mode colonne
+
+        // Neutralisation des anciennes marges/flottants et correction de la boîte
+        margin-top  : 0; // Le gap gère l'espacement vertical entre les éléments
+        box-sizing  : border-box; 
+        
+        // La classe large s'applique par défaut
+        @include column-classes($gutter-col, 7, large); 
+        
+        // Nettoyage des anciennes règles de float
+        &.-large-first{ clear : none; } 
+        &.-large-first-row{ margin-top : 0; } // Le gap gère déjà l'espacement initial
+        
+        // Selecteurs spécifiques
         .oneo-no-sidebar &, .page-footer &{
-            margin-top : col(1, 30);
-            //margin-right: col(1, 30);
-            &.-large-last{
-                //margin-right: -5px;
-            }
-            &.-large-first-row{
-                margin-top : 0;
-            }
+            margin-top : 0;
+            &.-large-first-row{ margin-top : 0; }
             @include column-classes($gutter-col, 7, large);
         }
     }
+
+    // --- LOGIQUE MEDIA QUERY STANDARD (pour passer en mode ligne) ---
+    
+    // Le bloc est conservé mais dépend de mixins @media (même si le nom 'container' est gardé)
     &:not(.mediaquery){
-        @include container-min(mobile){
-            flex-direction  : row;
-            justify-content : space-between;
+        container-type : inline-size; 
+        flex-direction  : row; 
+        // Passage en mode ROW pour les grands écrans
+        @include container(mobile){ // Utiliser @mediaquery-min(mobile) à la place
+            
         }
+
         .rs-column{
-            @include container(tablet){
+            // TABLETTE / MEDIUM (doit être remplacé par un @media screen and)
+            @include container(tablet){ 
+                @include column-classes($gutter-col, 7, medium);
+                box-sizing: border-box; // Rappel de sécurité
+                
+                // Neutralisation des marges obsolètes dans ce breakpoint
+                margin-top : 0; 
+                &.-medium-first{ clear : none; }
+                &.-medium-first-row{ margin-top : 0; }
+                
+                // Selecteurs spécifiques
                 &, .oneo-no-sidebar &, .page-footer &{
-                    margin-top : col(1, 22);
-                    //margin-right: col(1, 22);
-                    &.-large-first{
-                        clear : none;
-                    }
-                    &.-large-last{
-                        //margin-right: col(1, 22);
-                    }
-                    &.-large-first-row{
-                        margin-top : col(1, 22);
-                    }
-                    &.-medium-first{
-                        clear : left;
-                    }
-                    &.-medium-last{
-                        //margin-right: -5px;
-                    }
-                    &.-medium-first-row{
-                        margin-top : 0;
-                    }
                     @include column-classes($gutter-col, 7, medium);
                 }
             }
-            @include container(mobile){
-                width      : 100%;
-                margin-top : $gutter-width;
+            
+            // MOBILE (doit être remplacé par un @media screen and)
+            @include container(mobile){ 
+                width       : 100%; 
+                margin-top  : 0;
+                
+                // Selecteurs spécifiques
                 &, .oneo-no-sidebar &, .page-footer &{
-                    &.-medium-first{
-                        clear : none;
-                    }
-                    &.-medium-last{
-                        //margin-right: col(1, 22);
-                    }
-                    &.-medium-first-row{
-                        margin-top : col(1, 22);
-                    }
-                    &.-small-first{
-                        margin-top : 0 !important;
-                        clear      : left;
-                    }
-                    &.-small-last{
-                        //margin-right: -5px;
-                    }
-                    &.-small-first-row{
-                        margin-top : 0;
-                    }
                     @include column-classes($gutter-col, 7, small);
+                    &.-small-first-row{ margin-top : 0; }
                 }
             }
         }
     }
+    
+    // --- LOGIQUE pour &.mediaquery ---
     &.mediaquery{
-        @include mediaquery-min(mobile){
+        @include mediaquery-min(mobile){ 
             flex-direction  : row;
             justify-content : space-between;
         }
+        
         .rs-column{
-            @include mediaquery(tablet){
-                &, .no-sidebar &, .page-footer &{
-                    margin-top : col(1, 22);
-                    //margin-right: col(1, 22);
-                    &.-large-first{
-                        clear : none;
-                    }
-                    &.-large-last{
-                        //margin-right: col(1, 22);
-                    }
-                    &.-large-first-row{
-                        margin-top : col(1, 22);
-                    }
-                    &.-medium-first{
-                        clear : left;
-                    }
-                    &.-medium-last{
-                        //margin-right: -5px;
-                    }
-                    &.-medium-first-row{
-                        margin-top : 0;
-                    }
-                    @include column-classes($gutter-col, 7, medium);
-                }
+            @include mediaquery(tablet){ 
+                @include column-classes($gutter-col, 7, medium);
             }
-            @include mediaquery(mobile){
-                width      : 100%;
-                margin-top : $gutter-width;
-                &, .no-sidebar &, .page-footer &{
-                    &.-medium-first{
-                        clear : none;
-                    }
-                    &.-medium-last{
-                        //margin-right: col(1, 22);
-                    }
-                    &.-medium-first-row{
-                        margin-top : col(1, 22);
-                    }
-                    &.-small-first{
-                        margin-top : 0 !important;
-                        clear      : left;
-                    }
-                    &.-small-last{
-                        //margin-right: -5px;
-                    }
-                    &.-small-first-row{
-                    }
-                    @include column-classes($gutter-col, 7, small);
-                }
+            @include mediaquery(mobile){ 
+                @include column-classes($gutter-col, 7, small);
             }
         }
     }
