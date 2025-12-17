@@ -5,13 +5,35 @@ $line-height-heading: 1.1;
 
 $white: #ffffff;
 $black: #000000;
-$blue: #125994;
-$blue-dark: #125994;
-$blue2: #1b86df;
+
+$blue: #446179;
+$blue1: $blue; 
+$blue2: #45818e;
+$blue3: #034f66;
+$blue4: #76d3d3;
+$blue-dark: #034f66;
+
+$terre1: #796c5e;
+$terre2: #b9a48e;
+$terre3: #796c5e;
+$terre4: #ee6241;
+
+$green1: #313f2b;
+$green2: #86a178;
+$green3: #436235;
+$green4: #a4c051;
 
 $color1: $black;
-$color2: $blue;
-$color3: $blue2;
+$color2: $terre3;
+$color3: $blue3;
+$color4: $green3;
 
-$button-color: $black;
-$button-background-color: $white;
+$button-color: $terre3;
+$button-background-color: $green2;
+
+$headline-size-1: 2.86667em;
+$headline-size-2: 3em;
+$headline-size-3: 1.8em;
+$headline-size-4: 1.6em;
+$headline-size-5: 1.4em;
+$headline-size-6: 1.2em;

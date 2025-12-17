@@ -4,16 +4,161 @@
 
 .text-intro {
     font-size: 1.2em;
+    color: $color2;
+}
+
+.centered-wrapper {
+    &.-viewport-height {
+        height: 100vh;
+    }
+}
+
+.content-youtube>figure {
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.img-round {
+    figure {
+        img {
+            display: inline-block;
+            overflow: hidden;
+            border-radius: 50%;
+            width: auto;
+        }
+    }
+}
+
+.img-center {
+    figure {
+        display: block;
+        text-align: center;
+    }
+}
+
+.team-boxes {
+    .team-boxes-item {
+        .team-boxes-image-wrapper {
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            float: none;
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.headline-box {
+    h2 {
+        font-size: $headline-size-2;
+    }
+
+    h3 {
+        font-size: $headline-size-3;
+    }
+
+    h4 {
+        font-size: $headline-size-4;
+    }
+
+    h5 {
+        font-size: $headline-size-5;
+    }
 }
 
 h1,
-h2,
+h2 {
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: $color2;
+
+    .headline-box & {
+        color: $color2;
+    }
+}
+
 h3,
 h4,
 h5,
 h6 {
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: $color3 !important;
     font-weight: $font-weight2 !important;
     line-height: $line-height-heading;
+
+    .headline-box & {
+        color: $color1 !important;
+    }
+}
+
+body {
+    &:not(.scroll) {
+        .header-navigation {
+            box-shadow: none;
+        }
+    }
+}
+
+.headline-box {
+    &:after {
+        background: rgba($black, .2);
+        height: 1px;
+    }
+}
+
+.-color-inverted {
+    .headline-box {
+        &:after {
+            background: $color2;
+        }
+    }
+
+    h2 {
+        color: $white !important;
+    }
+
+    h2 {
+        color: $white !important;
+    }
+
+    h3 {
+        color: $white !important;
+    }
+
+    h4 {
+        color: $white !important;
+    }
+
+    h5 {
+        color: $white !important;
+    }
+
+    .headline-box {
+        h2 {
+            color: $white !important;
+        }
+
+        h2 {
+            color: $white !important;
+        }
+
+        h3 {
+            color: $white !important;
+        }
+
+        h4 {
+            color: $white !important;
+        }
+
+        h5 {
+            color: $white !important;
+        }
+    }
+
+    .text-intro {
+        color: $white;
+    }
 }
 
 .module-cookiebar-opener a {
@@ -21,21 +166,24 @@ h6 {
 }
 
 .button {
-    border: 2px solid $button-color;
+    background: $button-background-color;
+    color: $white;
 
     &:hover,
     &:focus {
         background-color: $button-color;
-        color: $button-background-color
     }
 }
 
-.skew{
+.skew {
     margin: -70px auto;
     transform: skewY(-3deg);
-    > .master-wrapper{
-        transform: skewY(3deg); 
-        > .centered-wrapper-background, .centered-wrapper-gradient{
+
+    >.master-wrapper {
+        transform: skewY(3deg);
+
+        >.centered-wrapper-background,
+        .centered-wrapper-gradient {
             top: -110px;
             bottom: -110px;
         }
@@ -68,6 +216,11 @@ h6 {
         }
 
         .header-logo {
+            max-width: 300px;
+            margin: 0 auto;
+            border-radius: 0 !important;
+            overflow: visible;
+
             .text-intro {
                 opacity: 0;
                 transform: translateY(50px);
@@ -88,9 +241,7 @@ h6 {
     &.in-view {
         >.centered-wrapper {
             .centered-wrapper-background {
-                opacity: .4;
-                transform: scale(1.3);
-                transform-origin: center;
+                opacity: 1;
             }
 
             img,
@@ -107,27 +258,37 @@ h6 {
         margin: 3px 0;
     }
 }
-.icon-links.social{
-    li{
-        a{
+
+.content-image {
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.icon-links.social {
+    li {
+        a {
             background: $white;
-            &:before{
+
+            &:before {
                 color: $black;
             }
         }
     }
 }
-.tagline{
-    .tagline-inner{
-        .breadcrumbs-wrapper{
-            background : url("/files/images/backgrounds/bitume.jpg") repeat center center;
+
+.tagline {
+    .tagline-inner {
+        .breadcrumbs-wrapper {
+            background: url("/files/images/backgrounds/bitume.jpg") repeat center center;
         }
     }
 }
-.content-wrapper{
+
+.content-wrapper {
     position: relative;
     z-index: 2;
 }
+
 .home {
     .page-header {
         overflow: hidden;
@@ -156,6 +317,7 @@ h6 {
             @include mediaquery-min(tablet) {
                 padding: 0;
             }
+
             >ul {
                 >li {
                     &.home {
@@ -186,10 +348,13 @@ h6 {
     &:not(.scroll) {
 
         .icon-links:not(.social) {
-            a:before, .icon-links-label{
-                color: $white !important;        
+
+            a:before,
+            .icon-links-label {
+                color: $white !important;
             }
         }
+
         .main-navigation-wrapper,
         .header-bar {
             background: none;
@@ -223,8 +388,67 @@ h6 {
         }
     }
 }
-.mask{
-    img{
+
+.mask-bg {
+    background: white;
+
+    @keyframes defilementInfini1 {
+        from {
+            mask-position: 0 100%, 50% 0;
+        }
+
+        to {
+            mask-position: -2000px 100%, 50% 0;
+        }
+    }
+
+    @keyframes defilementInfini2 {
+        from {
+            mask-position: 0 0, 50% 100%;
+        }
+
+        to {
+            mask-position: 2000px 0%, 50% 100%;
+        }
+    }
+
+    >.master-wrapper {
+        mask-repeat: repeat-x, no-repeat;
+        mask-position: 0% 100%, 50% 0%;
+        max-width: 100%;
+        display: block;
+        mask-size: 2000px auto, 100% 70%;
+        mask-mode: luminance;
+        animation: defilementInfini1 70s linear infinite;
+    }
+
+    >.centered-wrapper-background {
+        background-color: black;
+    }
+
+    @for $i from 1 through 20 {
+        &.wave#{$i} {
+            >.master-wrapper {
+                mask-image: url("/files/images/masks/wave#{$i}.png"),
+                linear-gradient(#fff, #fff);
+            }
+
+            >.centered-wrapper-background {}
+        }
+    }
+
+    &.wave-top {
+        >.master-wrapper {
+            mask-size: 2000px auto, 100% 70%;
+            mask-position: 0 0, 50% 100%;
+            animation: defilementInfini2 70s linear infinite;
+        }
+    }
+}
+
+.mask {
+
+    img {
         mask-repeat: no-repeat;
         mask-position: center;
         max-width: 100%;
@@ -234,10 +458,12 @@ h6 {
         mask-size: 100%;
         mask-mode: luminance;
     }
+
     // --- Génération des classes spécifiques ---
 
     // On crée une boucle qui va de 1 "through" (jusqu'à) 10
     @for $i from 1 through 20 {
+
         // Le sélecteur est généré : &.mask1, &.mask2, etc.
         // La variable #{$i} est interpolée pour devenir le chiffre
         &.mask#{$i} {
@@ -249,38 +475,46 @@ h6 {
     }
 }
 
-.icon-boxes{
-    .icon-boxes-item{
-        .icon-boxes-item-text{
-            color : $black;
+.icon-boxes {
+    .icon-boxes-item {
+        .icon-boxes-item-text {
+            color: $black;
         }
     }
 }
-.voyages-list{
-  display: grid;
-  
-  /* Crée 4 colonnes de taille égale */
-  grid-template-columns: repeat(4, 1fr); 
-  
-  /* Ajoute un espace entre les lignes et les colonnes */
-  gap: 20px; /* ou row-gap et column-gap séparémen²t */
-  padding: $gutter-width;
-  .voyage-content{
-    margin-bottom: 15px;
-  }
-}   
+
+.voyages-list {
+    @include mediaquery-min(tablet) {
+        display: grid;
+    }
+
+    /* Crée 4 colonnes de taille égale */
+    grid-template-columns: repeat(4, 1fr);
+
+    /* Ajoute un espace entre les lignes et les colonnes */
+    gap: 20px;
+    /* ou row-gap et column-gap séparémen²t */
+    padding: $gutter-width;
+
+    .voyage-content {
+        margin-bottom: 15px;
+    }
+}
+
 .voyages-master {
     position: relative;
     padding: $gutter-width;
     box-shadow: -5px -20px 15px rgba($black, 0.2);
-    .bb{
+
+    .bb {
         padding: 5px 0 0;
         margin: 5px 0 0;
         border-top-width: 1px;
         border-top-style: solid;
         border-top-color: $grey-medium;
     }
-    .voyage-archive{
+
+    .voyage-archive {
         position: relative;
         z-index: 2;
         margin-top: -10px;
@@ -292,11 +526,13 @@ h6 {
         border-radius: 10px;
         left: 10px;
     }
+
     .voyage-title {
         margin-top: 0;
     }
-    .voyage-wrapper{
-        .voyage-region{
+
+    .voyage-wrapper {
+        .voyage-region {
             position: absolute;
             top: -10px;
             right: -10px;
@@ -304,15 +540,16 @@ h6 {
             color: $white;
             padding: 0.25rem 0.5rem;
             border-radius: 10px;
-            
+
             i {
                 margin-right: 0.25rem;
             }
         }
-        .voyage-duree{
-        }
-        .voyage-dates{
-            .voyage-dates-liste{
+
+        .voyage-duree {}
+
+        .voyage-dates {
+            .voyage-dates-liste {
                 margin-top: 5px;
                 margin-bottom: 0;
             }
@@ -320,27 +557,33 @@ h6 {
     }
 
 }
+
 .voyage_full {
-    > .centered-wrapper{
-        > .centered-wrapper-innner{
+    >.centered-wrapper {
+        >.centered-wrapper-innner {
             margin: 50px $gutter-width;
-        }   
+        }
     }
-    .voyage-top-infos{
+
+    .voyage-top-infos {
         display: flex;
         gap: 5px;
-        .voyage-region, .voyage-duree {
+
+        .voyage-region,
+        .voyage-duree {
             background: $black;
             color: $white;
             z-index: 1;
             padding: 5px !important;
             border: none;
-            margin: 0 !important; 
+            margin: 0 !important;
         }
     }
-    .voyage-header{
+
+    .voyage-header {
         position: relative;
-        .image_container{
+
+        .image_container {
             width: 100%;
             position: absolute;
             top: 0;
@@ -348,34 +591,43 @@ h6 {
             bottom: 0;
             left: 0;
             margin: 0;
-            img{
+
+            img {
                 height: 100%;
                 object-fit: cover;
             }
         }
-        .centered-wrapper-inner{
+
+        .centered-wrapper-inner {
             position: relative;
             z-index: 2;
             padding-bottom: 25px;
-            .voyage-title-wrapper{
+
+            .voyage-title-wrapper {
                 z-index: 2;
                 padding: 300px 550px 50px $gutter-width;
-                .voyage-title{
+
+                .voyage-title {
                     font-size: 3em;
                 }
-                .voyage-title, .voyage-subtitle{
+
+                .voyage-title,
+                .voyage-subtitle {
                     color: $white;
                     text-shadow: 1px 1px 4px rgba($black, 0.7);
                     margin: 5px 0;
                 }
+
                 padding-bottom: 5px;
-                .voyage-archive{
+
+                .voyage-archive {
                     color: $white;
                     border-top: 1px solid rgba($black, 0.2);
                 }
             }
         }
-        &:after{
+
+        &:after {
             content: "";
             position: absolute;
             z-index: 1;
@@ -388,25 +640,32 @@ h6 {
         }
 
     }
-    .voyage-wrapper{
+
+    .voyage-wrapper {
         padding: 0 $gutter-width;
     }
-    .voyage-content{
+
+    .voyage-content {
         position: relative;
-        .voyage-content-wrapper{
+
+        .voyage-content-wrapper {
             margin-bottom: $gutter-width;
             position: absolute;
             width: 500px;
             right: 0;
             bottom: 50px;
             color: $white;
-            background: rgba($black, 0.5);    
+            background: rgba($black, 0.5);
             background: linear-gradient(90deg, rgba(0, 0, 0, .7) 28%, rgba(0, 0, 0, 0) 100%);
             z-index: 3;
             padding: 1rem;
         }
-        .bb{
-            &:not(.brand), &:not(.voyage-duree), &:not(.voyage-region){
+
+        .bb {
+
+            &:not(.brand),
+            &:not(.voyage-duree),
+            &:not(.voyage-region) {
                 padding: 5px 0 0;
                 margin: 5px 0 0;
                 border-top-width: 1px;
@@ -415,7 +674,8 @@ h6 {
             }
         }
     }
-    .voyage-detail { 
+
+    .voyage-detail {
         .voyage-programme {
             .programme-jour {
                 display: flex;
@@ -432,18 +692,20 @@ h6 {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.5rem; // Remplacer par ta variable $spacing-unit
-            
+
             // Trois colonnes sur tablette/desktop
             @media (min-width: 768px) {
                 grid-template-columns: repeat(3, 1fr);
-                
+
                 // Règle ajoutée : Le H2 doit couvrir les 3 colonnes (de la ligne 1 à la fin)
-                & > h2 { 
+                &>h2 {
                     grid-column: 1 / span 3;
                 }
             }
 
-            .prix-box, .inclusions-box, .exclusions-box {
+            .prix-box,
+            .inclusions-box,
+            .exclusions-box {
                 padding: 1.5rem;
                 border: 1px dashed currentColor;
                 border-radius: 0.25rem;
@@ -464,14 +726,16 @@ h6 {
             }
         }
     }
-    .back{
+
+    .back {
         text-align: center;
         margin: 50px 25px;
     }
 }
-.mod_newsreader{
-    .back{
+
+.mod_newsreader {
+    .back {
         text-align: center;
-        margin: 50px 25px; 
+        margin: 50px 25px;
     }
 }
