@@ -18638,100 +18638,51 @@ body:not(.scroll) .header-navigation {
 }
 
 .mask-bg {
-  background: white;
-}
-@keyframes defilementInfini1 {
-  from {
-    mask-position: 0 100%, 50% 0;
-  }
-  to {
-    mask-position: -2000px 100%, 50% 0;
-  }
-}
-@keyframes defilementInfini2 {
-  from {
-    mask-position: 0 0, 50% 100%;
-  }
-  to {
-    mask-position: 2000px 0%, 50% 100%;
-  }
-}
-.mask-bg > .master-wrapper {
-  mask-repeat: repeat-x, no-repeat;
-  mask-position: 0% 100%, 50% 0%;
-  max-width: 100%;
-  display: block;
-  mask-size: 2000px auto, 100% 70%;
-  mask-mode: luminance;
-  animation: defilementInfini1 70s linear infinite;
-}
-.mask-bg > .centered-wrapper-background {
-  background-color: black;
-}
-.mask-bg.wave1 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave1.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave2 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave2.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave3 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave3.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave4 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave4.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave5 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave5.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave6 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave6.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave7 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave7.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave8 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave8.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave9 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave9.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave10 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave10.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave11 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave11.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave12 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave12.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave13 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave13.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave14 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave14.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave15 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave15.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave16 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave16.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave17 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave17.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave18 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave18.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave19 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave19.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave20 > .master-wrapper {
-  mask-image: url("/files/images/masks/wave20.png"), linear-gradient(#ffffff, #ffffff);
-}
-.mask-bg.wave-top > .master-wrapper {
-  mask-size: 2000px auto, 100% 70%;
-  mask-position: 0 0, 50% 100%;
-  animation: defilementInfini2 70s linear infinite;
+    /*background: white;
+
+    @keyframes defilementInfini1 {
+        from {
+            mask-position: 0 100%, 50% 0;
+        }
+
+        to {
+            mask-position: -2000px 100%, 50% 0;
+        }
+    }
+
+    @keyframes defilementInfini2 {
+        from {
+            mask-position: 0 0, 50% 100%;
+        }
+
+        to {
+            mask-position: 2000px 0%, 50% 100%;
+        }
+    }
+
+    >.master-wrapper {
+        mask-repeat: repeat-x, no-repeat;
+        mask-position: 0% 100%, 50% 0%;
+        max-width: 100%;
+        display: block;
+        mask-size: 2000px auto, 100% 70%;
+        mask-mode: luminance;
+        animation: defilementInfini1 70s linear infinite;
+    }
+
+    >.centered-wrapper-background {
+        background-color: black;
+    }
+*/
+  /*
+      &.wave-top {
+          >.master-wrapper {
+              mask-size: 2000px auto, 100% 70%;
+              mask-position: 0 0, 50% 100%;
+              animation: defilementInfini2 70s linear infinite;
+          }
+      }
+          */
 }
 
 .mask img {
@@ -18811,7 +18762,7 @@ body:not(.scroll) .header-navigation {
 
 .voyages-list {
   /* Crée 4 colonnes de taille égale */
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   /* Ajoute un espace entre les lignes et les colonnes */
   gap: 20px;
   /* ou row-gap et column-gap séparémen²t */
@@ -18828,8 +18779,10 @@ body:not(.scroll) .header-navigation {
 
 .voyages-master {
   position: relative;
-  padding: 2rem;
   box-shadow: -5px -20px 15px rgba(0, 0, 0, 0.2);
+}
+.voyages-master .voyage-main-wrapper {
+  padding: 0 2rem 2rem 2rem;
 }
 .voyages-master .bb {
   padding: 5px 0 0;
@@ -18848,10 +18801,11 @@ body:not(.scroll) .header-navigation {
   display: inline-block;
   top: -25px;
   border-radius: 10px;
-  left: 10px;
+  left: 0;
 }
 .voyages-master .voyage-title {
-  margin-top: 0;
+  font-size: 1.8em;
+  margin-top: -19px;
 }
 .voyages-master .voyage-wrapper .voyage-region {
   position: absolute;

@@ -390,7 +390,7 @@ body {
 }
 
 .mask-bg {
-    background: white;
+    /*background: white;
 
     @keyframes defilementInfini1 {
         from {
@@ -425,18 +425,18 @@ body {
     >.centered-wrapper-background {
         background-color: black;
     }
+*/
+    //@for $i from 1 through 20 {
+    //    &.wave#{$i} {
+    //       >.master-wrapper {
+    //          mask-image: url("/files/images/masks/wave#{$i}.png"),
+    //        linear-gradient(#fff, #fff);
+    ///   }
 
-    @for $i from 1 through 20 {
-        &.wave#{$i} {
-            >.master-wrapper {
-                mask-image: url("/files/images/masks/wave#{$i}.png"),
-                linear-gradient(#fff, #fff);
-            }
-
-            >.centered-wrapper-background {}
-        }
-    }
-
+    //            >.centered-wrapper-background {}
+    //      }
+    //}
+/*
     &.wave-top {
         >.master-wrapper {
             mask-size: 2000px auto, 100% 70%;
@@ -444,6 +444,7 @@ body {
             animation: defilementInfini2 70s linear infinite;
         }
     }
+        */
 }
 
 .mask {
@@ -489,7 +490,7 @@ body {
     }
 
     /* Crée 4 colonnes de taille égale */
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     /* Ajoute un espace entre les lignes et les colonnes */
     gap: 20px;
@@ -503,8 +504,10 @@ body {
 
 .voyages-master {
     position: relative;
-    padding: $gutter-width;
     box-shadow: -5px -20px 15px rgba($black, 0.2);
+    .voyage-main-wrapper {
+        padding: 0 $gutter-width $gutter-width $gutter-width;
+    }
 
     .bb {
         padding: 5px 0 0;
@@ -524,11 +527,12 @@ body {
         display: inline-block;
         top: -25px;
         border-radius: 10px;
-        left: 10px;
+        left: 0;
     }
 
     .voyage-title {
-        margin-top: 0;
+        font-size: 1.8em;    
+        margin-top: -19px;
     }
 
     .voyage-wrapper {

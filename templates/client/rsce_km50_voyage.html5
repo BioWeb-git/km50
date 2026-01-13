@@ -27,7 +27,6 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 }
 $categorieClass = $this->categorie_sejour ?: 'échappée';
 ?>
-
 <div class="voyage-wrapper">
 	<div class="voyage-content">
 		
@@ -137,7 +136,10 @@ $categorieClass = $this->categorie_sejour ?: 'échappée';
 			</section>
 
 		</div>
-		
+		<h2 style="margin: 50px 0 0;">Réservation</h2>
+	<script async src="https://tally.so/widgets/embed.js"></script>
+	<iframe data-tally-src="https://tally.so/embed/dW0ElD?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Réservation Séjour Échappée Gourmande en Aubrac 2026"></iframe>
+	<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
 	<?php endif;?>
-
+	
 </div>

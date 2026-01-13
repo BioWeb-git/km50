@@ -12,30 +12,32 @@
 			</div>
 		<?php endif ?>
 	<?php endif ?>
-    <div class="voyage-archive">
-        <?= $this->archive->title; ?>
-    </div>
-	<h2 class="voyage-title">
+	<div class="voyage-main-wrapper">
+	    <div class="voyage-archive">
+	        <?= $this->archive->title; ?>
+	    </div>
+		<h2 class="voyage-title">
+			<?php if ($this->link): ?>
+				<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+			<?php endif ?>
+				<?php echo $this->newsHeadline ?>
+			<?php if ($this->link): ?>
+				</a>
+			<?php endif ?>
+		</h2>
+		<?php if ($this->hasSubHeadline): ?>
+			<div class="voyage-subtitle"><?= $this->subHeadline ?></div>
+		<?php endif; ?>
+		<?php if ($this->hasText): ?>
+			<div class="voyage-content">
+				<?= $this->text ?>
+			</div>
+		<?php endif; ?>
 		<?php if ($this->link): ?>
-			<a href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
-		<?php endif ?>
-			<?php echo $this->newsHeadline ?>
-		<?php if ($this->link): ?>
+			<a class="button" href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
+				Afficher le voyage
 			</a>
 		<?php endif ?>
-	</h2>
-	<?php if ($this->hasSubHeadline): ?>
-		<div class="voyage-subtitle"><?= $this->subHeadline ?></div>
-	<?php endif; ?>
-	<?php if ($this->hasText): ?>
-		<div class="voyage-content">
-			<?= $this->text ?>
-		</div>
-	<?php endif; ?>
-	<?php if ($this->link): ?>
-		<a class="button" href="<?php echo $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?php echo $this->attributes ?>>
-			Afficher le voyage
-		</a>
-	<?php endif ?>
+	</div>	
 	<?php // dump($this); ?>
 </div>
