@@ -165,12 +165,12 @@ body {
     color: $black;
 }
 
-.button {
+.button, button {
     background: $button-background-color;
     color: $white;
 
     &:hover,
-    &:focus {
+    &:focus { 
         background-color: $button-color;
     }
 }

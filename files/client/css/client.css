@@ -18474,11 +18474,11 @@ body:not(.scroll) .header-navigation {
   color: #000000;
 }
 
-.button, .module-cookiebar-opener {
+.button, .module-cookiebar-opener, button {
   background: #86a178;
   color: #ffffff;
 }
-.button:hover, .module-cookiebar-opener:hover, .button:focus, .module-cookiebar-opener:focus {
+.button:hover, .module-cookiebar-opener:hover, .button:focus, .module-cookiebar-opener:focus, button:hover, button:focus {
   background-color: #796c5e;
 }
 
@@ -18815,7 +18815,7 @@ body:not(.scroll) .header-navigation {
   margin: 0;
 }
 .voyages-list .voyages-master .voyage-title h2 {
-  line-height: 1em;
+  line-height: 1;
   margin: 0;
   font-size: 1.8em;
   text-shadow: 2px 2px 2px #ffffff;
