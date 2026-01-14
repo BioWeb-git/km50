@@ -61,15 +61,15 @@
         "numero2/contao-proper-filenames": "^2.1",
         "numero2/contao-tags": "^0.4",
         "oveleon/contao-cookiebar": "^2.0",
+        "scssphp/scssphp": "*",
         "terminal42/contao-changelanguage": "^3.7",
         "terminal42/contao-leads": "^3.0",
         "terminal42/contao-mp_forms": "^5.2",
         "terminal42/contao-url-rewrite": "^1.7",
         "terminal42/dc_multilingual": "^4.5",
         "terminal42/notification_center": "^2.0",
-        "trilobit-gmbh/contao-tiles-bundle": "^2.0",
-        "scssphp/scssphp": "*",
-        "bioweb/bioweb-bundle": "dev-master"
+        "timgatzky/form_google_recaptcha": "^2.0",
+        "trilobit-gmbh/contao-tiles-bundle": "^2.0"
     },
     "extra": {
         "contao-component-dir": "assets",

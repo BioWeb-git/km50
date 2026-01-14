@@ -1,0 +1,27 @@
+<?php 
+// load the google recaptcha API
+$GLOBALS['TL_JAVASCRIPT'][] = 'https://www.google.com/recaptcha/api.js';
+?>
+
+<?php $this->extend('form_row'); ?>
+
+<?php $this->block('label'); ?>
+  <?php if ($this->label): ?>
+    <label for="ctrl_<?= $this->id ?>"<?php if ($this->class): ?> class="<?= $this->class ?>"<?php endif; ?>>
+      <span class="invisible"><?= $this->mandatoryField ?> </span><?= $this->label ?><span class="mandatory">*</span>
+    </label>
+  <?php endif; ?>
+<?php $this->endblock(); ?>
+
+<?php $this->block('field'); ?>
+  <?php if ($this->hasErrors()): ?>
+    <p class="error"><?= $this->getErrorAsString() ?></p>
+  <?php endif; ?>
+  <button type="submit" class="g-recaptcha submit" data-sitekey="<?= $this->sitekey; ?>" data-callback="onSubmit_<?= $this->id; ?>" data-action="submit"><?= $this->svalue; ?></button>
+  <script>
+  function onSubmit_<?= $this->id; ?>(token)
+	{
+    jQuery('button[data-sitekey="<?= $this->sitekey; ?>"]').parents('form').submit();
+  }
+</script>
+<?php $this->endblock(); ?>
