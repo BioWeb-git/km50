@@ -31,7 +31,26 @@ return array(
     'types' => array('content'),
     'standardFields' => array('cssID', 'space'),
     'fields' => array(
-
+        'reservation_tally_id' => array(
+            'label' => array('fr' => array('ID Tally', 'Génération du formulaire de réservation externe.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50'),
+        ),
+        'min_participants' => array(
+            'label' => array('fr' => array('Nombre minimum de participants', 'Nombre requis pour confirmer le séjour.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50', 'rgxp' => 'digit'),
+        ),
+        'max_participants' => array(
+            'label' => array('fr' => array('Nombre maximum de participants', 'Capacité maximale du groupe.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50', 'rgxp' => 'digit'),
+        ),
+        'date_limite' => array(
+            'label' => array('fr' => array('Date limite de réservation', 'Date au-delà de laquelle les inscriptions ferment.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50', 'datepicker' => true, 'rgxp' => 'date'),
+        ),
         'dates_liste' => array( // CHANGEMENT APPLIQUÉ ICI : Passage à inputType 'list'
             'label' => array('fr' => array('Dates disponibles', 'Ajoutez les différentes dates ou périodes de séjour.')),
             'elementLabel' => 'Date %s',
@@ -50,51 +69,8 @@ return array(
             'inputType' => 'text',
             'eval' => array('tl_class' => 'w50'),
         ),
-        'region_select' => array(
-            'label' => array('fr' => array('Région', 'Choix parmi les régions françaises.')),
-            'inputType' => 'select',
-            'options' => $regions,
-            'eval' => array('includeBlankOption' => true, 'tl_class' => 'w50'),
-        ),
-        'region_custom' => array(
-            'label' => array('fr' => array('Région (personnalisée)', 'Surcharge le choix ci-dessus si renseigné.')),
-            'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
-        ),
-        'prix_liste' => array(
-            'label' => array('fr' => array('Prix', 'Ex: TTC (à partir de)')),
-            'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
-        ),
-        'participants' => array(
-            'label' => array('fr' => array('Nombre de participants', 'Ex: Mini 8 / Maxi 12')),
-            'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
-        ),
         'logement' => array(
             'label' => array('fr' => array('Logement', 'Ex: Chambre d\'hôtes / hôtel 3* / maison privée...')),
-            'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
-        ),
-        'marque_select' => array(
-            'label' => array('fr' => array('Marque', 'Constructeur / Assureur...')),
-            'inputType' => 'select',
-            'options' => array('Honda', 'Harley-Davidson', 'Ducati'),
-            'eval' => array('includeBlankOption' => true, 'tl_class' => 'w50'),
-        ),
-        'marque_custom' => array(
-            'label' => array('fr' => array('Marque (personnalisée)', 'Surcharge le choix ci-dessus si renseigné.')),
-            'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
-        ),
-        'thematique_select' => array(
-            'label' => array('fr' => array('Thématique / Univers', 'Choix prédéfini.')),
-            'inputType' => 'select',
-            'options' => array('Moto & gastronomie', 'Moto & rugby', 'Aventure', 'Détente'),
-            'eval' => array('includeBlankOption' => true, 'tl_class' => 'w50'),
-        ),
-        'thematique_custom' => array(
-            'label' => array('fr' => array('Thématique (personnalisée)', 'Surcharge le choix ci-dessus si renseigné.')),
             'inputType' => 'text',
             'eval' => array('tl_class' => 'w50'),
         ),
@@ -104,12 +80,6 @@ return array(
             'options' => $categories,
             'eval' => array('tl_class' => 'w50'),
         ),
-        'description_liste' => array(
-            'label' => array('fr' => array('Description (Aperçu)', 'Aperçu du séjour affiché sur la liste. Tronqué à l\'affichage.')),
-            'inputType' => 'textarea',
-            'eval' => array('tl_class' => 'clr', 'rows' => 4, 'rte' => 'tinyMCE'),
-        ),
-
 
         // --- GROUPEMENT : Affichage Fiche Détaillée ---
         array(
@@ -138,7 +108,7 @@ return array(
             'inputType' => 'list',
             'fields' => array(
                 'titre_jour' => array(
-                    'label' => array('fr' => array('Titre du Jour', 'Ex: Jour 1: Arrivée à Aubrac et Dégustation')),
+                    'label' => array('fr' => array('Titre du Jour', 'Arrivée à Aubrac et Dégustation')),
                     'inputType' => 'text',
                     'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
                 ),
@@ -151,9 +121,24 @@ return array(
             'eval' => array('tl_class' => 'clr', 'mandatory' => true),
         ),
         'prix_detaille' => array(
+            
             'label' => array('fr' => array('Prix détaillé', 'Détails TTC : chambre double/twin, individuelle, triple.')),
-            'inputType' => 'textarea',
-            'eval' => array('tl_class' => 'clr', 'rows' => 5),
+            
+            'elementLabel' => 'Prix %s',
+            'inputType' => 'list',
+            'fields' => array(
+                'titre_prix' => array(
+                    'label' => array('fr' => array('Titre du tarif', 'Ex: Tarif en chambre double/twin')),
+                    'inputType' => 'text',
+                    'eval' => array('tl_class' => 'w50'),
+                ),
+                'prix' => array(
+                    'label' => array('fr' => array('Prix', 'Ex: 450 €/personne')),
+                    'inputType' => 'text',
+                    'eval' => array('tl_class' => 'clr'),
+                ),
+            ),
+            'eval' => array('tl_class' => 'clr', 'mandatory' => true),
         ),
         'ce_prix_comprend' => array(
             'label' => array('fr' => array('Ce prix comprend', 'Liste des prestations incluses (utiliser une liste à puce).')),

@@ -1,0 +1,13 @@
+# config/services.yaml
+services:
+    _defaults:
+        autowire: true      # Injecte automatiquement les dépendances
+        autoconfigure: true # Active les tags comme #[AsHook], #[AsEventListener], etc.
+
+    # Charge tout ce qui est dans src/ comme service
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'

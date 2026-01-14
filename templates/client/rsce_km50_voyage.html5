@@ -1,23 +1,16 @@
 <?php
 // =========================================================================================
 // SÉCURISATION DE L'ID DE PAGE : On utilise une variable temporaire pour l'ID de la page
+$GLOBALS['TL_HEAD'][] = sprintf('
+	<script async src="https://tally.so/widgets/embed.js"></script>
+');
 $currentPageId = 0;
 if (isset($GLOBALS['objPage']) && is_object($GLOBALS['objPage'])) {
     $currentPageId = $GLOBALS['objPage']->id;
 }
-// Logique PHP
-// La logique de cette section est de préparer toutes les variables nécessaires
-// en s'assurant que les valeurs 'custom' priment sur les valeurs 'select'
-// et que le mode d'affichage est correctement défini.
-
-// Détermination de la Marque finale : On prend la valeur custom si elle est définie, sinon la valeur du select.
-$marque = $this->marque_custom ?: $this->marque_select;
-
-// Détermination de la Thématique finale
-$thematique = $this->thematique_custom ?: $this->thematique_select;
-
-// Détermination de la Région finale
-$region = $this->region_custom ?: $this->region_select;
+$organisateur = $GLOBALS['organisateur'] ?? null;
+$thematique   = $GLOBALS['thematique']   ?? null;
+$region       = $GLOBALS['region']       ?? null;
 
 $photoUuid = null;
 if (is_array($this->photo) && !empty($this->photo[0])) {
@@ -25,18 +18,19 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 } elseif (is_string($this->photo) && !empty($this->photo)) {
     $photoUuid = $this->photo;
 }
-$categorieClass = $this->categorie_sejour ?: 'échappée';
 ?>
 <div class="voyage-wrapper">
 	<div class="voyage-content">
 		
 		<div class="voyage-content-wrapper">
 			<div class="voyage-top-infos">
-				<div class="voyage-region">{{fa::map-marker-alt}} <?php echo $region ?></div>
 				<div class="voyage-duree bb">{{fa::clock}} <?php echo $this->duree ?></div>
 			</div>
-			<?php if ($marque): ?>
-				<div class="brand bb"><strong>Marque&nbsp;: </strong><?php echo $marque ?></div>
+			<?php if ($region): ?>
+				<div class="region bb"><strong>Région&nbsp;: </strong><?php echo $region ?></div>
+			<?php endif ?>
+			<?php if ($organisateur): ?>
+				<div class="brand bb"><strong>Organisateur&nbsp;: </strong><?php echo $organisateur ?></div>
 			<?php endif ?>
 			<?php if ($thematique): ?>
 				<div class="thematique bb"><strong>Thème&nbsp;: </strong><?php echo $thematique ?></div>
@@ -59,28 +53,52 @@ $categorieClass = $this->categorie_sejour ?: 'échappée';
 					<?php endif ?>
 				</ul>
 			</div>
-			<!-- Informations supplémentaires -->
-			<div class="voyage-prix bb"><strong>Prix&nbsp;:</strong> <?php echo $this->prix_liste ?>&nbsp;€&nbsp;TTC</div>
+			<div class="voyage-prix bb">
+				<strong>Prix&nbsp;:</strong> 
+				<?php 
+				$prix_numeriques = array();
+
+				if (!empty($this->prix_detaille)) {
+					foreach ($this->prix_detaille as $item) {
+						$item = (array) $item;
+						// On extrait uniquement les chiffres de la chaîne (ex: "450 €" -> 450)
+						$valeur = (int) preg_replace('/[^0-9]/', '', $item['prix']);
+						if ($valeur > 0) {
+							$prix_numeriques[] = $valeur;
+						}
+					}
+				}
+
+				if (!empty($prix_numeriques)): 
+					$prix_min = min($prix_numeriques);
+					
+					if (count($prix_numeriques) > 1) {
+						echo 'A partir de ';
+					}
+					
+					echo $prix_min; 
+				else:
+					// Valeur de secours si le tableau est vide ou mal rempli
+					echo $this->prix_liste; 
+				endif;
+				?>&nbsp;€&nbsp;TTC
+			</div>
 			<div class="voyage-logement bb"><strong>Logement&nbsp;:</strong> <?php echo $this->logement ?></div>
-			<div class="voyage-participants bb"><strong>Participants&nbsp;:</strong> <?php echo $this->participants ?></div>
+			<div class="voyage-participants bb"><strong>Participants&nbsp;:</strong> Min <?php echo $this->min_participants ?> - Max <?php echo $this->max_participants ?></div>
+			<div class="voyage-date-limite bb"><strong>Date limite d'inscription&nbsp;:</strong> <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?></div>
 		</div>
 	</div>
+	
 	<?php if ($currentPageId == 306): ?>
 		<div class="voyage-detail">
-			<div class="voyage-description">
-				<h2>Description</h2>
-				<div class="voyage-description-text">
-					<?php echo $this->description_liste ?>
-				</div>
-			</div>
 
 			<section class="voyage-introduction">
-				<h2>Présentation</h2>
+				<h2 class="voyage-titles sr-only">Présentation</h2>
 				<?php echo $this->description_fiche ?>
 			</section>
 
 			<section class="voyage-programme">
-				<h2>Programme du Voyage</h2>
+				<h2 class="voyage-titles">Programme du Voyage</h2>
 				<?php if ($this->programme && is_array($this->programme)): ?>
 					<?php foreach ($this->programme as $index => $jour): ?>
 						<?php $jour = (array) $jour;?>
@@ -95,11 +113,20 @@ $categorieClass = $this->categorie_sejour ?: 'échappée';
 			</section>
 
 			<section class="voyage-prix-inclusions">
-				<h2>Détails et Tarifs</h2>
-				<div class="prix-box">
-					<h3>Prix Détaillé</h3>
-					<p><?php echo nl2br($this->prix_detaille) ?></p>
-				</div>
+				<h2 class="voyage-titles">Détails et Tarifs</h2>
+				<?php if (!empty($this->prix_detaille)): ?>
+					<div class="prix-box">
+						<h3>Tarifs</h3>
+						<ul>
+							<?php foreach ($this->prix_detaille as $index => $prix_detaille): ?>
+								<?php $prix = (array) $prix_detaille; ?>
+								<li>
+									<?php echo $prix['titre_prix'] ?>&nbsp;: <strong><?php echo $prix['prix'] ?></strong>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				<?php endif; ?>
 				
 				<div class="inclusions-box">
 					<h3>Ce prix comprend</h3>
@@ -113,12 +140,12 @@ $categorieClass = $this->categorie_sejour ?: 'échappée';
 			</section>
 
 			<section class="voyage-documents">
-				<h2>Documents Indispensables</h2>
+				<h2 class="voyage-titles">Documents Indispensables</h2>
 				<p><?php echo nl2br($this->documents_indispensables) ?></p>
 			</section>
 
 			<section class="voyage-galerie">
-				<h2>Photos du Séjour</h2>
+				<h2 class="voyage-titles">Photos du Séjour</h2>
 				<?php if ($this->photos_fiche && is_array($this->photos_fiche)): ?>
 					<div class="gallery-container">
 						<?php foreach ($this->photos_fiche as $uuid): ?>
@@ -136,10 +163,20 @@ $categorieClass = $this->categorie_sejour ?: 'échappée';
 			</section>
 
 		</div>
-		<h2 style="margin: 50px 0 0;">Réservation</h2>
-	<script async src="https://tally.so/widgets/embed.js"></script>
-	<iframe data-tally-src="https://tally.so/embed/dW0ElD?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Réservation Séjour Échappée Gourmande en Aubrac 2026"></iframe>
-	<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+		<?php if ($this->reservation_tally_id): ?>	
+			<div class="voyage-reservation">
+				<h2 class="voyage-titles">
+					Réservation
+					<?php if ($this->date_limite): ?>
+						<span class="date-deadline">
+							avant le <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?>
+						</span>
+					<?php endif; ?>
+				</h2>
+				<iframe data-tally-src="https://tally.so/embed/<?= $this->reservation_tally_id ?>?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Réservation Séjour Échappée Gourmande en Aubrac 2026"></iframe>
+				<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+			</div>		
+		<?php endif;?>
 	<?php endif;?>
 	
 </div>
