@@ -445,12 +445,14 @@ form {
 }
 
 .module-cookiebar-opener {
-    color: $white;
     position: fixed;
     bottom: 5px;
     right: 5px;
     z-index: 100;
-    @extend .button;
+    a{
+        color: $white;
+        @extend .button;
+    }
 }
 
 /* ===========================================
