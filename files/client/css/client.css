@@ -18188,6 +18188,9 @@ form select {
   padding: 10px;
   border-color: #cecece;
 }
+form .honeyshow {
+  display: none;
+}
 
 .footer-copyright {
   font-size: .8em;
