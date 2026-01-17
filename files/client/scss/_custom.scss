@@ -433,6 +433,8 @@ form {
 * CookieBar
 * ======================================== */
 .contao-cookiebar {
+    right: auto; 
+    left: 0;
     button {
 
         &.cc-detail-btn,
