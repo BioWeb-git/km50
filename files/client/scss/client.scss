@@ -618,7 +618,9 @@ body {
             margin: 50px $gutter-width;
         }
     }
-
+    .voyage-video {
+        max-width: 600px;
+    }
     .voyage-top-infos {
         display: flex;
         gap: 5px;

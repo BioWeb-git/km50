@@ -36,6 +36,11 @@ return array(
             'inputType' => 'text',
             'eval' => array('tl_class' => 'w50'),
         ),
+        'youtube_video' => array(
+            'label' => array('fr' => array('Vidéo YouTube', 'Id de la vidéo à intégrer (ex: xxxxxx).')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50'),
+        ),
         'min_participants' => array(
             'label' => array('fr' => array('Nombre minimum de participants', 'Nombre requis pour confirmer le séjour.')),
             'inputType' => 'text',

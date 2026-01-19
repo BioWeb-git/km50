@@ -18881,6 +18881,9 @@ body:not(.scroll) .header-navigation {
 .voyage_full > .centered-wrapper > .centered-wrapper-innner {
   margin: 50px 2rem;
 }
+.voyage_full .voyage-video {
+  max-width: 600px;
+}
 .voyage_full .voyage-top-infos {
   display: flex;
   gap: 5px;

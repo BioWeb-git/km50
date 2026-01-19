@@ -96,7 +96,16 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 				<h2 class="voyage-titles sr-only">Présentation</h2>
 				<?php echo $this->description_fiche ?>
 			</section>
-
+			<?php if ($this->youtube_video): ?>
+				<div class="voyage-video">
+					<h2 class="voyage-titles">Vidéo de Présentation</h2>
+					<div class="content-youtube">
+						<figure class="aspect aspect--16:9">
+							<iframe allowfullscreen src="https://www.youtube.com/embed/<?php echo $this->youtube_video ?>?rel=0&amp;autohide=1&amp;showinfo=0" frameborder="0"></iframe>
+						</figure>
+					</div>
+				</div>
+			<?php endif; ?>
 			<section class="voyage-programme">
 				<h2 class="voyage-titles">Programme du Voyage</h2>
 				<?php if ($this->programme && is_array($this->programme)): ?>
