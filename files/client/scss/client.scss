@@ -769,20 +769,17 @@ body {
                 border-radius: 0.25rem;
             }
         }
-
-        // Prix et inclusions - Utilise Grid
+        .voyage-documents{
+            margin-bottom: $gutter-width;
+        }        // Prix et inclusions - Utilise Grid
         .voyage-prix-inclusions {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem; // Remplacer par ta variable $spacing-unit
-
-            // Trois colonnes sur tablette/desktop
-            @media (min-width: 768px) {
-                grid-template-columns: repeat(3, 1fr);
-
-                // Règle ajoutée : Le H2 doit couvrir les 3 colonnes (de la ligne 1 à la fin)
-                &>h2 {
-                    grid-column: 1 / span 3;
+            .voyage-prix-inclusions-wrapper {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 1.5rem; // Remplacer par ta variable $spacing-unit
+                // Trois colonnes sur tablette/desktop
+                @media (min-width: 768px) {
+                    grid-template-columns: repeat(3, 1fr);
                 }
             }
 

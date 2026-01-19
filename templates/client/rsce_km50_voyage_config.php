@@ -1,29 +1,5 @@
 <?php
 
-// Liste des régions françaises pour le champ Région
-$regions = array(
-    'Auvergne-Rhône-Alpes',
-    'Bourgogne-Franche-Comté',
-    'Bretagne',
-    'Centre-Val de Loire',
-    'Corse',
-    'Grand Est',
-    'Hauts-de-France',
-    'Île-de-France',
-    'Normandie',
-    'Nouvelle-Aquitaine',
-    'Occitanie',
-    'Pays de la Loire',
-    'Provence-Alpes-Côte d\'Azur',
-);
-
-// Liste des catégories de séjour
-$categories = array(
-    'échappée' => 'Échappée',
-    'roadtrip' => 'Roadtrip',
-    'inedit' => 'Inédit',
-);
-
 return array(
     'label' => array(
         'fr' => array('Voyage', 'Gère l\'affichage d\'un voyage en mode liste et fiche détaillée.'),
@@ -31,6 +7,16 @@ return array(
     'types' => array('content'),
     'standardFields' => array('cssID', 'space'),
     'fields' => array(
+        'type_voyage' => array(
+            'label'     => array('fr' => array('Type de voyage', 'Choisissez le mode de transport')),
+            'inputType' => 'select',
+            'options'   => array(
+                'auto' => 'Voyage Auto',
+                'moto' => 'Voyage Moto'
+            ),
+            'eval'      => array('mandatory' => true, 'includeBlankOption' => true),
+            'sql'       => "varchar(16) NOT NULL default ''"
+        ),
         'reservation_tally_id' => array(
             'label' => array('fr' => array('ID Tally', 'Génération du formulaire de réservation externe.')),
             'inputType' => 'text',
@@ -69,21 +55,33 @@ return array(
             ),
             'eval' => array('tl_class' => 'clr'),
         ),
-        'duree' => array(
-            'label' => array('fr' => array('Durée', 'Ex: 3 jours/2 nuits')),
+        'nb_jours' => array(
+            'label'     => array('fr' => array('Nombre de jours', '')),
             'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
+            'eval'      => array('tl_class' => 'w50', 'rgxp' => 'digit'),
+            'sql'       => "int(10) unsigned NOT NULL default '0'"
         ),
-        'logement' => array(
-            'label' => array('fr' => array('Logement', 'Ex: Chambre d\'hôtes / hôtel 3* / maison privée...')),
+        'nb_nuits' => array(
+            'label'     => array('fr' => array('Nombre de nuits', '')),
             'inputType' => 'text',
-            'eval' => array('tl_class' => 'w50'),
+            'eval'      => array('tl_class' => 'w50', 'rgxp' => 'digit'),
+            'sql'       => "int(10) unsigned NOT NULL default '0'"
         ),
-        'categorie_sejour' => array(
-            'label' => array('fr' => array('Catégorie de séjour', 'Échappée / Roadtrip / Inédit.')),
-            'inputType' => 'select',
-            'options' => $categories,
-            'eval' => array('tl_class' => 'w50'),
+       'logement' => array(
+            'label'     => array('fr' => array('Logement', 'Sélectionnez le ou les types d\'hébergement')),
+            'inputType' => 'checkbox',
+            'options'   => array(
+                'gite'          => 'Gîte',
+                'chambre_hote'  => 'Chambre d\'hôtes',
+                'maison_privee' => 'Maison Privée',
+                'hotel_2'       => 'Hotel **',
+                'hotel_3'       => 'Hotel ***',
+                'hotel_4'       => 'Hotel ****',
+                'hotel_5'       => 'Hotel *****',
+                'tente'         => 'Tente',
+            ),
+            'eval'      => array('tl_class' => 'w50', 'multiple' => true),
+            'sql'       => "blob NULL"
         ),
 
         // --- GROUPEMENT : Affichage Fiche Détaillée ---
@@ -103,7 +101,7 @@ return array(
             ),
         ),
         'description_fiche' => array(
-            'label' => array('fr' => array('Description (Fiche)', 'Paragraphe d\'introduction du séjour complet.')),
+            'label' => array('fr' => array('Description', 'Ajouter un texte intro (Selectionner texte puis Menu > Format > Formats > Text intro) - Paragraphe d\'introduction du séjour complet.')),
             'inputType' => 'textarea',
             'eval' => array('tl_class' => 'clr', 'rte' => 'tinyMCE'),
         ),
@@ -113,7 +111,7 @@ return array(
             'inputType' => 'list',
             'fields' => array(
                 'titre_jour' => array(
-                    'label' => array('fr' => array('Titre du Jour', 'Arrivée à Aubrac et Dégustation')),
+                    'label' => array('fr' => array('Titre du Jour', 'Exemple : Arrivée à Aubrac et Dégustation')),
                     'inputType' => 'text',
                     'eval' => array('maxlength' => 255, 'tl_class' => 'w50'),
                 ),
@@ -145,6 +143,11 @@ return array(
             ),
             'eval' => array('tl_class' => 'clr', 'mandatory' => true),
         ),
+        'mention_prix' => array(
+            'label' => array('fr' => array('Mention du tarif', 'Ex: remplace la mention "Possibilité de règlement en plusieurs fois : 50% d\'acompte à la réservation" présente dans le template.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50'),
+        ),
         'ce_prix_comprend' => array(
             'label' => array('fr' => array('Ce prix comprend', 'Liste des prestations incluses (utiliser une liste à puce).')),
             'inputType' => 'textarea',
@@ -156,9 +159,17 @@ return array(
             'eval' => array('tl_class' => 'clr', 'rte' => 'tinyMCE'),
         ),
         'documents_indispensables' => array(
-            'label' => array('fr' => array('Documents indispensables', 'Ex: permis, CNI/Passeport, visa.')),
-            'inputType' => 'textarea',
-            'eval' => array('tl_class' => 'clr', 'rows' => 3),
+            'label'     => array('fr' => array('Documents indispensables', 'Sélectionnez les documents requis')),
+            'inputType' => 'checkbox',
+            'options'   => array(
+                'permis'    => 'Permis',
+                'assurance' => 'Assurance',
+                'cni'       => 'Carte d\'identité',
+                'passeport' => 'Passeport',
+                'visa'      => 'Visa',
+            ),
+            'eval'      => array('tl_class' => 'clr', 'multiple' => true),
+            'sql'       => "blob NULL"
         ),
     ),
 );

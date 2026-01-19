@@ -11,7 +11,7 @@
   font-style: normal;
 }
 .font1 {
-  font-family: Comfortaa, sans-serif !important;
+  font-family: Quicksand, sans-serif !important;
 }
 
 .font2 {
@@ -19,7 +19,7 @@
 }
 
 html {
-  font: 400 15px/1.6 Comfortaa, sans-serif;
+  font: 400 15px/1.6 Quicksand, sans-serif;
   color: #242424;
 }
 @media screen and (max-width: 700px) {
@@ -7896,7 +7896,7 @@ html {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font: 15px/1.6 "Comfortaa", sans-serif;
+  font: 15px/1.6 "Quicksand", sans-serif;
   color: #242424;
   -webkit-tap-highlight-color: #000000;
 }
@@ -19011,17 +19011,17 @@ body:not(.scroll) .header-navigation {
   border-left: 5px solid currentColor;
   border-radius: 0.25rem;
 }
-.voyage_full .voyage-detail .voyage-prix-inclusions {
+.voyage_full .voyage-detail .voyage-documents {
+  margin-bottom: 2rem;
+}
+.voyage_full .voyage-detail .voyage-prix-inclusions .voyage-prix-inclusions-wrapper {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 @media (min-width: 768px) {
-  .voyage_full .voyage-detail .voyage-prix-inclusions {
+  .voyage_full .voyage-detail .voyage-prix-inclusions .voyage-prix-inclusions-wrapper {
     grid-template-columns: repeat(3, 1fr);
-  }
-  .voyage_full .voyage-detail .voyage-prix-inclusions > h2 {
-    grid-column: 1 / span 3;
   }
 }
 .voyage_full .voyage-detail .voyage-prix-inclusions .prix-box,
