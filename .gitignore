@@ -15,6 +15,7 @@
 # IDE, System
 /.DS_Store
 /.idea
+/.vscode
 /.vagrant
 /Vagrantfile
 Thumbs.db

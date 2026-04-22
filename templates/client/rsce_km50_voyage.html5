@@ -11,13 +11,24 @@ if (isset($GLOBALS['objPage']) && is_object($GLOBALS['objPage'])) {
 $organisateur = $GLOBALS['organisateur'] ?? null;
 $thematique   = $GLOBALS['thematique']   ?? null;
 $region       = $GLOBALS['region']       ?? null;
-
+$dispoLabels = [
+    'complet' => 'Complet',
+    'last'    => 'Dernières places'
+];
+$GLOBALS['disponibilite'] = isset($dispoLabels[$this->disponibilite]) ? $dispoLabels[$this->disponibilite] : null;
+$GLOBALS['disponibilite_class'] = $this->disponibilite;
+$objFile = \Contao\FilesModel::findByUuid($this->photos_organisateur); 
 $photoUuid = null;
 if (is_array($this->photo) && !empty($this->photo[0])) {
     $photoUuid = $this->photo[0];
 } elseif (is_string($this->photo) && !empty($this->photo)) {
     $photoUuid = $this->photo;
 }
+
+	$GLOBALS['organisateur'] = null;
+	$GLOBALS['thematique']   = null;
+	$GLOBALS['region']       = null; 
+
 ?>
 <div class="voyage-wrapper">
 	<div class="voyage-content">
@@ -66,36 +77,12 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 					<?php endif ?>
 				</ul>
 			</div>
-			<div class="voyage-prix bb">
-				<strong>Prix&nbsp;:</strong> 
-				<?php 
-				$prix_numeriques = array();
-
-				if (!empty($this->prix_detaille)) {
-					foreach ($this->prix_detaille as $item) {
-						$item = (array) $item;
-						// On extrait uniquement les chiffres de la chaîne (ex: "450 €" -> 450)
-						$valeur = (int) preg_replace('/[^0-9]/', '', $item['prix']);
-						if ($valeur > 0) {
-							$prix_numeriques[] = $valeur;
-						}
-					}
-				}
-
-				if (!empty($prix_numeriques)): 
-					$prix_min = min($prix_numeriques);
-					
-					if (count($prix_numeriques) > 1) {
-						echo 'A partir de ';
-					}
-					
-					echo $prix_min; 
-				else:
-					// Valeur de secours si le tableau est vide ou mal rempli
-					echo $this->prix_liste; 
-				endif;
-				?>&nbsp;€&nbsp;TTC
-			</div>
+			<?php if ($this->prix_partir_de): ?>
+				<div class="voyage-prix bb">
+					<strong>Prix&nbsp;:</strong> 
+					A partir de <?php echo $this->prix_partir_de; ?>&nbsp;€&nbsp;TTC
+				</div>
+			<?php endif; ?>
 			<div class="voyage-logement bb">
 				<strong>Logement&nbsp;:</strong>
 				<?php
@@ -142,12 +129,21 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 	<?php if ($currentPageId == 306): ?>
 		<div class="voyage-detail">
 
+			
 			<section class="voyage-introduction">
 				<h2 class="voyage-titles sr-only">Présentation</h2>
 				<?php echo $this->description_fiche ?>
 			</section>
+			<?php if ($objFile): ?>
+				<img class="voyage-organisateur-logo" src="<?= $objFile->path ?>" alt="Logo organisateur">
+			<?php endif; ?>
 			<?php if ($this->youtube_video): ?>
 				<div class="voyage-video">
+					<?php if ($GLOBALS['disponibilite']): ?>
+						<div class="voyage-disponibilite">
+							<?= $GLOBALS['disponibilite'] ?>
+						</div>
+					<?php endif; ?>
 					<h2 class="voyage-titles">Vidéo de Présentation</h2>
 					<div class="content-youtube">
 						<figure class="aspect aspect--16:9">

@@ -2,7 +2,7 @@
 // 1. Initialisation des variables
 $organisateur = null;
 $region       = null;
-$thematique   = null;
+$thematique   = null; 
 
 // 2. Tri des catégories
 if ($this->categories && is_array($this->categories)) {
@@ -24,6 +24,9 @@ if ($this->categories && is_array($this->categories)) {
         }
     }
 }
+
+// 3. Pré-exécution du texte pour peupler les GLOBALS
+$processedText = $this->text;
 ?>
 
 <div class="voyages-master block<?= $this->class ?>">
@@ -34,6 +37,11 @@ if ($this->categories && is_array($this->categories)) {
             <div class="voyage-image">
         <?php endif ?>
 			<div class="voyage-title">
+                <?php if ($GLOBALS['disponibilite']): ?>
+                    <div class="voyage-disponibilite -<?= $GLOBALS['disponibilite_class'] ?>">
+                        <?= $GLOBALS['disponibilite'] ?>
+                    </div>
+                <?php endif; ?>
 				<h2>
 					<?php if ($this->link): ?>
 						<a href="<?= $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?= $this->attributes ?>>
@@ -67,7 +75,7 @@ if ($this->categories && is_array($this->categories)) {
        
         <?php if ($this->hasText): ?>
             <div class="voyage-content">
-                <?= $this->text ?>
+                <?= $processedText ?>
             </div>
         <?php endif; ?>
 

@@ -17,6 +17,17 @@ return array(
             'eval'      => array('mandatory' => true, 'includeBlankOption' => true),
             'sql'       => "varchar(16) NOT NULL default ''"
         ),
+        
+        'disponibilite' => array(
+            'label'     => array('fr' => array('Disponibilité', 'Sélectionnez le type de disponibilité')),
+            'inputType' => 'select',
+            'options'   => array(
+                'complet'          => 'Complet',
+                'last'  => 'Dernières places',
+            ),
+            'eval'      => array('tl_class' => 'w50', 'includeBlankOption' => true),
+            'sql'       => "blob NULL"
+        ),
         'reservation_tally_id' => array(
             'label' => array('fr' => array('ID Tally', 'Génération du formulaire de réservation externe.')),
             'inputType' => 'text',
@@ -67,6 +78,11 @@ return array(
             'eval'      => array('tl_class' => 'w50', 'rgxp' => 'digit'),
             'sql'       => "int(10) unsigned NOT NULL default '0'"
         ),
+        'prix_partir_de' => array(
+            'label' => array('fr' => array('Prix "A partir de"', 'Laisser vide pour calculer automatiquement depuis les tarifs détaillés.')),
+            'inputType' => 'text',
+            'eval' => array('tl_class' => 'w50', 'rgxp' => 'digit'),
+        ),
        'logement' => array(
             'label'     => array('fr' => array('Logement', 'Sélectionnez le ou les types d\'hébergement')),
             'inputType' => 'checkbox',
@@ -78,6 +94,7 @@ return array(
                 'hotel_3'       => 'Hotel ***',
                 'hotel_4'       => 'Hotel ****',
                 'hotel_5'       => 'Hotel *****',
+                'chateau'       => 'Château',
                 'tente'         => 'Tente',
             ),
             'eval'      => array('tl_class' => 'w50', 'multiple' => true),
@@ -95,6 +112,17 @@ return array(
             'eval' => array(
                 'multiple' => true,
                 'fieldType' => 'checkbox',
+                'filesOnly' => true,
+                'extensions' => implode(',', Contao\System::getContainer()->getParameter('contao.image.valid_extensions')),
+                'tl_class' => 'clr',
+            ),
+        ),
+         'photos_organisateur' => array(
+            'label' => array('fr' => array('Logo de l\'organisateur', 'Sélectionnez une images.')),
+            'inputType' => 'fileTree',
+            'eval' => array(
+                'multiple' => false,
+                'fieldType' => 'radio',
                 'filesOnly' => true,
                 'extensions' => implode(',', Contao\System::getContainer()->getParameter('contao.image.valid_extensions')),
                 'tl_class' => 'clr',
