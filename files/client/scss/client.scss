@@ -2,6 +2,236 @@
 @import "variables";
 @import "custom";
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.voyage-info-tile {
+    &.is-animated {
+        opacity: 0;
+        animation: fadeInUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        backface-visibility: hidden;
+
+        @for $i from 1 through 9 {
+            &:nth-child(#{$i}) {
+                animation-delay: #{$i * 0.1}s;
+            }
+        }
+    }
+
+    background: $black-light;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 10px 25px rgba($black, 0.1);
+    border: none;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-align: left;
+    margin-bottom: 10px;
+
+    padding: 5px 8px;
+
+    @include mediaquery-min(tablet) {
+        padding: 1.2rem 1.5rem;
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba($black, 0.2);
+        background: $black;
+
+        .info-icon {
+            background: $white;
+            color: $black;
+            transform: scale(1.1) rotate(5deg);
+        }
+    }
+
+    .info-icon {
+        flex-shrink: 0;
+        width: 48px;
+        height: 48px;
+        background: rgba($white, 0.1);
+        color: $white;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        transition: all 0.3s ease;
+
+        i,
+        .fa,
+        svg {
+            font-size: inherit;
+            display: block;
+            margin: 0;
+        }
+    }
+
+    .info-content {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        overflow: hidden;
+
+        strong {
+            font-family: $font-family2;
+            text-transform: uppercase;
+            font-size: 0.65em;
+            color: rgba($white, 0.6);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        span,
+        .voyage-dates-liste,
+        a {
+            color: $white;
+            font-weight: 700;
+            font-size: 0.95em;
+            white-space: normal;
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+
+            &:hover {
+                color: $color3;
+            }
+        }
+
+        .voyage-dates-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    }
+
+    &.-duration,
+    &.-dates,
+    &.-price,
+    &.-region,
+    &.-organisateur,
+    &.-theme,
+    &.-logement,
+    &.-participants,
+    &.-inscription {
+        .info-content {
+            strong {
+                color: rgba($white, 0.7);
+            }
+
+            span,
+            .voyage-dates-liste {
+                color: $white;
+            }
+        }
+
+        &:hover {
+            filter: brightness(1.1);
+            // On ne définit pas de background ici pour garder celui de la classe spécifique
+
+            .info-icon {
+                background: $white;
+                color: $black;
+            }
+        }
+    }
+
+    $c-start: #cbb49c;
+    $c-end: #4c443c;
+
+    &.-duration {
+        background: $c-start;
+
+        &:hover {
+            background: $c-start;
+        }
+    }
+
+    &.-dates {
+        $c: mix($c-end, $c-start, 12.5%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-price {
+        $c: mix($c-end, $c-start, 25%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-region {
+        $c: mix($c-end, $c-start, 37.5%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-organisateur {
+        $c: mix($c-end, $c-start, 50%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-theme {
+        $c: mix($c-end, $c-start, 62.5%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-logement {
+        $c: mix($c-end, $c-start, 75%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-participants {
+        $c: mix($c-end, $c-start, 87.5%);
+        background: $c;
+
+        &:hover {
+            background: $c;
+        }
+    }
+
+    &.-inscription {
+        background: $c-end;
+
+        &:hover {
+            background: $c-end;
+        }
+    }
+}
+
 .text-intro {
     font-size: 1.2em;
     color: $color2;
@@ -281,6 +511,10 @@ button {
     .tagline-inner {
         .breadcrumbs-wrapper {
             background: linear-gradient(rgba($black, 0.6), rgba($black, 0.6)), url("/files/images/backgrounds/bitume.jpg") repeat center center;
+
+            .mod_breadcrumb {
+                margin: 0 !important;
+            }
         }
     }
 }
@@ -288,6 +522,34 @@ button {
 .content-wrapper {
     position: relative;
     z-index: 2;
+}
+
+.page-header {
+    .logo {
+        @include mediaquery(tablet) {
+            padding: 0 !important;
+
+            img {
+                height: auto;
+                max-width: 300px;
+                width: 100%;
+            }
+        }
+
+        @include mediaquery(mobile) {
+            margin: 25px 25px 0;
+        }
+    }
+}
+
+.main-navigation-wrapper {
+    .navigation-wrapper {
+        &.right-navigation-wrapper {
+            @include mediaquery(mobile) {
+                margin: 0;
+            }
+        }
+    }
 }
 
 .home {
@@ -543,7 +805,7 @@ button {
         .voyage-image {
             position: relative;
             display: block;
-            
+
             .voyage-image-overlay {
                 position: absolute;
                 top: 0;
@@ -567,16 +829,31 @@ button {
         }
 
         .voyage-main-wrapper {
-            padding: 0 $gutter-width $gutter-width $gutter-width;
-            margin-top: -30px;
+            padding: 0 $gutter-width/2 $gutter-width/2 $gutter-width/2;
+            //margin-top: -30px;
         }
 
         .bb {
-            padding: 5px 0 0;
-            margin: 5px 0 0;
-            border-top-width: 1px;
-            border-top-style: solid;
-            border-top-color: $grey-medium;
+            padding: 10px 0 0;
+            margin: 10px 0 0;
+            border-top: 1px solid $grey-medium;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9em;
+
+            i,
+            .fa,
+            svg {
+                color: $color3;
+                width: 20px;
+                text-align: center;
+                flex-shrink: 0;
+            }
+
+            strong {
+                color: $black;
+            }
         }
 
         .voyage-archive {
@@ -586,6 +863,79 @@ button {
             color: $black;
             display: inline-block;
             border-radius: 10px;
+        }
+
+        .voyage-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-top: 15px;
+        }
+
+        // Adaptation ultra-compacte des tuiles pour le mode Liste
+        .voyage-info-tile {
+            display: flex;
+            background: transparent !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            gap: 10px;
+            margin-bottom: 6px;
+            min-height: auto;
+            align-items: center;
+
+            &:hover {
+                transform: none !important;
+            }
+
+            .info-icon {
+                width: 20px;
+                height: 20px;
+                background: transparent !important;
+                color: $color3 !important;
+                border-radius: 0;
+                font-size: 1em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .info-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 5px;
+                line-height: 1.2;
+
+                strong {
+                    display: none; // On cache le label (ex: "DURÉE") dans la liste
+                }
+
+                span,
+                .voyage-dates-liste,
+                .voyage-dates-liste li,
+                a {
+                    color: $black !important;
+                    font-size: 0.9em !important;
+                    font-weight: 500;
+                    line-height: 1.2;
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+            }
+
+            &.-duration .info-icon {
+                color: $color2 !important;
+            }
+
+            &.-dates .info-icon {
+                color: $color3 !important;
+            }
+
+            &.-price .info-icon {
+                color: $color4 !important;
+            }
         }
 
         .voyage-title {
@@ -728,8 +1078,13 @@ button {
 
             .voyage-title-wrapper {
                 z-index: 2;
-                min-height: 550px;
-                padding: 200px 550px 50px $gutter-width;
+                padding: $gutter-width;
+
+                @include mediaquery-min(tablet) {
+                    min-height: 550px;
+                    padding: 200px 550px 50px $gutter-width;
+                }
+
 
                 .voyage-title {
                     font-size: 3em;
@@ -737,6 +1092,27 @@ button {
                     @include mediaquery-min(tablet) {
                         font-size: 5em;
                         line-height: 1em;
+                    }
+                }
+
+                .is-animated {
+                    opacity: 0;
+                    animation: fadeInUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+                    &.voyage-disponibilite {
+                        animation-delay: 0.1s;
+                    }
+
+                    &.voyage-title {
+                        animation-delay: 0.2s;
+                    }
+
+                    &.voyage-subtitle {
+                        animation-delay: 0.3s;
+                    }
+
+                    &.voyage-archive {
+                        animation-delay: 0.4s;
                     }
                 }
 
@@ -752,7 +1128,7 @@ button {
 
                 }
 
-                padding-bottom: 5px;
+                padding-bottom: 50px;
 
                 .voyage-archive {
                     color: $white;
@@ -769,7 +1145,7 @@ button {
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, rgba($black, 0.6), rgba($black, 0));
+            background: linear-gradient(to top, rgba($black, 0.9), rgba($black, 0));
             z-index: 1;
         }
 
@@ -789,112 +1165,314 @@ button {
     }
 
     .voyage-reservation {
-        margin: $gutter-width 0;
-        padding: 25px;
-        border: 10px solid #dddddd;
-        border-radius: 25px;
+        margin: 5rem 0;
+        padding: 4rem;
+        background: $white;
+        border: 2px solid $color3;
+        border-radius: 50px;
+        box-shadow: 0 20px 60px rgba($color3, 0.1);
 
-        .voyage-titles {
-            margin-top: 0;
-        }
     }
 
     .voyage-content {
         position: relative;
+        margin-top: -50px;
 
         .voyage-content-wrapper {
-            border-radius: 25px 0 0 25px;
-            margin-bottom: $gutter-width;
-            position: absolute;
-            width: 400px;
-            right: 0;
-            bottom: 50px;
-            color: $white;
-            background: rgba($black, 0.5);
-            background: linear-gradient(90deg, rgba(0, 0, 0, .7) 28%, rgba(0, 0, 0, 0) 100%);
-            z-index: 3;
-            padding: 1rem;
+            background: transparent;
+            padding: 0;
+            box-shadow: none;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: .5rem;
+            border: none;
+            position: relative;
+            z-index: 10;
+
+            @include mediaquery-min(tablet) {
+                gap: 1.2rem;
+                position: sticky;
+                top: 100px;
+                align-self: start;
+            }
+
+            @include mediaquery(desktop) {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            @include mediaquery(mobile) {
+                grid-template-columns: 1fr;
+            }
         }
 
-        .bb {
-            a {
-                color: $white;
-            }
+        .voyage-dates-liste {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+    }
+}
 
-            &:not(.brand),
-            &:not(.voyage-duree) {
-                padding: 5px 0 0;
-                margin: 5px 0 0;
-                border-top-width: 1px;
-                border-top-style: solid;
-                border-top-color: rgba($white, 0.2);
+.voyage-detail {
+    .voyage-titles {
+        &:not(.sr-only) {
+            font-size: 2.5em;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+            color: $color3;
+
+            &:after {
+                content: "";
+                position: absolute;
+                bottom: -10px;
+                left: 0;
+                width: 60px;
+                height: 4px;
+                background: $color2;
+                border-radius: 2px;
             }
+        }
+
+    }
+
+    .voyage-introduction {
+        margin-bottom: 4rem;
+        line-height: 1.8;
+        font-size: 1.1em;
+
+        .text-intro {
+            display: block;
+            font-size: 1.3em;
+            color: $color3;
+            border-left: 5px solid $color2;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            font-style: italic;
         }
     }
 
-    .voyage-detail {
-        .voyage-programme {
-            .programme-jour {
-                display: flex;
-                flex-direction: column;
-                padding: $gutter-width;
-                margin-bottom: $gutter-width;
-                border-left: 5px solid currentColor;
-                border-radius: 0.25rem;
+    .voyage-organisateur-logo {
+        display: block;
+        max-width: 250px;
+        margin: 0 auto 4rem;
+        filter: drop-shadow(0 5px 15px rgba($black, 0.1));
+    }
+
+    .voyage-programme {
+        margin-bottom: 5rem;
+
+        .programme-jour {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            background: $white;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba($black, 0.05);
+            border: 1px solid rgba($black, 0.03);
+            transition: transform 0.3s ease;
+
+            &:hover {
+                transform: translateY(-5px);
+                border-color: rgba($color3, 0.1);
             }
-        }
 
-        .voyage-documents {
-            margin-bottom: $gutter-width;
-        }
+            @include mediaquery(tablet) {
+                flex-direction: column;
+                padding: 2rem;
+            }
 
-        // Prix et inclusions - Utilise Grid
-        .voyage-prix-inclusions {
-            .voyage-prix-inclusions-wrapper {
-                display: grid;
-                grid-template-columns: 1fr;
-                gap: 1.5rem; // Remplacer par ta variable $spacing-unit
+            h3 {
+                flex: 0 0 250px;
+                margin: 0;
+                color: $color3;
+                font-size: 1.4em;
+                line-height: 1.2;
+                border-right: 1px solid $grey-light;
+                padding-right: 2rem;
 
-                // Trois colonnes sur tablette/desktop
-                @media (min-width: 768px) {
-                    grid-template-columns: repeat(3, 1fr);
+                @include mediaquery(tablet) {
+                    flex: none;
+                    border-right: none;
+                    border-bottom: 1px solid $grey-light;
+                    padding-right: 0;
+                    padding-bottom: 1rem;
                 }
             }
 
-            .prix-box,
-            .inclusions-box,
-            .exclusions-box {
+            .description-jour {
+                flex: 1;
+
+                p:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .voyage-prix-inclusions {
+        background: #f9f9f9;
+        margin: 0 calc($gutter-width * -1);
+        padding: 5rem $gutter-width;
+        border-radius: 50px;
+
+        .voyage-documents {
+            background: rgba($color3, 0.05);
+            border-left: 4px solid $color3;
+            padding: 1.5rem 2.5rem;
+            border-radius: 8px 30px 30px 8px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 5px 15px rgba($black, 0.02);
+
+            &:before {
+                content: "\e0a6"; // icon-info-2
+                font-family: "RockSolid Icons";
+                color: $color3;
+                font-size: 1.8em;
+            }
+
+            h3 {
+                margin: 0;
+                font-size: 0.85em;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                color: $grey-dark;
+                font-family: $font-family2;
+                flex-shrink: 0;
+            }
+
+            strong {
+                color: $color1;
+                font-weight: 600;
+                font-size: 1.1em;
+            }
+
+            @include mediaquery(mobile) {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
                 padding: 1.5rem;
-                border: 1px dashed $grey-light;
-                border-radius: 25px;
+
+                &:before {
+                    display: none;
+                }
             }
         }
 
-        // Galerie photos - Utilise Grid pour une mise en page réactive
-        .gallery-container {
+        .voyage-prix-inclusions-wrapper {
             display: grid;
-            // Répète les colonnes, minimum 250px de large par photo
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-            &.justified-gallery {
-                display: block;
-                gap: 0;
+        .prix-box,
+        .inclusions-box,
+        .exclusions-box {
+            background: $white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba($black, 0.03);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+
+            h3 {
+                font-size: 1.3em;
+                margin-bottom: 1.5rem;
+                color: $color3;
+                border-bottom: 2px solid $grey-light;
+                padding-bottom: 1rem;
             }
 
-            .gallery-item {
-                display: block;
-                overflow: hidden;
-                border-radius: 0.5rem;
-                // On enlève le box-shadow
+            ul {
+                padding-left: 1.5rem;
+                margin: 0;
+
+                li {
+                    margin-bottom: 0.8rem;
+
+                    strong {
+                        color: $color2;
+                    }
+                }
+            }
+        }
+
+        .prix-box {
+            border: 2px solid $color3;
+
+            ul {
+                list-style: none;
+                padding-left: 0;
+
+                li:last-child {
+                    margin-top: auto;
+                    padding-top: 1.5rem;
+                    font-style: italic;
+                    font-size: 0.9em;
+                    color: $grey-dark;
+                }
+            }
+        }
+
+        .inclusions-box li::marker {
+            color: $green2;
+        }
+
+        .exclusions-box li::marker {
+            color: $red;
+        }
+    }
+
+    .voyage-galerie {
+        padding-top: 5rem;
+
+        .voyage-titles {
+            text-align: center;
+            display: block;
+            margin-bottom: 4rem;
+
+            &:after {
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
     }
 
-    .back {
-        text-align: center;
-        margin: 50px 25px;
+    // Galerie photos - Utilise Grid pour une mise en page réactive
+    .gallery-container {
+        &.justified-gallery {
+            background: $white;
+            padding: 10px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba($black, 0.08);
+            overflow: hidden;
+        }
+
+        .gallery-item {
+            display: block;
+            overflow: hidden;
+            border-radius: 15px;
+            transition: transform 0.4s ease;
+
+            &:hover {
+                transform: scale(1.02);
+                z-index: 10;
+            }
+        }
     }
+}
+
+.back {
+    text-align: center;
+    margin: 50px 25px;
 }
 
 .mod_newsreader {

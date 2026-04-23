@@ -43,13 +43,7 @@ $processedText = $this->text;
                     </div>
                 <?php endif; ?>
 				<h2>
-					<?php if ($this->link): ?>
-						<a href="<?= $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?= $this->attributes ?>>
-					<?php endif ?>
 						<?= $this->newsHeadline ?>
-					<?php if ($this->link): ?>
-						</a>
-					<?php endif ?>
 				</h2>
 				<?php if ($this->hasSubHeadline): ?>
 					<div class="voyage-subtitle"><?= $this->subHeadline ?></div>
@@ -61,6 +55,7 @@ $processedText = $this->text;
                 <?php endif; ?>
 			</div> 
             <?php $this->insert('picture_default', $this->picture) ?>
+			<div class="voyage-image-overlay"></div>
         <?php if ($this->link): ?>
             </a>
         <?php else: ?>

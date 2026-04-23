@@ -7,6 +7,10 @@ return array(
     'types' => array('content'),
     'standardFields' => array('cssID', 'space'),
     'fields' => array(
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Configuration générale')),
+        ),
         'type_voyage' => array(
             'label'     => array('fr' => array('Type de voyage', 'Choisissez le mode de transport')),
             'inputType' => 'select',
@@ -17,7 +21,16 @@ return array(
             'eval'      => array('mandatory' => true, 'includeBlankOption' => true),
             'sql'       => "varchar(16) NOT NULL default ''"
         ),
-        
+        'assurance_destination' => array(
+            'label'     => array('fr' => array('Assurance', 'Choisir le lien pour l\'assurance.')),
+            'inputType' => 'select',
+            'options'   => array(
+                'none'     => 'Non renseigné',
+                'annulation'   => 'Assurance annulation',
+                'multirisk' => 'Assurance Multirisque',
+            ),
+            'eval'      => array('tl_class' => 'w50 clr'),
+        ),
         'disponibilite' => array(
             'label'     => array('fr' => array('Disponibilité', 'Sélectionnez le type de disponibilité')),
             'inputType' => 'select',
@@ -65,6 +78,10 @@ return array(
                 ),
             ),
             'eval' => array('tl_class' => 'clr'),
+        ),
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Informations temporelles')),
         ),
         'nb_jours' => array(
             'label'     => array('fr' => array('Nombre de jours', '')),
@@ -149,7 +166,7 @@ return array(
                     'eval' => array('rte' => 'tinyMCE', 'tl_class' => 'clr'),
                 ),
             ),
-            'eval' => array('tl_class' => 'clr', 'mandatory' => true),
+            'eval' => array('tl_class' => 'clr', 'mandatory' => true, 'minItems' => 1),
         ),
         'prix_detaille' => array(
             
@@ -169,22 +186,81 @@ return array(
                     'eval' => array('tl_class' => 'clr'),
                 ),
             ),
-            'eval' => array('tl_class' => 'clr', 'mandatory' => true),
+            'eval' => array('tl_class' => 'clr', 'mandatory' => true, 'minItems' => 1),
+        ),
+        
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Tarification')),
         ),
         'mention_prix' => array(
             'label' => array('fr' => array('Mention du tarif', 'Ex: remplace la mention "Possibilité de règlement en plusieurs fois : 50% d\'acompte à la réservation" présente dans le template.')),
             'inputType' => 'text',
             'eval' => array('tl_class' => 'w50'),
         ),
-        'ce_prix_comprend' => array(
-            'label' => array('fr' => array('Ce prix comprend', 'Liste des prestations incluses (utiliser une liste à puce).')),
-            'inputType' => 'textarea',
-            'eval' => array('tl_class' => 'clr', 'rte' => 'tinyMCE'),
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Inclusions')),
         ),
-        'ce_prix_ne_comprend_pas' => array(
-            'label' => array('fr' => array('Ce prix ne comprend pas', 'Liste des prestations non incluses (utiliser une liste à puce).')),
-            'inputType' => 'textarea',
-            'eval' => array('tl_class' => 'clr', 'rte' => 'tinyMCE'),
+        'ce_prix_comprend_labels' => array(
+            'label' => array('fr' => array('Ce prix comprend (Prestations standards)', 'Cochez les prestations incluses par défaut.')),
+            'inputType' => 'checkbox',
+            'options' => array(
+                'conception' => 'La Conception et l’organisation du séjour par <strong>KM50</strong>',
+                'accompagnement' => 'L’accompagnement de <strong>KM50</strong>',
+                'traces' => 'Les tracés et le roadbook',
+                'pauses' => 'Les pauses café pendant les balades motos',
+                'assurance_annul' => 'L’assurance annulation et interruption de voyage (sans franchise)',
+                'assurance_multi' => 'L’assurance multirisques (annulation & frais médicaux - sans franchise)',
+            ),
+            'eval' => array('multiple' => true, 'tl_class' => 'clr', 'allowHtml' => true),
+        ),
+      
+        'ce_prix_comprend_extra' => array(
+            'label' => array('fr' => array('Ce prix comprend (Extras)', 'Ajoutez d\'autres prestations incluses spécifiques à ce voyage.')),
+            'elementLabel' => array('fr' => 'Prestation %s'),
+            'inputType' => 'list',
+            'fields' => array(
+                'text' => array(
+                    'label' => array('fr' => array('Libellé', 'Vous pouvez utiliser des balises <strong>...</strong> pour le gras.')),
+                    'inputType' => 'text',
+                    'eval' => array('allowHtml' => true, 'tl_class' => 'w100'),
+                ),
+            ),
+            'eval' => array('tl_class' => 'clr', 'minItems' => 1),
+        ),
+          
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Exclusions')),
+        ),
+        'ce_prix_ne_comprend_pas_labels' => array(
+            'label' => array('fr' => array('Ce prix ne comprend pas (Standards)', 'Cochez les exclusions par défaut.')),
+            'inputType' => 'checkbox',
+            'options' => array(
+                'carburant' => 'Le carburant',
+                'peages' => 'Les péages éventuels',
+                'depenses' => 'Les dépenses personnelles',
+            ),
+            'eval' => array('multiple' => true, 'tl_class' => 'clr', 'allowHtml' => true),
+        ),
+        'ce_prix_ne_comprend_pas_extra' => array(
+            'label' => array('fr' => array('Ce prix ne comprend pas (Extras)', 'Ajoutez d\'autres exclusions spécifiques à ce voyage.')),
+            'elementLabel' => array('fr' => 'Exclusion %s'),
+            'inputType' => 'list',
+            'fields' => array(
+                'text' => array(
+                    'label' => array('fr' => array('Libellé', 'Vous pouvez utiliser des balises <strong>...</strong> pour le gras.')),
+                    'inputType' => 'text',
+                    'eval' => array('allowHtml' => true, 'tl_class' => 'w100'),
+                ),
+            ),
+            'eval' => array('tl_class' => 'clr', 'minItems' => 1),
+        ),
+          
+        array(
+            'inputType' => 'group',
+            'label' => array('fr' => array('Documents')),
         ),
         'documents_indispensables' => array(
             'label'     => array('fr' => array('Documents indispensables', 'Sélectionnez les documents requis')),

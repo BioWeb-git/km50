@@ -45,94 +45,113 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 		
 		<div class="voyage-content-wrapper">
 			<?php if ($this->nb_jours > 0 || $this->nb_nuits > 0): ?>
-				<div class="voyage-top-infos">
-					<div class="voyage-duree bb">
-						{{fa::clock}} 
-						<?php if ($this->nb_jours > 0): ?>
-							<?php echo $this->nb_jours; ?> jour<?php echo ($this->nb_jours > 1) ? 's' : ''; ?>
-						<?php endif; ?>
-
-						<?php if ($this->nb_jours > 0 && $this->nb_nuits > 0): ?>&nbsp;/&nbsp;<?php endif; ?>
-
-						<?php if ($this->nb_nuits > 0): ?>
-							<?php echo $this->nb_nuits; ?> nuit<?php echo ($this->nb_nuits > 1) ? 's' : ''; ?>
-						<?php endif; ?>
+				<div class="voyage-info-tile is-animated -duration">
+					<span class="info-icon">{{fa::clock}}</span>
+					<div class="info-content">
+						<strong>Durée</strong>
+						<span>
+							<?php if ($this->nb_jours > 0): ?>
+								<?php echo $this->nb_jours; ?> jour<?php echo ($this->nb_jours > 1) ? 's' : ''; ?>
+							<?php endif; ?>
+							<?php if ($this->nb_jours > 0 && $this->nb_nuits > 0): ?>&nbsp;/&nbsp;<?php endif; ?>
+							<?php if ($this->nb_nuits > 0): ?>
+								<?php echo $this->nb_nuits; ?> nuit<?php echo ($this->nb_nuits > 1) ? 's' : ''; ?>
+							<?php endif; ?>
+						</span>
 					</div>
 				</div>
 			<?php endif; ?>
-			<?php if ($region): ?>
-				<div class="region bb"><strong>Région&nbsp;: </strong><?php echo $region ?></div>
-			<?php endif ?>
-			<?php if ($organisateur): ?>
-				<div class="brand bb"><strong>Organisateur&nbsp;: </strong><?php echo $organisateur ?></div>
-			<?php endif ?>
-			<?php if ($thematique): ?>
-				<div class="thematique bb"><strong>Thème&nbsp;: </strong><?php echo $thematique ?></div>
-			<?php endif ?>
-				
-			<div class="voyage-dates bb">
-				<strong>Dates&nbsp;:</strong>
-				<ul class="voyage-dates-liste">
-					<?php if (is_array($this->dates_liste) && count($this->dates_liste)): ?>
-						<?php foreach ($this->dates_liste as $index => $date): ?>
-							<li>
-								<?php 
-									$date = (array) $date; 
-									echo $date['date_range'];
-								?>
-							</li>
-						<?php endforeach ?>
-					<?php else: ?>
-						Date non spécifiée
-					<?php endif ?>
-				</ul>
+
+			<div class="voyage-info-tile is-animated -dates">
+				<span class="info-icon">{{fa::calendar-alt}}</span>
+				<div class="info-content">
+					<strong>Dates</strong>
+					<ul class="voyage-dates-liste">
+						<?php if (is_array($this->dates_liste) && count($this->dates_liste)): ?>
+							<?php foreach ($this->dates_liste as $index => $date): ?>
+								<li><?php $date = (array) $date; echo $date['date_range']; ?></li>
+							<?php endforeach ?>
+						<?php else: ?>
+							<li>Date non spécifiée</li>
+						<?php endif ?>
+					</ul>
+				</div>
 			</div>
-			<?php if ($this->prix_partir_de): ?>
-				<div class="voyage-prix bb">
-					<strong>Prix&nbsp;:</strong> 
-					A partir de <?php echo $this->prix_partir_de; ?>&nbsp;€&nbsp;TTC
+
+			<?php 
+				$displayPrice = $this->prix_partir_de;
+				if (!$displayPrice && is_array($this->prix_detaille) && count($this->prix_detaille)) {
+					$firstPrice = (array) $this->prix_detaille[0];
+					$displayPrice = $firstPrice['prix'];
+				}
+			?>
+			<?php if ($displayPrice): ?>
+				<div class="voyage-info-tile is-animated -price">
+					<span class="info-icon">{{fa::euro-sign}}</span>
+					<div class="info-content">
+						<strong>Tarif</strong> 
+						<span>A partir de <?php echo $displayPrice; ?><?php if (strpos($displayPrice, '€') === false): ?>&nbsp;€<?php endif; ?> TTC</span>
+					</div>
 				</div>
 			<?php endif; ?>
-			<div class="voyage-logement bb">
-				<strong>Logement&nbsp;:</strong>
-				<?php
-					// Correspondance Clé => Label (car le template n'a pas toujours accès au DCA)
-					$labels = [
-						'gite'          => 'Gîte',
-						'chambre_hote'  => 'Chambre d\'hôtes',
-						'maison_privee' => 'Maison Privée',
-						'hotel_2'       => 'Hotel **',
-						'hotel_3'       => 'Hotel ***',
-						'hotel_4'       => 'Hotel ****',
-						'hotel_5'       => 'Hotel *****',
-						'tente'         => 'Tente',
-					];
 
-					// Transformation de la donnée brute en tableau PHP
-					$valeurs = \Contao\StringUtil::deserialize($this->logement, true);
+			<?php if ($region): ?>
+				<div class="voyage-info-tile is-animated -region">
+					<span class="info-icon">{{fa::map-marker-alt}}</span> 
+					<div class="info-content"><strong>Région</strong> <span><?php echo $region ?></span></div>
+				</div>
+			<?php endif ?>
 
-					// Récupération des bons libellés
-					$affichage = array_map(function($v) use ($labels) {
-						return $labels[$v] ?? $v;
-					}, $valeurs);
+			<?php if ($organisateur): ?>
+				<div class="voyage-info-tile is-animated -organisateur">
+					<span class="info-icon">{{fa::user-tie}}</span> 
+					<div class="info-content"><strong>Organisateur</strong> <span><?php echo $organisateur ?></span></div>
+				</div>
+			<?php endif ?>
 
-					// Affichage séparé par des virgules
-					echo implode(' | ', $affichage);
-				?>
+			<?php if ($thematique): ?>
+				<div class="voyage-info-tile is-animated -theme">
+					<span class="info-icon">{{fa::tag}}</span> 
+					<div class="info-content"><strong>Thème</strong> <span><?php echo $thematique ?></span></div>
+				</div>
+			<?php endif ?>
+
+			<div class="voyage-info-tile is-animated -logement">
+				<span class="info-icon">{{fa::bed}}</span>
+				<div class="info-content">
+					<strong>Logement</strong>
+					<span>
+						<?php
+							$labels = ['gite'=>'Gîte','chambre_hote'=>'Chambre d\'hôtes','maison_privee'=>'Maison Privée','hotel_2'=>'Hotel **','hotel_3'=>'Hotel ***','hotel_4'=>'Hotel ****','hotel_5'=>'Hotel *****','tente'=>'Tente'];
+							$valeurs = \Contao\StringUtil::deserialize($this->logement, true);
+							$affichage = array_map(function($v) use ($labels) { return $labels[$v] ?? $v; }, $valeurs);
+							echo implode(' | ', $affichage);
+						?>
+					</span>
+				</div>
 			</div>
-			<div class="voyage-participants bb">
-				<strong>Participants&nbsp;:</strong> 
-				Min <?php echo $this->min_participants ?> - Max <?php echo $this->max_participants ?> 
-				<?php 
-					$isPluriel = ($this->max_participants > 1);
-					if ($this->type_voyage == 'auto') {
-						echo $isPluriel ? 'Équipages' : 'Équipage';
-					} elseif ($this->type_voyage == 'moto') {
-						echo $isPluriel ? 'Motos' : 'Moto';
-					}
-				?>
+
+			<div class="voyage-info-tile is-animated -participants">
+				<span class="info-icon">{{fa::users}}</span>
+				<div class="info-content">
+					<strong>Participants</strong> 
+					<span>
+						Min <?php echo $this->min_participants ?> - Max <?php echo $this->max_participants ?> 
+						<?php 
+							$isPluriel = ($this->max_participants > 1);
+							echo ($this->type_voyage == 'auto') ? ($isPluriel ? 'Équipages' : 'Équipage') : ($isPluriel ? 'Motos' : 'Moto');
+						?>
+					</span>
+				</div>
 			</div>
-			<div class="voyage-date-limite bb"><strong>Date limite d'inscription&nbsp;:</strong> <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?></div>
+
+			<div class="voyage-info-tile is-animated -inscription">
+				<span class="info-icon">{{fa::hourglass-end}}</span> 
+				<div class="info-content">
+					<strong>Inscription</strong> 
+					<span>Avant le <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?></span>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -150,11 +169,10 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 			<?php if ($this->youtube_video): ?>
 				<div class="voyage-video">
 					<?php if ($GLOBALS['disponibilite']): ?>
-						<div class="voyage-disponibilite">
-							<?= $GLOBALS['disponibilite'] ?>
+						<div class="voyage-disponibilite is-animated <?php echo $this->disponibilite; ?>">
 						</div>
 					<?php endif; ?>
-					<h2 class="voyage-titles">Vidéo de Présentation</h2>
+					<h1 class="voyage-title is-animated"><?php echo $this->titre; ?></h1>
 					<div class="content-youtube">
 						<figure class="aspect aspect--16:9">
 							<iframe allowfullscreen src="https://www.youtube.com/embed/<?php echo $this->youtube_video ?>?rel=0&amp;autohide=1&amp;showinfo=0" frameborder="0"></iframe>
@@ -226,12 +244,62 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 					
 					<div class="inclusions-box">
 						<h3>Ce prix comprend</h3>
-						<?php echo $this->ce_prix_comprend ?>
+						<ul>
+							<?php
+								$labelsComprend = [
+									'conception' => 'La Conception et l’organisation du séjour par <strong>KM50</strong>',
+									'accompagnement' => 'L’accompagnement de <strong>KM50</strong>',
+									'traces' => 'Les tracés et le roadbook',
+									'pauses' => 'Les pauses café pendant les balades motos',
+									'assurance_annul' => 'L’assurance annulation et interruption de voyage (sans franchise)',
+									'assurance_multi' => 'L’assurance multirisques (annulation & frais médicaux - sans franchise)',
+								];
+								
+								// Fonction pour transformer **texte** ou ***texte*** en <strong>texte</strong>
+								$parseBold = function($text) {
+									return preg_replace('/\*{2,3}([^\*]+)\*{2,3}/', '<strong>$1</strong>', $text);
+								};
+
+								$comprendCoches = \Contao\StringUtil::deserialize($this->ce_prix_comprend_labels, true);
+								foreach ($comprendCoches as $k) {
+									if (isset($labelsComprend[$k])) echo '<li>' . $parseBold($labelsComprend[$k]) . '</li>';
+								}
+								if (is_array($this->ce_prix_comprend_extra)) {
+									foreach ($this->ce_prix_comprend_extra as $extra) {
+										$extra = (array)$extra;
+										if (!empty($extra['text'])) echo '<li>' . $parseBold($extra['text']) . '</li>';
+									}
+								}
+							?>
+						</ul>
+						<?php if ($this->assurance_destination === 'annulation'): ?>
+							<p><a class="button" href="https://drive.google.com/file/d/1YO0bqLJCHgQiKgQeBcd8_TakPspBlO5Y/view?usp=drive_link" target="_blank" rel="noopener">Information assurance annulation</a></p>
+						<?php elseif ($this->assurance_destination === 'multirisk'): ?>
+							<p><a class="button" href="https://drive.google.com/file/d/1y9_Uibrtn7qzi4AIX7fN2HzBFMQxsQif/view?usp=drive_link" target="_blank" rel="noopener">Information assurance multirisques</a></p>
+						<?php endif; ?>
 					</div>
 					
 					<div class="exclusions-box">
 						<h3>Ce prix ne comprend pas</h3>
-						<?php echo $this->ce_prix_ne_comprend_pas ?>
+						<ul>
+							<?php
+								$labelsExclu = [
+									'carburant' => 'Le carburant',
+									'peages' => 'Les péages éventuels',
+									'depenses' => 'Les dépenses personnelles',
+								];
+								$excluCoches = \Contao\StringUtil::deserialize($this->ce_prix_ne_comprend_pas_labels, true);
+								foreach ($excluCoches as $k) {
+									if (isset($labelsExclu[$k])) echo '<li>' . $parseBold($labelsExclu[$k]) . '</li>';
+								}
+								if (is_array($this->ce_prix_ne_comprend_pas_extra)) {
+									foreach ($this->ce_prix_ne_comprend_pas_extra as $extra) {
+										$extra = (array)$extra;
+										if (!empty($extra['text'])) echo '<li>' . $parseBold($extra['text']) . '</li>';
+									}
+								}
+							?>
+						</ul>
 					</div>
 				</div>
 			</section>

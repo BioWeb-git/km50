@@ -38,15 +38,15 @@
       <div class="centered-wrapper-inner">
         <div class="voyage-title-wrapper">
               <?php if ($GLOBALS['disponibilite']): ?>
-                  <div class="voyage-disponibilite -<?= $GLOBALS['disponibilite_class'] ?>">
+                  <div class="voyage-disponibilite is-animated -<?= $GLOBALS['disponibilite_class'] ?>">
                       <?= $GLOBALS['disponibilite'] ?>
                   </div>
               <?php endif; ?>         
-            <h1 class="voyage-title"><?= $this->newsHeadline ?></h1>
+            <h1 class="voyage-title is-animated"><?= $this->newsHeadline ?></h1>
             <?php if ($this->hasSubHeadline): ?>
-              <h2 class="voyage-subtitle"><?= $this->subHeadline ?></h2>
+               <h2 class="voyage-subtitle is-animated"><?= $this->subHeadline ?></h2>
             <?php endif; ?>
-          <div class="voyage-archive"><?= $this->archive->title; ?></div> 
+          <div class="voyage-archive is-animated"><?= $this->archive->title; ?></div> 
         </div>
       </div>
   </div>
