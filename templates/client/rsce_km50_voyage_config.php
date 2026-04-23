@@ -222,7 +222,7 @@ return array(
             'inputType' => 'list',
             'fields' => array(
                 'text' => array(
-                    'label' => array('fr' => array('Libellé', 'Vous pouvez utiliser des balises <strong>...</strong> pour le gras.')),
+                    'label' => array('fr' => array('Libellé', 'Vous pouvez utiliser la notation ***texte gras*** pour mettre en gras.')),
                     'inputType' => 'text',
                     'eval' => array('allowHtml' => true, 'tl_class' => 'w100'),
                 ),
