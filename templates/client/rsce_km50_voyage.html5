@@ -29,6 +29,16 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 	$GLOBALS['thematique']   = null;
 	$GLOBALS['region']       = null; 
 
+    if (!isset($GLOBALS['justified_gallery_lib']) || !$GLOBALS['justified_gallery_lib']) {
+        $GLOBALS['TL_JAVASCRIPT'][] = 'files/js/justifiedGallery/jquery.justifiedGallery.min.js';
+	    $GLOBALS['TL_CSS'][] = 'files/js/justifiedGallery/justifiedGallery.min.css';
+        $GLOBALS['justified_gallery_lib'] = true;
+    }
+    if (!isset($GLOBALS['photoswipe_gallery_lib']) || !$GLOBALS['photoswipe_gallery_lib']) {
+	    $GLOBALS['TL_CSS'][] = 'files/js/photoswipe/photoswipe.css';
+        $GLOBALS['photoswipe_gallery_lib'] = true;
+    }
+
 ?>
 <div class="voyage-wrapper">
 	<div class="voyage-content">
@@ -228,12 +238,22 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 			<section class="voyage-galerie">
 				<h2 class="voyage-titles">Photos du Séjour</h2>
 				<?php if ($this->photos_fiche && is_array($this->photos_fiche)): ?>
-					<div class="gallery-container">
+					<div id="gallery-<?= $this->id ?>" class="gallery-container justified-gallery photoswipe">
 						<?php foreach ($this->photos_fiche as $uuid): ?>
-							<figure class="gallery-item">
-								<!-- Rendu des images de la galerie (ex: en 800px de large, hauteur auto) -->
-								{{image::<?= $uuid ?>?width=800&alt=<?= htmlspecialchars($this->titre_liste) ?> - Photo}}
-							</figure>
+							<?php 
+								$objFile = \Contao\FilesModel::findByUuid($uuid);
+								if (!$objFile) continue;
+								$thumb = $this->getImageObject($objFile->uuid, [null, 600]);
+								$full  = $this->getImageObject($objFile->uuid, [null, null]);
+							?>
+							<a href="<?= $full->singleSRC ?>" 
+							   class="gallery-item"
+							   data-pswp-width="<?= $full->width ?>"
+							   data-pswp-height="<?= $full->height ?>"
+							   title="<?= $full->caption ?: $full->alt ?>"
+							>
+								<img src="<?= $thumb->src ?>" alt="<?= $thumb->alt ?: $this->titre_liste ?>" <?= $thumb->imgSize ?>>
+							</a>
 						<?php endforeach ?>
 					</div>
 				<?php else: ?>
@@ -261,3 +281,28 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 	<?php endif;?>
 	
 </div>
+<?php  $GLOBALS['TL_BODY'][] = '
+    <script>
+        $(document).ready(function () {
+            $("#gallery-' . $this->id . '").justifiedGallery({
+                rowHeight: 250,
+                margins: 10,
+                lastRow: "nojustify",
+                captions: false,
+                selector: "a"
+            });
+        });
+    </script>
+    <script type="module">
+        import PhotoSwipeLightbox from "./files/js/photoswipe/photoswipe-lightbox.esm.js";
+        const lightbox = new PhotoSwipeLightbox({
+            gallery: "#gallery-' . $this->id . '",
+            children: "a",
+            showHideAnimationType: "zoom",
+            bgOpacity: 0.9,
+            wheelToZoom: true,
+            pswpModule: () => import("./files/js/photoswipe/photoswipe.esm.js")
+        });
+        lightbox.init();
+    </script>
+'?>
