@@ -161,11 +161,16 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 			
 			<section class="voyage-introduction">
 				<h2 class="voyage-titles sr-only">Présentation</h2>
+				<?php if ($objFile): ?>
+					<div class="voyage-organisateur-logo-wrapper">
+						<div class="wrapper">
+							<strong>Organisateur</strong>
+							<img class="voyage-organisateur-logo" src="<?= $objFile->path ?>" alt="Logo organisateur">
+						</div>
+					</div>
+				<?php endif; ?>
 				<?php echo $this->description_fiche ?>
 			</section>
-			<?php if ($objFile): ?>
-				<img class="voyage-organisateur-logo" src="<?= $objFile->path ?>" alt="Logo organisateur">
-			<?php endif; ?>
 			<?php if ($this->youtube_video): ?>
 				<div class="voyage-video">
 					<?php if ($GLOBALS['disponibilite']): ?>
@@ -186,7 +191,7 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 					<?php foreach ($this->programme as $index => $jour): ?>
 						<?php $jour = (array) $jour;?>
 						<article class="programme-jour">
-							<h3>Jour <?php echo $index + 1 ?>&nbsp;: <?php echo $jour['titre_jour'] ?></h3>
+							<h3 class="voyage-subtitles"><span class="jour-label">Jour <?php echo $index + 1 ?>&nbsp;:</span> <?php echo $jour['titre_jour'] ?></h3>
 							<div class="description-jour">
 								<?php echo $jour['description_jour'] ?>
 							</div>
@@ -228,7 +233,7 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 								<?php foreach ($this->prix_detaille as $index => $prix_detaille): ?>
 									<?php $prix = (array) $prix_detaille; ?>
 									<li>
-										<?php echo $prix['titre_prix'] ?>&nbsp;: <strong><?php echo $prix['prix'] ?>&nbsp;€&nbsp;/&nbsp;pers</strong>
+										<?php echo ($prix['titre_prix'] === 'custom' && !empty($prix['titre_prix_custom'])) ? $prix['titre_prix_custom'] : $prix['titre_prix']; ?>&nbsp;: <strong><?php echo $prix['prix'] ?>&nbsp;€&nbsp;/&nbsp;pers</strong>
 									</li>
 								<?php endforeach; ?>
 								<li>
@@ -249,6 +254,7 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 								$labelsComprend = [
 									'conception' => 'La Conception et l’organisation du séjour par <strong>KM50</strong>',
 									'accompagnement' => 'L’accompagnement de <strong>KM50</strong>',
+									'accompagnement_concession' => 'L’accompagnement de la concession',
 									'traces' => 'Les tracés et le roadbook',
 									'pauses' => 'Les pauses café pendant les balades motos',
 									'assurance_annul' => 'L’assurance annulation et interruption de voyage (sans franchise)',
@@ -287,6 +293,8 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 									'carburant' => 'Le carburant',
 									'peages' => 'Les péages éventuels',
 									'depenses' => 'Les dépenses personnelles',
+									'dejeuner' => 'Les déjeuners',
+									'boissons' => 'Les boissons pendant les repas',
 								];
 								$excluCoches = \Contao\StringUtil::deserialize($this->ce_prix_ne_comprend_pas_labels, true);
 								foreach ($excluCoches as $k) {

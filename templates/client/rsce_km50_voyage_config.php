@@ -176,9 +176,24 @@ return array(
             'inputType' => 'list',
             'fields' => array(
                 'titre_prix' => array(
-                    'label' => array('fr' => array('Titre du tarif', 'Ex: Tarif en chambre double/twin')),
+                    'label' => array('fr' => array('Titre du tarif', 'Choisissez ou entrez un tarif')),
+                    'inputType' => 'select',
+                    'options' => array(
+                        'Tarif pilote en chambre partagée (lit double ou 2 lits simples)' => 'Tarif pilote en chambre partagée (lit double ou 2 lits simples)',
+                        'Tarif pilote en chambre individuelle (lit double)' => 'Tarif pilote en chambre individuelle (lit double)',
+                        'Tarif passager en chambre partagée' => 'Tarif passager en chambre partagée',
+                        'custom' => 'Autre tarif (préciser)',
+                    ),
+                    'eval' => array('tl_class' => 'w50'),
+                ),
+                'titre_prix_custom' => array(
+                    'label' => array('fr' => array('Titre personnalisé', 'Précisez le titre du tarif')),
                     'inputType' => 'text',
                     'eval' => array('tl_class' => 'w50'),
+                    'dependsOn' => array(
+                        'field' => 'titre_prix',
+                        'value' => 'custom',
+                    ),
                 ),
                 'prix' => array(
                     'label' => array('fr' => array('Prix', 'Ex: 450 €/personne')),
@@ -212,6 +227,8 @@ return array(
                 'pauses' => 'Les pauses café pendant les balades motos',
                 'assurance_annul' => 'L’assurance annulation et interruption de voyage (sans franchise)',
                 'assurance_multi' => 'L’assurance multirisques (annulation & frais médicaux - sans franchise)',
+                'accompagnement_concession' => 'L’accompagnement de la concession',
+
             ),
             'eval' => array('multiple' => true, 'tl_class' => 'clr', 'allowHtml' => true),
         ),
@@ -241,6 +258,8 @@ return array(
                 'carburant' => 'Le carburant',
                 'peages' => 'Les péages éventuels',
                 'depenses' => 'Les dépenses personnelles',
+                'dejeuner' => 'Les déjeuners',
+                'boissons' => 'Les boissons pendant les repas',
             ),
             'eval' => array('multiple' => true, 'tl_class' => 'clr', 'allowHtml' => true),
         ),

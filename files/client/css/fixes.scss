@@ -1,15 +1,858 @@
+@import "../scss/variables_client";
+@import "../scss/variables";
+
+// Shims for PHP SCSS compiler (Compass compatibility)
+@mixin font-face($name, $files, $eot: false, $weight: normal, $style: normal) {
+    @font-face {
+        font-family: $name;
+        src: $files;
+        font-weight: $weight;
+        font-style: $style;
+    }
+}
+
+@function font-files($args...) {
+    @return $args;
+}
+
+@mixin mediaquery($breakpoint, $property: max-width) {
+    @if $breakpoint ==desktop {
+        $breakpoint: $breakpoint-desktop;
+    }
+
+    @else if $breakpoint ==tablet {
+        $breakpoint: $breakpoint-tablet;
+    }
+
+    @else if $breakpoint ==mobile {
+        $breakpoint: $breakpoint-mobile;
+    }
+
+    @media screen and (unquote($property): $breakpoint) {
+        @content;
+    }
+}
+
+@import "../scss/fonts";
+
+.border-radius {
+    border-radius: 25px;
+}
+
 .voyage-organisateur-logo {
     display: block;
     max-width: 200px !important;
     margin: 50px 0;
-
 }
-.date-deadline{
+
+.date-deadline {
     display: block;
     font-size: .6em;
 }
+
 .headline-box {
     .subhealine {
         font-size: 1.8em;
+        line-height: 1.1;
+    }
+
+    h2 {
+        color: $terre1 !important;
+        font-size: 3.1em;
+        line-height: 1.1;
+    }
+
+    h3 {
+        color: $terre2 !important;
+        font-size: 2.8em;
+        line-height: 1.1;
+    }
+}
+
+.main-slider {
+    opacity: .7 !important;
+    position: absolute !important;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .rsts-view,
+    .rsts-crop,
+    .rsts-slides,
+    .rsts-slide {
+        width: 100% !important;
+        height: 100% !important;
+
+        >div {
+            width: 100% !important;
+            //height: 100% !important;
+
+            img {
+                object-fit: cover;
+                height: 100% !important;
+            }
+        }
+    }
+}
+
+.voyage-info-tile {
+    margin-bottom: 0 !important;
+    padding: 0.5rem !important;
+
+    .info-icon {
+        width: 30px !important;
+        height: 30px !important;
+    }
+}
+
+.voyage-organisateur-logo-wrapper {
+    text-align: center;
+    padding: 50px 0;
+
+    @media screen and (min-width: 768px) {
+        text-align: left;
+        float: right;
+        padding: 0;
+
+        .wrapper {
+            border-left: 3px dotted $grey-medium;
+            margin-left: 30px;
+            padding-left: 30px;
+            border-bottom: 3px dotted $grey-medium;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+    }
+
+    strong {
+        display: block;
+        font-size: 1.3em;
+    }
+
+    .voyage-organisateur-logo {
+        display: inline-block;
+        margin: 10px 0;
+        width: 300px;
+        object-fit: contain;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.home {
+    h1 {
+        color: $white;
+        animation: fadeInUp 1.8s ease-out 3s both;
+    }
+}
+
+.-color-inverted {
+    .teaser-boxes {
+        .teaser-boxes-item {
+            padding: 10px;
+            border: 1px solid rgba($white, .3) !important;
+            border-width: 0 1px 0 0 !important;
+            border-radius: 0 !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+
+            .teaser-boxes-item-title {
+                margin-top: 0;
+                font-weight: 300 !important;
+                font-size: 1.5em !important;
+                text-transform: none !important;
+            }
+
+            .teaser-boxes-label {
+                @extend .font2;
+                color: $white !important;
+                border: none !important;
+                font-size: 1.5em !important;
+                box-shadow: 0 4px 15px rgba($black, 0.2) !important;
+            }
+
+            .button {
+                transition: all .3s ease;
+                border: 1px solid $white !important;
+                border-top-color: transparent !important;
+                border-right-color: transparent !important;
+                border-bottom-color: $white !important;
+                border-left-color: $white !important;
+                border-radius: 0 !important;
+                background: none !important;
+                padding: 5px 15px !important;
+                color: $white;
+                border-color: rgba($white, .3) !important;
+                width: 100%;
+
+                &:hover {
+                    background-color: transparent !important;
+                    border-top-color: $white !important;
+                    border-right-color: $white !important;
+                    border-bottom-color: transparent !important;
+                    border-left-color: transparent !important;
+                }
+            }
+        }
+    }
+}
+
+// --- Nice UL (Léger & Élégant) ---
+.nice-ul {
+    list-style: none !important;
+    padding: 0;
+    margin: 1.5rem 0;
+
+    li {
+        list-style-type: none !important;
+        position: relative;
+        padding: 10px 0 10px 25px;
+        border-bottom: 1px solid rgba($black, 0.04);
+        color: $terre1;
+        font-size: 1.05rem;
+        transition: all 0.3s ease;
+        cursor: default;
+
+        a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            margin: -10px 0 -10px -25px;
+            padding: 10px 0 10px 25px;
+            cursor: pointer;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.2rem;
+            width: 8px;
+            height: 2px;
+            background: $green2;
+            transition: all 0.3s ease;
+        }
+
+        &:hover {
+            color: $green1;
+            padding-left: 35px;
+
+            &::before {
+                width: 15px;
+                background: $terre2;
+                left: 5px;
+            }
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+// --- Nice UL 2 (Discret & Sexy) ---
+.nice-ul2 {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 0 1.5rem !important;
+
+    li {
+        list-style-type: none !important;
+        position: relative;
+        padding: 6px 0 6px 30px;
+        color: $terre1;
+        font-size: 1rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        cursor: default;
+        border-bottom: 1px solid rgba($black, 0.03);
+
+        a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+            margin: -6px 0 -6px -30px;
+            padding: 6px 0 6px 30px;
+            cursor: pointer;
+        }
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border: 1.5px solid $green2;
+            border-radius: 50%;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        &:hover {
+            color: $green1;
+            transform: translateX(5px);
+
+            &::before {
+                background: $green2;
+                transform: translateY(-50%) scale(1.4);
+                box-shadow: 0 0 8px rgba($green2, 0.4);
+            }
+        }
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+}
+
+// --- Teaser Boxes Label (Tag Style) ---
+.teaser-boxes-label {
+    display: inline-block !important;
+    background: rgba($green2, 0.06) !important;
+    color: $green2 !important;
+    border: 1px solid rgba($green2, 0.2) !important;
+    padding: 4px 12px !important;
+    border-radius: 4px !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 1.5rem !important;
+    box-shadow: none !important;
+    position: relative;
+    pointer-events: none; // Renforce l'aspect non-cliquable
+    transition: none !important;
+
+    // On retire l'effet de brillance et d'ombre du bouton
+    &::after {
+        display: none !important;
+    }
+
+    &:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .-color-inverted & {
+        background: rgba($white, 0.1) !important;
+        color: $white !important;
+        border-color: rgba($white, 0.3) !important;
+    }
+}
+
+// --- Elegant Buttons ---
+.button,
+.module-cookiebar-opener a,
+button {
+    display: inline-block !important;
+    background: $green2 !important;
+    color: $white !important;
+    border: none !important;
+    padding: 14px 36px !important;
+    border-radius: 50px !important;
+    font-family: $font-family2 !important; // Oswald
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.5px !important;
+    box-shadow: 0 4px 15px rgba($black, 0.15) !important;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    cursor: pointer;
+    text-decoration: none !important;
+    text-align: center;
+    line-height: 1 !important;
+
+    &:hover {
+        background: $green1 !important;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba($black, 0.2) !important;
+        color: $white !important;
+    }
+
+    &:active {
+        transform: translateY(-1px);
+    }
+}
+
+// --- Logos Gallery Fix ---
+.logos {
+    ul {
+        flex-wrap: wrap;
+    }
+
+    img {
+        filter: none !important;
+        opacity: 1 !important;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    // Support mode sombre
+    .-color-inverted & {
+        img {
+            filter: none !important;
+            opacity: 1 !important;
+        }
+    }
+}
+
+// --- Testimonials (Témoignages) ---
+.testimonials {
+    &.rs-columns {
+        display: flex;
+        flex-wrap: wrap;
+
+        .rs-column {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+    // Animation au défilement (Entrée par le bas)
+    &.is-animated {
+        .rs-column {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.7s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            @for $i from 1 through 8 {
+                &:nth-child(#{$i}) {
+                    transition-delay: #{$i * 0.2}s;
+                }
+            }
+        }
+
+        &.in-view {
+            .rs-column {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .team-boxes-item {
+        background: $white;
+        padding: 35px !important;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba($black, 0.04);
+        border: 1px solid rgba($black, 0.02);
+        display: flex;
+        flex-direction: column;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        flex: 1;
+        margin-bottom: 30px;
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba($black, 0.1);
+            border-color: rgba($green2, 0.15);
+        }
+
+        .team-boxes-image-wrapper {
+            width: 65px !important;
+            height: 65px !important;
+            margin: 0 0 25px 0 !important;
+            border-radius: 50% !important;
+            overflow: hidden;
+            border: 2px solid rgba($green2, 0.1);
+            background: $white;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .no-image {
+                background: rgba($green2, 0.05);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+
+                &::before {
+                    content: '👤';
+                    font-size: 1.4rem;
+                    opacity: 0.4;
+                }
+            }
+        }
+
+        .team-boxes-content {
+            z-index: 1;
+
+            // Decorative Quote Mark
+            &::after {
+                content: '“';
+                position: absolute;
+                top: -15px;
+                right: 0;
+                font-family: Georgia, serif;
+                font-size: 7rem;
+                color: rgba($green2, 0.07);
+                line-height: 1;
+                pointer-events: none;
+            }
+
+            .team-boxes-content-title {
+                margin: 0 !important;
+                font-size: 1.15rem !important;
+                color: $terre1 !important;
+                text-transform: uppercase !important;
+                font-weight: 800 !important;
+                letter-spacing: 0.5px;
+                line-height: 1.2 !important;
+            }
+
+            .team-boxes-content-subtitle {
+                margin: 5px 0 20px 0 !important;
+                font-size: 0.75rem !important;
+                color: $green2 !important;
+                text-transform: uppercase !important;
+                font-weight: 700 !important;
+                letter-spacing: 1.5px;
+                opacity: 0.7;
+            }
+
+            .team-boxes-content-text {
+                font-size: 1rem;
+                line-height: 1.7;
+                color: rgba($color3, 0.9);
+                font-style: italic;
+                position: relative;
+
+                &::before {
+                    content: '“';
+                    display: inline-block;
+                    color: $green2;
+                    font-size: 2.2rem;
+                    font-family: Georgia, serif;
+                    line-height: 0;
+                    margin-right: 8px;
+                    vertical-align: -8px;
+                }
+
+                p {
+                    display: inline;
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    // Support mode inversé
+    .-color-inverted & {
+        .team-boxes-item {
+            background: rgba($white, 0.08) !important;
+            backdrop-filter: blur(15px);
+            border-color: rgba($white, 0.15) !important;
+            box-shadow: 0 10px 40px rgba($black, 0.15) !important;
+
+            .team-boxes-content-title {
+                color: $white !important;
+            }
+
+            .team-boxes-content-text {
+                color: rgba($white, 0.9);
+            }
+
+            .team-boxes-content-subtitle {
+                color: $green4;
+                opacity: 1;
+            }
+
+            .team-boxes-content::after {
+                color: rgba($white, 0.05);
+            }
+        }
+    }
+}
+
+// --- Counter Boxes Separators Style ---
+.counter-boxes.testimonials {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+    // Animation au défilement (Entrée par le bas, un par un)
+    &.is-animated {
+        .rs-column {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+            @for $i from 1 through 6 {
+                &:nth-child(#{$i}) {
+                    transition-delay: #{$i * 0.15}s;
+                }
+            }
+        }
+
+        &.in-view {
+            .rs-column {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+
+    .rs-column {
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba($green2, 0.3);
+        margin: 20px 0;
+
+        &:last-child {
+            border-right: none;
+        }
+
+        @media screen and (max-width: 767px) {
+            border-right: none;
+            border-bottom: 1px solid rgba($green2, 0.3);
+            margin: 0;
+            padding: 30px 0;
+
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+
+    .counter-boxes-item {
+        background: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 30px !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        flex: 1;
+
+        &::before {
+            font-size: 3.5rem;
+            color: $green2;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .-counter {
+            font-family: $font-family2; // Oswald
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 900;
+            color: $terre1;
+            margin: 0 !important;
+            line-height: 0.85;
+            letter-spacing: -2px;
+
+            .-color-inverted & {
+                color: $white !important;
+                text-shadow: 0 2px 15px rgba($black, 0.1);
+            }
+        }
+
+        .counter-boxes-item-title {
+            margin: 15px 0 0 0 !important;
+            font-size: 0.9rem !important;
+            color: $green2 !important;
+            text-transform: uppercase !important;
+            font-weight: 700 !important;
+            letter-spacing: 2px;
+            opacity: 0.9;
+
+            .-color-inverted & {
+                color: $green4 !important;
+                font-weight: 800;
+            }
+        }
+    }
+}
+
+// --- Text Conclusion (Sexy & Premium Style) ---
+.text-conclusion {
+    display: table;
+    margin: 3rem auto;
+    padding: 3rem 5rem;
+    text-align: center;
+    position: relative;
+    max-width: 90%;
+
+    // Corners Focus Effect
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba($green2, 0.5);
+        transition: all 0.5s ease;
+    }
+
+    // Top-Right Corner
+    &::before {
+        top: 0;
+        right: 0;
+        border-bottom: none;
+        border-left: none;
+    }
+
+    // Bottom-Left Corner
+    &::after {
+        bottom: 0;
+        left: 0;
+        border-top: none;
+        border-right: none;
+    }
+
+    strong {
+        display: block;
+        font-family: $font-family2; // Oswald
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: -1.5px;
+        line-height: 0.9;
+        margin-bottom: 0.8rem;
+        font-style: normal;
+
+        // Sexy Gradient Text
+        background: linear-gradient(to right, $terre1, $terre4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+
+        @media screen and (max-width: 767px) {
+            letter-spacing: -0.5px;
+        }
+    }
+
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    color: $color3;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    opacity: 0.9;
+
+    .-color-inverted & {
+        color: rgba($white, 0.9) !important;
+
+        &::before,
+        &::after {
+            border-color: rgba($white, 0.4);
+        }
+
+        strong {
+            background: linear-gradient(to right, $white, rgba($white, 0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    }
+
+    // Hover effect for extra sexiness
+    &:hover {
+
+        &::before,
+        &::after {
+            width: 50px;
+            height: 50px;
+            border-color: $green2;
+        }
+
+        .-color-inverted & {
+
+            &::before,
+            &::after {
+                border-color: $white;
+            }
+        }
+    }
+}
+
+.voyages-list,
+.voyage_full {
+    .voyage-archive {
+        display: inline-block;
+        background: $white;
+        line-height: 1;
+        padding: 1px 5px;
+        font-size: .8em;
+        font-weight: bolder;
+        color: $black !important;
+        border-radius: 5px;
+    }
+}
+
+.voyages-list {
+    .voyage-title {
+        padding-top: 35px !important;
+    }
+
+    .voyage-archive {
+        position: absolute;
+        top: 5px;
+        left: auto;
+        right: 5px;
+        z-index: 2;
+    }
+}
+
+.voyage_full {
+    .voyage-organisateur-logo {
+        border: 25px solid $white;
+    }
+
+    .voyage-archive {
+        font-size: 1.2em;
+        text-decoration: none;
+    }
+
+    .voyage-content {
+        margin-top: -25px;
+    }
+
+    .programme-jour {
+        .jour-label {
+            display: block;
+            font-size: .7em;
+            text-decoration: underline;
+            opacity: .8;
+        }
+    }
+}
+
+.confiance-slider {
+
+
+    .rsts-prev,
+    .rsts-next {
+        bottom: auto;
+        top: -45px
+    }
+
+    .rsts-nav {
+        right: 25px;
+        bottom: -45px;
     }
 }

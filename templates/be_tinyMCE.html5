@@ -92,7 +92,11 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
     <?php endif; ?>
 
     browser_spellcheck: true,
-    importcss_append: true
+    importcss_append: true,
+    style_formats_merge: true,
+    style_formats: [
+      { title: 'Texte Conclusion', inline: 'span', classes: 'text-conclusion' }
+    ]
   };
 
   // Add Stimulus data and controller reference
