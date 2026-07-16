@@ -1,12 +1,13 @@
-# Migration vers filtrage client-side — km50.fr (v6)
+# Migration vers filtrage client-side — km50.fr (v7)
 
 > [!IMPORTANT]
-> Plan v6 — cinq corrections du v5 :
-> 1. **Regex nginx ancrée** : `^/voyages/categorie/` au lieu de `/categorie/` (non-ancrée = tue aussi les Actualités et autres archives)
-> 2. **Ordre inversé** : templates + JS d'abord → 410 nginx en dernier (pas l'inverse)
-> 3. **`forge-conf/before/` inutilisable** pour des `location` — hors bloc `server{}`, ignoré
-> 4. **Q3 fermée** : `$item['pid']` disponible (`category->row()` expose toutes les colonnes de `tl_news_category`)
-> 5. **Q3 bloquait aussi l'Étape 1** (pas seulement l'Étape 3) — précisé dans le plan
+> Plan v7 — réécriture complète avec six résolutions de contradictions :
+> 1. **nginx** : le 410 va dans `sites-enabled/km50.fr`, pas dans `site.conf`
+> 2. **Cohérence 100% JS** : plus aucun lien `/voyages/categorie/*` généré nulle part
+> 3. **robots.txt** : pas de `Disallow` — incompatible avec 410
+> 4. **IDs confirmés** : Voyages=**294**, Actualités=**297**, Reader=/voyage/*=**306**
+> 5. **Module 254** : reste activé car son template modifié génère les `<button>` et charge les catégories proprement
+> 6. **Regex nginx ancrée** : `^/voyages/categorie/` pour ne pas impacter les Actualités (module 245)
 
 ---
 
