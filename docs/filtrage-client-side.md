@@ -135,6 +135,13 @@ $group = $pidToGroup[(int)($item['pid'] ?? 0)] ?? null;
 ```
 
 Pour les items non-actifs (remplacer le `<span class="js-cat-link">`) :
+
+> [!WARNING]
+> **Markup HTML invalide** : `$item['link']` contient déjà une balise `<a>` générée par le bundle. L'imbriquer dans `<button>` produira du HTML invalide et un lien pointant toujours vers `/voyages/categorie/*` (qui retournera 410). Il faut extraire le texte brut de la catégorie (ex: `$item['title']` ou `$item['name']` ou faire un `strip_tags($item['link'])`).
+
+> [!NOTE]
+> **Compteurs de quantités (`quantity`) figés** : Les quantités sont calculées côté serveur au chargement. Avec le filtrage JS, elles ne se mettront pas à jour dynamiquement selon la combinaison active. Soit les recalculer en JS lors de la mise à jour des filtres, soit les supprimer complètement du template.
+
 ```html
 <?php if ($group): ?>
 <button
@@ -143,7 +150,7 @@ Pour les items non-actifs (remplacer le `<span class="js-cat-link">`) :
     data-filter-value="<?= htmlspecialchars($item['alias'] ?? '', ENT_QUOTES) ?>"
     <?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>
 >
-    <span class="name"><?= $item['link'] ?></span>
+    <span class="name"><?= htmlspecialchars($item['title'] ?? strip_tags($item['link']), ENT_QUOTES) ?></span>
     <?php if ($this->showQuantity): ?><span class="quantity"><?= $item['quantity'] ?></span><?php endif; ?>
 </button>
 <?php else: ?>
