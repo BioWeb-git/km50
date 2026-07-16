@@ -1,100 +1,81 @@
-# Migration vers filtrage client-side — km50.fr (v5)
+# Migration vers filtrage client-side — km50.fr (v6)
 
 > [!IMPORTANT]
-> Plan v5 — réécriture complète. Les v3/v4 empilaient des patchs contradictoires.
-> Quatre contradictions résolues avant exécution :
-> 1. **nginx** : le 410 va dans `sites-enabled/km50.fr`, pas dans `site.conf`
-> 2. **Cohérence 100% JS** : plus aucun lien `/voyages/categorie/*` généré nulle part
-> 3. **robots.txt** : pas de `Disallow` — incompatible avec 410 (Google ne voit jamais le 410 si le crawl est bloqué)
-> 4. **IDs confirmés** : Voyages=**294**, Actualités=**297** (crawlé par le bot par fallback), Reader=/voyage/*=**306**
+> Plan v6 — cinq corrections du v5 :
+> 1. **Regex nginx ancrée** : `^/voyages/categorie/` au lieu de `/categorie/` (non-ancrée = tue aussi les Actualités et autres archives)
+> 2. **Ordre inversé** : templates + JS d'abord → 410 nginx en dernier (pas l'inverse)
+> 3. **`forge-conf/before/` inutilisable** pour des `location` — hors bloc `server{}`, ignoré
+> 4. **Q3 fermée** : `$item['pid']` disponible (`category->row()` expose toutes les colonnes de `tl_news_category`)
+> 5. **Q3 bloquait aussi l'Étape 1** (pas seulement l'Étape 3) — précisé dans le plan
 
 ---
 
-## Contexte et décision
+## Contexte
 
-**Problème** : `codefog/contao-news_categories` génère des URLs `/voyages/categorie/a__b__c` par combinaison de filtres → espace de crawl 2^40, botnet actif, ~195 requêtes SQL par HTTP request.
+**Problème** : le bundle `codefog/contao-news_categories` génère des URLs `/voyages/categorie/a__b__c`. Le bot lit les ~40 alias valides dans le HTML, compose toutes les permutations → chacune retourne 200 + ~195 requêtes SQL. `limit_req zone=catcombo` tient le botnet pendant la migration.
 
-**Solution** : filtrage 100% client-side. On charge les 41 voyages une fois, le JS filtre par show/hide. Zéro requête SQL par combinaison de filtres.
+**Solution** : filtrage 100% client-side. 41 voyages chargés une fois, JS filtre par show/hide. Zéro SQL par combinaison.
 
-**SEO** : migration totale sans risque. Le sitemap ne contient aucune URL `/voyages/categorie/*`. Site neuf.
+**SEO** : migration totale sans risque (sitemap vérifié — aucune URL `/voyages/categorie/*`).
 
-**Architecture cible** :
-- `/voyages` (id=294) → page unique, 41 voyages, filtrage 100% JS via query string
-- `?organisateur=km50&region=normandie` → état filtre JS, `canonical=/voyages`, `noindex`
-- `/voyages/categorie/*` → **410 Gone** nginx (module Contao désactivé)
-- `/voyages/categorie/*__*` → **410 Gone** nginx + rate-limit (botnet)
+**IDs confirmés** :
+- `/voyages` → page id=**294**
+- `/voyage/<alias>` reader → page id=**306**
+- id=**297** = Actualités (module `id=245`, archive `id=6`) — non ciblé
+
+**Modules km50 concernés** (base confirmée) :
+- `id=245` — type `newscategories`, archive `[6]` → Actualités — **à laisser intact**
+- `id=254` — type `newscategories_cumulativehierarchical`, archives `[7,8,9]` → Voyages — **à désactiver**
 
 ---
 
-## Analyse du vhost nginx — où mettre le 410
+## Analyse nginx — pourquoi les locations dans `site.conf` ne mordent pas
 
-Le fichier `sites-enabled/km50.fr` (généré par Forge) contient **déjà** deux `location` déclarées **avant** l'`include forge-conf/2942385/site.conf` :
+`sites-enabled/km50.fr` déclare ces deux blocs **avant** l'`include forge-conf/2942385/site.conf` :
 
 ```nginx
-location ~* /categorie/[^/]*__ {
-    limit_req zone=catcombo burst=15 nodelay;
-    limit_req_status 429;
-    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
-}
-location ~* /categorie/ {
-    limit_req zone=categories_limit burst=5 nodelay;
-    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
-}
+location ~* /categorie/[^/]*__ { ... }  # ← matche en premier
+location ~* /categorie/ { ... }          # ← matche en premier
+# include forge-conf/2942385/site.conf ← jamais consulté pour /categorie/*
 ```
 
-**Règle nginx** : pour les regex, la **première déclarée qui matche** gagne. Les locations dans `site.conf` (inclus après) ne sont **jamais consultées** pour ces URLs. C'est pourquoi les modifications précédentes dans `site.conf` ne mordaient pas.
+Nginx : pour les regex (`~*`), **première déclarée qui matche = gagne**. Les locations dans `site.conf` sont ignorées pour ces URLs.
 
 > [!WARNING]
-> `sites-enabled/km50.fr` est **généré par Forge** à chaque redeploy — modifications manuelles écrasées. `site.conf` lui est éditable via le panel Forge "Custom Nginx". Gérer le risque en notant la modification dans le panel Forge pour la réappliquer si besoin, ou via un include depuis `forge-conf/2942385/km50.fr/before/`.
+> `sites-enabled/km50.fr` = généré par Forge à chaque redeploy (risque d'écrasement).
+> `forge-conf/2942385/site.conf` = éditable via panel Forge "Custom Nginx".
+> `forge-conf/2942385/km50.fr/before/` = hors du bloc `server{}` → **impossible d'y déclarer une `location`**.
+>
+> **Seul levier** : modifier directement `sites-enabled/km50.fr`. Documenter la modification dans Forge pour la réappliquer après redeploy.
+
+---
+
+## Ordre d'exécution (inversé par rapport au v5)
+
+> [!CAUTION]
+> Le v5 proposait nginx en premier. **Erreur** : à ce moment, les modules génèrent encore des `<a href="/voyages/categorie/alias">`. Les vrais visiteurs cliquent → 410 immédiat → site cassé pendant la migration.
+>
+> **Ordre correct** : les templates et le JS d'abord. Les visiteurs continuent d'utiliser les liens existants (server-side) pendant que la nouvelle expérience JS est déployée. Une fois le JS validé et les liens supprimés du HTML, les 410 nginx sont activés — rien ne pointe plus vers ces URLs.
+
+```
+Étape 1 → Étape 2 → Étape 3 → Étape 4 → Étape 5 → Étape 6 → Étape 7 (nginx)
+Templates  Boutons   JS        fe_page   shared.js  Backend   410 nginx
+```
 
 ---
 
 ## Étapes d'implémentation
 
-### Étape 0 — nginx : 410 Gone dans `sites-enabled/km50.fr`
+### Étape 1 — `news_voyages.html5` : `data-categories` + supprimer les liens
 
-**À faire en premier**, avant tout changement PHP/template.
-
-```nginx
-# AVANT
-location ~* /categorie/[^/]*__ {
-    limit_req zone=catcombo burst=15 nodelay;
-    limit_req_status 429;
-    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
-}
-location ~* /categorie/ {
-    limit_req zone=categories_limit burst=5 nodelay;
-    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
-}
-
-# APRÈS
-location ~* /categorie/[^/]*__ {
-    # Botnet : rate-limit + 410 immédiat, PHP jamais appelé
-    limit_req zone=catcombo burst=5 nodelay;
-    limit_req_status 429;
-    return 410;
-}
-location ~* /categorie/ {
-    # Toutes les URLs /categorie/* : module désactivé → 410
-    return 410;
-}
-```
-
-`return 410` court-circuite PHP et FPM entièrement → coût quasi nul.
-410 Gone = Google déréférence plus vite qu'un 404.
-Le rate-limit reste sur `__` : filet de sécurité réseau.
-
-**Pas de `Disallow` dans robots.txt** : si robots.txt bloque le crawl, Google ne voit jamais le 410 et ne déréférence pas. Le 410 seul suffit.
-
----
-
-### Étape 1 — `news_voyages.html5` : `data-categories` + supprimer les liens `/categorie/*`
+> [!NOTE]
+> **Q3 fermée** : `$item['pid']` est disponible car `generateItem()` fait `$data = $category->row()` (ligne 330 de `NewsModule.php`), qui expose **toutes les colonnes** de `tl_news_category`, dont `pid`. Cela débloque aussi le `data-categories` (Étape 1), pas seulement les boutons (Étape 3).
 
 #### [MODIFY] [news_voyages.html5](file:///home/forge/km50.fr/templates/client/news_voyages.html5)
 
 ```php
 <?php
-// Variables locales uniquement — pas de $GLOBALS, pas de fuite entre cartes
+// Variables locales — pas de $GLOBALS, pas de fuite entre cartes
 $catClasses   = [];
 $organisateur = null;
 $region       = null;
@@ -110,7 +91,7 @@ if ($this->categories && is_array($this->categories)) {
 
         $catClasses[] = 'cat-' . $alias;
 
-        // Texte brut sans <a> — /voyages/categorie/* retourne 410
+        // Texte brut — plus de <a href="/voyages/categorie/..."> (futur 410)
         $label = '<span class="category-' . $id . '">' . $title . '</span>';
 
         if ($pid === 2)       { $organisateur = $label; }
@@ -129,61 +110,46 @@ Div wrapper :
 ```
 
 > [!CAUTION]
-> Même remplacement `$link → $label` à faire dans [news_voyage_full.html5](file:///home/forge/km50.fr/templates/client/news_voyage_full.html5) (même pattern ligne 16).
+> Même suppression `$link → $label` dans [news_voyage_full.html5](file:///home/forge/km50.fr/templates/client/news_voyage_full.html5) (même pattern ligne 16).
 
 ---
 
-### Étape 2 — Désactiver les modules `newscategories` dans le backend Contao
+### Étape 2 — `nav_newscategories_hierarchical.html5` : boutons au lieu de liens
 
-Désactiver ou supprimer de la mise en page :
-- Module `mod_newscategories_cumulativehierarchical` (CustomCumulativeFilterModule)
-- Module `mod_newscategories_cumulative` (template [mod_newscategories_cumulative.html5](file:///home/forge/km50.fr/templates/client/mod_newscategories_cumulative.html5) — actif, génère des liens `__`)
+#### [MODIFY] [nav_newscategories_hierarchical.html5](file:///home/forge/km50.fr/templates/client/nav_newscategories_hierarchical.html5)
 
-Ces modules seront remplacés par les boutons JS de l'Étape 3.
+`$item['pid']` est disponible. Mapping pid → groupe :
 
----
-
-### Étape 3 — Boutons de filtre JS
-
-Structure HTML cible (à injecter via article Contao ou template RSCE) :
-
-```html
-<div class="voyage-filters" id="voyage-filters">
-    <button class="filter-reset-all" data-filter-reset="all">Tous les voyages</button>
-
-    <div class="filter-group" data-group="organisateur">
-        <span class="filter-group-label">Organisateur</span>
-        <div class="filter-group-buttons">
-            <button data-filter-reset="organisateur" class="active">Tous</button>
-            <button data-filter-group="organisateur" data-filter-value="km50">KM50</button>
-            <!-- ... -->
-        </div>
-    </div>
-
-    <div class="filter-group" data-group="region">
-        <span class="filter-group-label">Région</span>
-        <div class="filter-group-buttons">
-            <button data-filter-reset="region" class="active">Toutes</button>
-            <button data-filter-group="region" data-filter-value="normandie">Normandie</button>
-            <!-- ... -->
-        </div>
-    </div>
-
-    <!-- idem thematique, experience -->
-
-    <div class="filter-results">
-        <span id="voyage-count">41</span> voyage(s)
-    </div>
-</div>
-<div id="voyage-no-results" style="display:none">Aucun résultat.</div>
+```php
+<?php
+$pidToGroup = [2 => 'organisateur', 3 => 'region', 9 => 'thematique', 37 => 'experience'];
+$group = $pidToGroup[(int)($item['pid'] ?? 0)] ?? null;
+?>
 ```
 
-> [!NOTE]
-> **Q3 — `$item['pid']` disponible ?** Si on génère les boutons depuis le module hiérarchique modifié, vérifier avec `dump($item)` dans `nav_newscategories_hierarchical.html5`. Si `pid` absent : lookup par alias (les aliases racines sont fixes : `organisateur`, `région`, `thématique-univers`, `expériences`).
+Pour les items non-actifs (remplacer le `<span class="js-cat-link">`) :
+```html
+<?php if ($group): ?>
+<button
+    class="<?= $item['class'] ?>"
+    data-filter-group="<?= $group ?>"
+    data-filter-value="<?= htmlspecialchars($item['alias'] ?? '', ENT_QUOTES) ?>"
+    <?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>
+>
+    <span class="name"><?= $item['link'] ?></span>
+    <?php if ($this->showQuantity): ?><span class="quantity"><?= $item['quantity'] ?></span><?php endif; ?>
+</button>
+<?php else: ?>
+<!-- item sans groupe connu : afficher normalement -->
+<span class="<?= $item['class'] ?>"><?= $item['link'] ?></span>
+<?php endif; ?>
+```
 
 ---
 
-### Étape 4 — [NEW] `files/client/js/voyage-filter.js`
+### Étape 3 — [NEW] `files/client/js/voyage-filter.js`
+
+#### [NEW] [voyage-filter.js](file:///home/forge/km50.fr/files/client/js/voyage-filter.js)
 
 ```javascript
 /**
@@ -268,11 +234,11 @@ Structure HTML cible (à injecter via article Contao ou template RSCE) :
 
 ---
 
-### Étape 5 — [MODIFY] `fe_page.html5` : canonical + chargement conditionnel JS
+### Étape 4 — [MODIFY] `fe_page.html5` : canonical + chargement conditionnel
 
 ```php
 <?php
-// IDs confirmés : Voyages=294, Actualités=297 (≠), Reader /voyage/*=306
+// Voyages=294, Actualités=297 (différent !), Reader=306
 $isVoyagesPage  = ((int)$this->pageId === 294);
 $hasQueryFilter = !empty($_GET['organisateur']) || !empty($_GET['region'])
                || !empty($_GET['thematique'])  || !empty($_GET['experience']);
@@ -288,46 +254,73 @@ $hasQueryFilter = !empty($_GET['organisateur']) || !empty($_GET['region'])
 
 ---
 
-### Étape 6 — [MODIFY] `shared.js` : supprimer le listener `js-cat-link`
+### Étape 5 — [MODIFY] `shared.js` : supprimer le listener `js-cat-link`
 
-Supprimer les lignes 58–71 de [shared.js](file:///home/forge/km50.fr/files/client/js/shared.js) — plus aucun élément `.js-cat-link` ne sera généré après la migration.
-
----
-
-## robots.txt — rien à changer
-
-```
-# Pas de Disallow sur /voyages/categorie/* :
-# Ces URLs retournent 410 Gone via nginx.
-# Google visite → voit le 410 → déréférence.
-# Disallow bloquerait la visite → Google ne verrait jamais le 410 → pas de déréférencement.
-```
+Supprimer les lignes 58–71 de [shared.js](file:///home/forge/km50.fr/files/client/js/shared.js) — plus aucun `.js-cat-link` après la migration.
 
 ---
 
-## Récapitulatif des fichiers modifiés
+### Étape 6 — Backend Contao : désactiver le module `id=254`
 
-| Fichier | Action | Priorité |
+Désactiver dans la mise en page uniquement le module `id=254` (`newscategories_cumulativehierarchical`, archives Voyages `[7,8,9]`).
+
+**Laisser intact** le module `id=245` (`newscategories`, archive `[6]` = Actualités).
+
+---
+
+### Étape 7 — nginx : 410 Gone dans `sites-enabled/km50.fr`
+
+**En dernier**, une fois le filtrage JS validé et les liens `/categorie/*` supprimés du HTML.
+
+```nginx
+# AVANT
+location ~* /categorie/[^/]*__ {
+    limit_req zone=catcombo burst=15 nodelay;
+    limit_req_status 429;
+    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
+}
+location ~* /categorie/ {
+    limit_req zone=categories_limit burst=5 nodelay;
+    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
+}
+
+# APRÈS — regex ancrées sur ^/voyages/ pour ne pas toucher /actualites/categorie/*
+location ~* ^/voyages/categorie/[^/]*__ {
+    limit_req zone=catcombo burst=5 nodelay;
+    limit_req_status 429;
+    return 410;
+}
+location ~* ^/voyages/categorie/ {
+    return 410;
+}
+# /actualites/categorie/* et toute autre archive : laisser passer (try_files inchangé)
+location ~* /categorie/ {
+    limit_req zone=categories_limit burst=5 nodelay;
+    try_files /share/$host${uri}index.html $uri /index.php$is_args$args;
+}
+```
+
+**Pas de `Disallow` dans robots.txt** : si Googlebot est bloqué par robots.txt, il ne voit jamais le 410 → pas de déréférencement. Le 410 seul suffit et est le signal correct.
+
+---
+
+## Récapitulatif des fichiers
+
+| Ordre | Fichier | Action |
 |---|---|---|
-| `sites-enabled/km50.fr` (via Forge) | Étape 0 — 410 Gone nginx | **1er** |
-| `templates/client/news_voyages.html5` | Étape 1 — data-categories, suppr. liens | 2 |
-| `templates/client/news_voyage_full.html5` | Étape 1 — suppr. liens /categorie | 2 |
-| Backend Contao — modules newscategories | Étape 2 — désactiver | 3 |
-| `files/client/js/voyage-filter.js` | Étape 4 — nouveau fichier | 4 |
-| `templates/client/fe_page.html5` | Étape 5 — canonical + JS conditionnel | 4 |
-| `files/client/js/shared.js` | Étape 6 — suppr. listener js-cat-link | 5 |
+| 1 | `templates/client/news_voyages.html5` | data-categories, suppr. `<a>` /categorie |
+| 1 | `templates/client/news_voyage_full.html5` | Même suppression |
+| 2 | `templates/client/nav_newscategories_hierarchical.html5` | `<button data-filter-*>` |
+| 3 | `files/client/js/voyage-filter.js` | Nouveau fichier |
+| 4 | `templates/client/fe_page.html5` | Canonical + chargement JS conditionnel |
+| 5 | `files/client/js/shared.js` | Suppr. listener js-cat-link (L58-71) |
+| 6 | Backend Contao | Désactiver module id=254 uniquement |
+| **7 (dernier)** | `sites-enabled/km50.fr` | **410 Gone ancrés sur ^/voyages/categorie/** |
 
 ---
 
 ## Open Questions
 
-> ~~**Q1 — Search Console**~~ : Fermée. Aucune URL `/voyages/categorie/*` dans le sitemap.
+> ~~**Q1**~~ Fermée. ~~**Q2**~~ Fermée. ~~**Q3**~~ **Fermée** — `$item['pid']` disponible via `category->row()`. ~~**Q4**~~ Fermée. ~~**Q5**~~ Fermée.
 
-> ~~**Q2 — IDs pages**~~ : Fermée. Voyages=**294**, Actualités=**297**, Reader=**306**.
-
-> [!NOTE]
-> **Q3 — `$item['pid']` dans le template de navigation ?** Vérifier avec `dump($item)`. Détermine la méthode de génération des boutons (Étape 3).
-
-> ~~**Q4 — Isotope vs show/hide**~~ : 41 voyages → vanilla JS suffit.
-
-> ~~**Q5 — mod_newscategories_cumulative actif**~~ : Actif, à désactiver (Étape 2).
+Aucune question ouverte bloquante. Plan prêt à exécuter.
