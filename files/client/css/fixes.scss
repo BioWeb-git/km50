@@ -35,6 +35,20 @@
 
 @import "../scss/fonts";
 
+.main-navigation-mobile-close:hover {
+    background: none !important;
+}
+
+.small-h3 {
+    h3 {
+        font-size: 1.6em !important;
+    }
+}
+
+.main-navigation-mobile .icon-links.social a::before {
+    color: #000;
+}
+
 .border-radius {
     border-radius: 25px;
 }
@@ -67,6 +81,10 @@
         font-size: 2.8em;
         line-height: 1.1;
     }
+}
+
+.main-navigation-mobile-close {
+    box-shadow: none;
 }
 
 .main-slider {
@@ -356,6 +374,10 @@ body.home {
 }
 
 // --- Elegant Buttons ---
+.link {
+    border-bottom: 1px dashed lightgrey;
+}
+
 .button,
 .module-cookiebar-opener a,
 button {
@@ -375,7 +397,7 @@ button {
     cursor: pointer;
     text-decoration: none !important;
     text-align: center;
-    line-height: 1 !important;
+    line-height: 1.6 !important;
 
     &:hover {
         background: $green1 !important;
@@ -387,12 +409,21 @@ button {
     &:active {
         transform: translateY(-1px);
     }
+
+    &.button.-tertiary {
+        text-align: center;
+    }
+
+    &.-small {
+        font-size: .8em !important;
+        line-height: 1.1 !important;
+    }
 }
 
 // --- Logos Gallery Fix ---
 .logos {
     ul {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
     }
 
     img {
@@ -691,8 +722,8 @@ button {
 // --- Text Conclusion (Sexy & Premium Style) ---
 .text-conclusion {
     display: table;
-    margin: 3rem auto;
-    padding: 3rem 5rem;
+    margin: 1.5rem auto;
+    padding: 1.5rem 2.5rem;
     text-align: center;
     position: relative;
     max-width: 90%;
@@ -848,11 +879,29 @@ button {
     .rsts-prev,
     .rsts-next {
         bottom: auto;
-        top: -45px
+        top: -15px
     }
 
     .rsts-nav {
         right: 25px;
         bottom: -45px;
+    }
+}
+
+.voyage-reserver-action {
+    position: absolute;
+    bottom: 30px;
+    right: 26px;
+    transform: translateY(-50%) !important;
+
+    @include mediaquery(tablet) {
+        transform: translateY(0) !important;
+        position: static !important;
+    }
+
+    .button {
+        font-size: 1.5em !important;
+        padding: 0.8em 1.5em !important;
+
     }
 }

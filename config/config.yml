@@ -1,4 +1,4 @@
-# This file has been auto-generated during installation
+# Configuration optimisée pour km50.fr
 contao:
   search:
     listener:
@@ -10,11 +10,10 @@ contao:
   image:
     preview:
       max_size: 2048
-  mailer:
-    transports:
-      mailtrap: ~
-      mailjet: ~
+
 framework:
+  http_cache:
+    enabled: true
   cache:
     app: cache.adapter.redis
     default_redis_provider: redis://localhost

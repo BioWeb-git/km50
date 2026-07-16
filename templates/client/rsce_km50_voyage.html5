@@ -279,9 +279,9 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 							?>
 						</ul>
 						<?php if ($this->assurance_destination === 'annulation'): ?>
-							<p><a class="button" href="https://drive.google.com/file/d/1YO0bqLJCHgQiKgQeBcd8_TakPspBlO5Y/view?usp=drive_link" target="_blank" rel="noopener">Information assurance annulation</a></p>
+							<p><a class="link" href="https://drive.google.com/file/d/1YO0bqLJCHgQiKgQeBcd8_TakPspBlO5Y/view?usp=drive_link" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> Information assurance annulation</a></p>
 						<?php elseif ($this->assurance_destination === 'multirisk'): ?>
-							<p><a class="button" href="https://drive.google.com/file/d/1y9_Uibrtn7qzi4AIX7fN2HzBFMQxsQif/view?usp=drive_link" target="_blank" rel="noopener">Information assurance multirisques</a></p>
+							<p><a class="link" href="https://drive.google.com/file/d/1y9_Uibrtn7qzi4AIX7fN2HzBFMQxsQif/view?usp=drive_link" target="_blank" rel="noopener"><i class="fa fa-external-link"></i> Information assurance multirisques</a></p>
 						<?php endif; ?>
 					</div>
 					
@@ -341,7 +341,7 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 
 		</div>
 		<?php if ($this->reservation_tally_id): ?>	
-			<div class="voyage-reservation">
+			<div id="reservation-tally" class="voyage-reservation">
 				<h2 class="voyage-titles">
 					Réservation
 					<?php if ($this->date_limite): ?>

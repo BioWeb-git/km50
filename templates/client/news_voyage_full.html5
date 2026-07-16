@@ -47,6 +47,11 @@
                <h2 class="voyage-subtitle is-animated"><?= $this->subHeadline ?></h2>
             <?php endif; ?>
           <div class="voyage-archive is-animated"><?= $this->archive->title; ?></div> 
+          <?php if ($GLOBALS['disponibilite_class'] !== 'complet'): ?>
+            <div class="voyage-reserver-action is-animated" style="margin-top: 20px;">
+              <a href="#reservation-tally" class="button">Réserver</a>
+            </div>
+          <?php endif; ?>
         </div>
       </div>
   </div>

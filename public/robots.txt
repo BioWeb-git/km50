@@ -1,0 +1,4 @@
+
+User-agent: *
+Disallow: /voyages/categorie/*__*
+Sitemap: https://www.km50.fr/sitemap.xml
