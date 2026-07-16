@@ -25,7 +25,7 @@
 
 **Modules km50 concernés** (base confirmée) :
 - `id=245` — type `newscategories`, archive `[6]` → Actualités — **à laisser intact**
-- `id=254` — type `newscategories_cumulativehierarchical`, archives `[7,8,9]` → Voyages — **à désactiver**
+- `id=254` — type `newscategories_cumulativehierarchical`, archives `[7,8,9]` → Voyages — **à laisser activé** (son template modifié `nav_newscategories_hierarchical.html5` génère les `<button>` et fournit les catégories au chargement)
 
 ---
 
@@ -114,7 +114,13 @@ Div wrapper :
 
 ---
 
-### Étape 2 — `nav_newscategories_hierarchical.html5` : boutons au lieu de liens
+### Étape 2 — Garder le module 254 activé
+
+Le module `id=254` (type `newscategories_cumulativehierarchical`) doit **rester activé**. Son template modifié (`nav_newscategories_hierarchical.html5`) ne génèrera plus de liens `__`, mais des `<button data-filter-*>` statiques. Cela permet :
+1. De charger et lister les catégories sémantiques au chargement de la page (1 seule requête SQL).
+2. D'avoir les boutons prêts dans le DOM pour le JS.
+
+Désactiver ou retirer de la mise en page tout autre module cumulatif de catégories inutile (par exemple `mod_newscategories_cumulative` s'il est présent en parallèle).
 
 #### [MODIFY] [nav_newscategories_hierarchical.html5](file:///home/forge/km50.fr/templates/client/nav_newscategories_hierarchical.html5)
 
@@ -260,11 +266,13 @@ Supprimer les lignes 58–71 de [shared.js](file:///home/forge/km50.fr/files/cli
 
 ---
 
-### Étape 6 — Backend Contao : désactiver le module `id=254`
+### Étape 6 — Backend Contao : nettoyer la mise en page
 
-Désactiver dans la mise en page uniquement le module `id=254` (`newscategories_cumulativehierarchical`, archives Voyages `[7,8,9]`).
+Vérifier la mise en page de la page Voyages (page 294) :
+- S'assurer que le module `id=254` est bien présent (pour générer les boutons).
+- Désactiver ou retirer tout autre module cumulatif (comme un module basé sur `mod_newscategories_cumulative.html5` s'il y en avait un de configuré).
 
-**Laisser intact** le module `id=245` (`newscategories`, archive `[6]` = Actualités).
+**Laisser intact** le module `id=245` (`newscategories`, archive `[6]` = Actualités) sur les autres pages.
 
 ---
 
@@ -314,7 +322,7 @@ location ~* /categorie/ {
 | 3 | `files/client/js/voyage-filter.js` | Nouveau fichier |
 | 4 | `templates/client/fe_page.html5` | Canonical + chargement JS conditionnel |
 | 5 | `files/client/js/shared.js` | Suppr. listener js-cat-link (L58-71) |
-| 6 | Backend Contao | Désactiver module id=254 uniquement |
+| 6 | Backend Contao | Garder 254 actif, retirer autres modules cumulatifs |
 | **7 (dernier)** | `sites-enabled/km50.fr` | **410 Gone ancrés sur ^/voyages/categorie/** |
 
 ---
