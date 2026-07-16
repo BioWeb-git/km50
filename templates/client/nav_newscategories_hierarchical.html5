@@ -10,15 +10,22 @@
 
       <li class="<?= $item['class'] ?>">
         <?php if (!str_contains((string) $item['class'], 'reset') || !str_contains((string) $item['class'], 'active')): ?>
-        <<?= $tag ?> 
-            class="<?= $item['class'] ?> <?= $hideInList ?>" 
-            <?php if ('a' === $tag): ?>
-                href="<?= $item['href'] ?>" 
-                title="<?= $item['linkTitle'] ?>" 
-                itemprop="url"
-            <?php endif; ?>
+        <?php if ('a' === $tag): ?>
+        <span 
+            class="<?= $item['class'] ?> <?= $hideInList ?> js-cat-link" 
+            data-href="<?= base64_encode($item['href']) ?>" 
+            title="<?= $item['linkTitle'] ?>" 
+            role="link" 
+            tabindex="0" 
+            style="cursor:pointer"
             <?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>
         >
+        <?php else: ?>
+        <<?= $tag ?> 
+            class="<?= $item['class'] ?> <?= $hideInList ?>" 
+            <?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>
+        >
+        <?php endif; ?>
         <?php endif; ?>
 
           <?php if ($item['image']): ?>
@@ -40,7 +47,7 @@
           <?php endif; ?>
 
         <?php if (!str_contains((string) $item['class'], 'reset') || !str_contains((string) $item['class'], 'active')): ?>
-        </<?= $tag ?>>
+        </<?= 'a' === $tag ? 'span' : $tag ?>>
         <?php endif; ?>
 
         <?= $item['subitems'] ?>

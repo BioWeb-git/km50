@@ -20,7 +20,7 @@
             </li>
         <?php else: ?>
             <li class="<?= $item['class'] ?>">
-                <a href="<?= str_replace(' ', '', $item['href']); ?>" class="<?= $item['class'] ?>" title="<?= $item['linkTitle'] ?>" itemprop="url"<?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>>
+                <span data-href="<?= base64_encode(str_replace(' ', '', $item['href'])) ?>" class="<?= $item['class'] ?> js-cat-link" title="<?= $item['linkTitle'] ?>" role="link" tabindex="0" style="cursor:pointer"<?php if ($item['subitems']): ?> aria-haspopup="true"<?php endif; ?>>
                     <?php if ($item['image']): ?>
                         <?php $this->insert('picture_default', $item['image']->picture) ?>
                     <?php endif; ?>
@@ -30,7 +30,7 @@
                     <?php if ($this->showQuantity): ?>
                         <sup class="quantity">(<?= $item['quantity'] ?>)</sup>
                     <?php endif; ?>
-                </a>
+                </span>
 
                 <?= $item['subitems'] ?>
             </li>

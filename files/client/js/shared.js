@@ -54,3 +54,18 @@ $(window).on('load', function () {
 $(window).scroll(function () {
     scrollClass();
 });
+
+// Redirection pour les filtres de catégories dé-crawlisés (base64)
+document.addEventListener('click', function(e) {
+    const el = e.target.closest('.js-cat-link');
+    if (el && el.dataset.href) {
+        window.location.href = atob(el.dataset.href);
+    }
+});
+document.addEventListener('keydown', function(e) {
+    const el = e.target.closest('.js-cat-link');
+    if (el && el.dataset.href && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        window.location.href = atob(el.dataset.href);
+    }
+});
