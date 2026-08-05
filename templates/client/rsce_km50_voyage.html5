@@ -311,6 +311,96 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 					</div>
 				</div>
 			</section>
+			<?php 
+				$mp4Videos = \Contao\StringUtil::deserialize($this->videos_mp4, true);
+			?>
+			<?php if (!empty($mp4Videos)): ?>
+				<section class="voyage-reels voyage-mp4-videos">
+					<h2 class="voyage-titles">Vidéos du Séjour</h2>
+					<div class="reels-container">
+						<?php foreach ($mp4Videos as $uuid): ?>
+							<?php 
+								$objFile = \Contao\FilesModel::findByUuid($uuid);
+								if (!$objFile) continue;
+							?>
+							<div class="reel-item mp4-item">
+								<video controls playsinline preload="metadata" onloadedmetadata="if(this.videoHeight > this.videoWidth){this.parentElement.classList.add('is-portrait');}">
+									<source src="<?= $objFile->path ?>" type="video/mp4">
+									Votre navigateur ne supporte pas la lecture de vidéos.
+								</video>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				</section>
+			<?php endif; ?>
+
+			<?php if (!empty($this->instagram_reels)): ?>
+				<?php 
+					$reelsRaw = \Contao\StringUtil::deserialize($this->instagram_reels, true);
+				?>
+				<?php if (!empty($reelsRaw)): ?>
+					<section class="voyage-reels">
+						<h2 class="voyage-titles">KM50 sur Instagram</h2>
+						<div class="reels-container">
+							<?php 
+								foreach ((array)$reelsRaw as $reelItem): 
+									$url = '';
+									if (is_string($reelItem)) {
+										$url = $reelItem;
+									} elseif (is_array($reelItem)) {
+										$url = $reelItem['url'] ?? reset($reelItem) ?? '';
+									} elseif (is_object($reelItem)) {
+										$url = $reelItem->url ?? '';
+									}
+									$url = trim((string)$url);
+									if (empty($url)) continue;
+
+									// Extraire le code court
+									$shortcode = '';
+									if (preg_match('/(?:reel|reels|p)\/([A-Za-z0-9_-]+)/i', $url, $m)) {
+										$shortcode = $m[1];
+									} else {
+										$shortcode = preg_replace('/[^A-Za-z0-9_-]/', '', $url);
+									}
+									if (empty($shortcode)) continue;
+
+									$reelUrl = "https://www.instagram.com/reel/{$shortcode}/";
+							?>
+								<div class="reel-item">
+									<iframe src="https://www.instagram.com/reel/<?= htmlspecialchars($shortcode) ?>/embed/captioned/" width="328" height="1020" frameborder="0" scrolling="no" allowtransparency="true" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</section>
+					<script>
+						window.addEventListener('message', function(e) {
+							if (!e.origin || e.origin.indexOf('instagram.com') === -1) return;
+							var data = e.data;
+							if (typeof data === 'string') {
+								try { data = JSON.parse(data); } catch(err) {}
+							}
+							var h = 0;
+							if (data && data.details && (data.details.height || data.details.scrollHeight)) {
+								h = parseInt(data.details.height || data.details.scrollHeight, 10);
+							} else if (data && data.height) {
+								h = parseInt(data.height, 10);
+							}
+							if (h > 0) {
+								var iframes = document.querySelectorAll('.voyage-reels iframe');
+								iframes.forEach(function(iframe) {
+									if (iframe.contentWindow === e.source) {
+										iframe.style.setProperty('height', h + 'px', 'important');
+										if (iframe.parentElement) {
+											iframe.parentElement.style.setProperty('height', h + 'px', 'important');
+										}
+									}
+								});
+							}
+						});
+					</script>
+				<?php endif; ?>
+			<?php endif; ?>
+
 			<section class="voyage-galerie">
 				<h2 class="voyage-titles">Photos du Séjour</h2>
 				<?php if ($this->photos_fiche && is_array($this->photos_fiche)): ?>

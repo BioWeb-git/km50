@@ -51,6 +51,30 @@ return array(
             'inputType' => 'text',
             'eval' => array('tl_class' => 'w50'),
         ),
+        'instagram_reels' => array(
+            'label' => array('fr' => array('Instagram Reels', 'Ajoutez les liens ou URLs des reels Instagram (ex: https://www.instagram.com/reel/DbFgq7huiBv/)')),
+            'elementLabel' => 'Reel %s',
+            'inputType' => 'list',
+            'fields' => array(
+                'url' => array(
+                    'label' => array('fr' => array('Lien / URL du Reel Instagram', 'Ex: https://www.instagram.com/reel/DbFgq7huiBv/')),
+                    'inputType' => 'text',
+                    'eval' => array('tl_class' => 'clr'),
+                ),
+            ),
+            'eval' => array('tl_class' => 'clr'),
+        ),
+        'videos_mp4' => array(
+            'label' => array('fr' => array('Vidéos MP4 locales', 'Sélectionnez des fichiers vidéo MP4 à intégrer avec un lecteur propre.')),
+            'inputType' => 'fileTree',
+            'eval' => array(
+                'multiple' => true,
+                'fieldType' => 'checkbox',
+                'filesOnly' => true,
+                'extensions' => 'mp4,webm,mov',
+                'tl_class' => 'clr',
+            ),
+        ),
         'min_participants' => array(
             'label' => array('fr' => array('Nombre minimum de participants', 'Nombre requis pour confirmer le séjour.')),
             'inputType' => 'text',
