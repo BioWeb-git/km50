@@ -13,10 +13,36 @@ $thematique   = $GLOBALS['thematique']   ?? null;
 $region       = $GLOBALS['region']       ?? null;
 $dispoLabels = [
     'complet' => 'Complet',
-    'last'    => 'Dernières places'
+    'last'    => 'Dernières places',
+    'past'    => 'Édition passée'
 ];
 $GLOBALS['disponibilite'] = isset($dispoLabels[$this->disponibilite]) ? $dispoLabels[$this->disponibilite] : null;
 $GLOBALS['disponibilite_class'] = $this->disponibilite;
+
+// Détection automatique : date limite d'inscription dépassée ou statut forcé
+$isPast = false;
+if ($this->disponibilite === 'past') {
+    $isPast = true;
+} elseif ($this->date_limite) {
+    $tsLimite = is_numeric($this->date_limite) ? (int)$this->date_limite : strtotime($this->date_limite);
+    // Si la date limite est échue (fin de journée) -> inscriptions closes -> séjour passé
+    if ($tsLimite < strtotime('today 23:59:59')) {
+        $isPast = true;
+    }
+}
+
+if ($isPast) {
+    $GLOBALS['voyage_status'] = 'past';
+    $GLOBALS['voyage_status_class'] = 'status-past';
+    // Si aucun badge spécifique (complet/last) ou si forcé en past, afficher "Édition passée"
+    if (!$GLOBALS['disponibilite'] || $this->disponibilite === 'past') {
+        $GLOBALS['disponibilite'] = 'Édition passée';
+        $GLOBALS['disponibilite_class'] = 'past';
+    }
+} else {
+    $GLOBALS['voyage_status'] = 'upcoming';
+    $GLOBALS['voyage_status_class'] = 'status-upcoming';
+}
 $objFile = \Contao\FilesModel::findByUuid($this->photos_organisateur); 
 $photoUuid = null;
 if (is_array($this->photo) && !empty($this->photo[0])) {
@@ -432,16 +458,25 @@ if (is_array($this->photo) && !empty($this->photo[0])) {
 		</div>
 		<?php if ($this->reservation_tally_id): ?>	
 			<div id="reservation-tally" class="voyage-reservation">
-				<h2 class="voyage-titles">
-					Réservation
-					<?php if ($this->date_limite): ?>
-						<span class="date-deadline">
-							avant le <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?>
-						</span>
-					<?php endif; ?>
-				</h2>
-				<iframe data-tally-src="https://tally.so/embed/<?= $this->reservation_tally_id ?>?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Réservation Séjour Échappée Gourmande en Aubrac 2026"></iframe>
-				<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+				<?php if ($isPast): ?>
+					<div class="voyage-reservation-closed">
+						<h2 class="voyage-titles">Inscriptions closes</h2>
+						<p>Les inscriptions pour cette édition sont désormais terminées.</p>
+						<a href="/voyages" class="button">Découvrir les séjours disponibles</a>
+					</div>
+				<?php endif; ?>
+				<div class="voyage-reservation-tally-active<?= $isPast ? ' is-past-tally' : '' ?>">
+					<h2 class="voyage-titles">
+						Réservation
+						<?php if ($this->date_limite): ?>
+							<span class="date-deadline">
+								avant le <?php echo date('d/m/Y', is_numeric($this->date_limite) ? $this->date_limite : strtotime($this->date_limite)); ?>
+							</span>
+						<?php endif; ?>
+					</h2>
+					<iframe data-tally-src="https://tally.so/embed/<?= $this->reservation_tally_id ?>?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="200" frameborder="0" marginheight="0" marginwidth="0" title="Réservation Séjour"></iframe>
+					<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+				</div>
 			</div>		
 		<?php endif;?>
 	<?php endif;?>

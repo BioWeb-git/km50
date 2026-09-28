@@ -3,6 +3,10 @@
 $organisateur = null;
 $region       = null;
 $thematique   = null; 
+$GLOBALS['disponibilite'] = null;
+$GLOBALS['disponibilite_class'] = null;
+$GLOBALS['voyage_status'] = 'upcoming';
+$GLOBALS['voyage_status_class'] = 'status-upcoming';
 
 // 2. Tri des catégories
 if ($this->categories && is_array($this->categories)) {
@@ -29,7 +33,7 @@ if ($this->categories && is_array($this->categories)) {
 $processedText = $this->text;
 ?>
 
-<div class="voyages-master block<?= $this->class ?>">
+<div class="voyages-master block<?= $this->class ?> <?= $GLOBALS['voyage_status_class'] ?? 'status-upcoming' ?>" data-status="<?= $GLOBALS['voyage_status'] ?? 'upcoming' ?>">
     <?php if ($this->addImage && $this->src): ?>
         <?php if ($this->link): ?>
             <a class="voyage-image" href="<?= $this->link ?>"<?php if ($this->target): ?> target="_blank" rel="noopener"<?php endif ?><?= $this->attributes ?>>

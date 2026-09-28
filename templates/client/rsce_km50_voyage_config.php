@@ -35,8 +35,9 @@ return array(
             'label'     => array('fr' => array('Disponibilité', 'Sélectionnez le type de disponibilité')),
             'inputType' => 'select',
             'options'   => array(
-                'complet'          => 'Complet',
-                'last'  => 'Dernières places',
+                'complet' => 'Complet',
+                'last'    => 'Dernières places',
+                'past'    => 'Séjour passé / Référence',
             ),
             'eval'      => array('tl_class' => 'w50', 'includeBlankOption' => true),
             'sql'       => "blob NULL"

@@ -108,35 +108,39 @@ Il existe trois façons de déterminer qu'un séjour est passé :
 - [x] Création d'un backup de la base de données de production (`php8.3 vendor/bin/contao-console contao:backup:create`).
 - [x] Sauvegarde et commit/push de l'état initial et du plan d'intervention avant de commencer.
 
-### Phase 1 — Validation des choix (Avant tout code)
-- [ ] Valider l'ergonomie souhaitée avec la cliente :
-  - Deux sections l'une sous l'autre ?
-  - Ou onglets / bascule interactive en haut de page ?
-- [ ] Valider la règle temporelle :
-  - `date_limite` actuelle suffisante ?
-  - Ou ajout d'un champ `date_fin` ?
+### Phase 1 — Validation des choix (Réalisée)
+- [x] Ergonomie validée : **Option 2B (Onglets / Toggle interactif)** avec compteurs en amont de la liste.
+- [x] Règle temporelle validée : Détection automatique via `date_limite < aujourd'hui 23:59:59` avec possibilité de forçage manuel via l'option `past` ("Séjour passé / Référence") dans `disponibilite`.
 
-### Phase 2 — Préparation technique (Non destructive)
-- [ ] Mettre à jour `rsce_km50_voyage_config.php` si nécessaire (ajout de `date_fin` ou option de forçage manuel dans `disponibilite`).
-- [ ] Adapter le template [news_voyages.html5](file:///home/forge/km50.fr/templates/client/news_voyages.html5) pour marquer visuellement les séjours passés :
-  - Badge spécifique : `Édition passée`.
-  - Bouton adapté : remplacer *"Réserver"* par *"Voir le détail du voyage"*.
-  - Attributs HTML pour le ciblage CSS et JS (`data-status="past|upcoming"`).
+### Phase 2 — Préparation technique (Réalisée)
+- [x] Mise à jour de [`templates/client/rsce_km50_voyage_config.php`](file:///home/forge/km50.fr/templates/client/rsce_km50_voyage_config.php) : ajout de `'past' => 'Séjour passé / Référence'` dans le champ `disponibilite`.
+- [x] Mise à jour de [`templates/client/rsce_km50_voyage.html5`](file:///home/forge/km50.fr/templates/client/rsce_km50_voyage.html5) :
+  - Détection `$isPast` automatique et manuelle.
+  - Définition des GLOBALS (`voyage_status`, `voyage_status_class`, `disponibilite`).
+  - Insertion du bloc *"Inscriptions closes"* en mode preview tout en conservant le formulaire Tally standard pour la vue publique.
+- [x] Mise à jour de [`templates/client/news_voyages.html5`](file:///home/forge/km50.fr/templates/client/news_voyages.html5) :
+  - Ajout des attributs `data-status="upcoming|past"` et classes CSS sur `.voyages-master`.
+  - Libellé par défaut conservé à *"Afficher le voyage"* pour la vue publique.
+- [x] Mise à jour de [`templates/client/news_voyage_full.html5`](file:///home/forge/km50.fr/templates/client/news_voyage_full.html5) : compatibilité vue détaillée.
 
-### Phase 3 — Mise en place de la séparation
-- [ ] **Si Option 1 (Deux modules)** :
-  1. Créer le listener de filtrage sur `newsListFetchItems`.
-  2. Dupliquer le module `252` en module `Voyages Passés` avec classe CSS `voyages-past`.
-  3. Ajouter la classe CSS `voyages-upcoming` au module `252`.
-  4. Insérer le nouveau module et l'intertitre dans la page `294`.
-- [ ] **Si Option 2 (Template / Onglets)** :
-  1. Intégrer les filtres d'état dans le template ou dans le script JS de filtrage.
-  2. Ajouter les styles CSS appropriés dans [fixes.scss](file:///home/forge/km50.fr/files/client/css/fixes.scss).
+### Phase 3 — Mise en place de la séparation & Mode Prévisualisation (Réalisée)
+- [x] Implémentation du filtrage interactif dans [`files/client/js/shared.js`](file:///home/forge/km50.fr/files/client/js/shared.js) :
+  - Détection automatique et calcul des compteurs : *Séjours disponibles*, *Séjours passés*, *Tous les séjours*.
+  - Gestion de l'historique URL par hash (`#past`, `#all`, et URL propre sans hash pour les disponibles).
+  - Préservation du statut actif lors du clic sur les filtres de catégories (`.js-cat-link`).
+  - Gestion du message d'absence avec bouton de bascule vers les séjours passés.
+  - **Mode Prévisualisation sécurisé** : activation via `?preview=1` (persisté en `localStorage`), désactivation via `?preview=0`.
+- [x] Intégration des styles CSS dans [`files/client/css/fixes.scss`](file:///home/forge/km50.fr/files/client/css/fixes.scss) :
+  - Boutons d'onglets ergonomiques avec badges compteurs et couleur KM50 `#7fa171`.
+  - Conditionnement strict à `body.km50-preview` : la fonctionnalité est **100% invisible pour le client et les visiteurs publics** tant que le devis n'est pas validé.
 
-### Phase 4 — Contrôle Qualité, Recette & Clôture
-- [ ] Vérifier que les 17 voyages existants se répartissent correctement.
-- [ ] Vérifier la vue détaillée (fiche voyage `news_voyage_full.html5` et lecteur `306`) : les anciens voyages doivent rester accessibles et indexables.
-- [ ] Vérifier l'affichage responsive (mobile & tablette).
-- [ ] Inutile de compiler le SCSS fixes.scss car contao le fait tout seul.
-- [ ] Créer un backup BDD de clôture (`contao:backup:create`).
-- [ ] Validation de l'utilisateur avant le commit/push final.
+### Phase 4 — Contrôle Qualité & Recette
+- [x] Test de la répartition temporelle (1 séjour disponible, 13 passés, 3 fiches de référence/éditions passées sur 17 voyages).
+- [x] Test de la navigation par catégorie (ex: *Ducati Groupe Priod* reste sur l'onglet disponible avec message d'absence adapté et bouton vers les passés).
+- [x] Test de l'isolation du mode prévisualisation :
+  - **Vue publique** (`https://www.km50.fr/voyages`) : affichage d'origine à 100%, zéro onglet, tous les séjours visibles.
+  - **Vue dev / prévisualisation** (`https://www.km50.fr/voyages?preview=1`) : barre d'onglets active, filtrage dynamique fonctionnel.
+- [ ] Présentation du devis à la cliente.
+- [ ] Après acceptation du devis : retrait du conditionnement preview pour ouverture publique.
+- [ ] Création du backup BDD de clôture (`contao:backup:create`).
+- [ ] Validation de l'utilisateur avant le commit/push final sur `origin main`.

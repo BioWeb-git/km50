@@ -970,3 +970,176 @@ button {
         }
     }
 }
+
+// =========================================================================
+// SÉPARATION DES SÉJOURS PASSÉS (Option 2B - Mode Prévisualisation)
+// =========================================================================
+
+// Éléments strictement masqués hors mode preview (invisibles pour le client et visiteurs)
+body:not(.km50-preview) {
+    .voyage-disponibilite.-past,
+    .voyages-status-filter,
+    .voyages-empty-message,
+    .voyage-reservation-closed {
+        display: none !important;
+    }
+}
+
+// Styles actifs UNIQUEMENT en mode prévisualisation (?preview=1)
+body.km50-preview {
+    // Badge disponibilité : Édition passée
+    .voyage-disponibilite.-past {
+        display: inline-block !important;
+        background: #555555 !important;
+        color: #ffffff !important;
+    }
+
+    // Barre d'onglets de filtrage temporel
+    .voyages-status-filter {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin: 0 0 35px 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+
+        button.btn-status-filter {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 10px !important;
+            padding: 10px 22px !important;
+            background: #f2efe9 !important;
+            color: #555555 !important;
+            font-family: inherit !important;
+            font-size: 0.9em !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            border: 1px solid #ded9ce !important;
+            border-radius: 30px !important;
+            cursor: pointer !important;
+            box-shadow: none !important;
+            line-height: normal !important;
+            margin: 0 !important;
+            transition: all 0.2s ease !important;
+
+            .badge-count {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                min-width: 22px !important;
+                height: 22px !important;
+                padding: 0 7px !important;
+                border-radius: 11px !important;
+                font-size: 0.85em !important;
+                font-weight: 700 !important;
+                background: #ded9ce !important;
+                color: #444444 !important;
+                transition: all 0.2s ease !important;
+            }
+
+            &:hover {
+                background: #e6e2d8 !important;
+                color: #222222 !important;
+                border-color: #cdc7bb !important;
+            }
+
+            &.is-active {
+                background: #7fa171 !important; // Vert KM50
+                color: #ffffff !important;
+                border-color: #7fa171 !important;
+                box-shadow: 0 4px 12px rgba(127, 161, 113, 0.35) !important;
+
+                .badge-count {
+                    background: rgba(255, 255, 255, 0.3) !important;
+                    color: #ffffff !important;
+                }
+            }
+        }
+    }
+
+    // Style adapté pour les fiches passées dans la grille
+    .voyages-list .voyages-master.status-past {
+        .voyage-image img {
+            filter: grayscale(15%);
+            transition: filter 0.3s ease;
+        }
+
+        &:hover .voyage-image img {
+            filter: grayscale(0%);
+        }
+
+        .button {
+            background: #555555;
+            border-color: #555555;
+
+            &:hover {
+                background: #222222;
+                border-color: #222222;
+            }
+        }
+    }
+
+    // Message quand aucun séjour ne correspond (affichage piloté par jQuery)
+    .voyages-empty-message {
+        padding: 40px 20px;
+        text-align: center;
+        background: #fbfbfb;
+        border: 1px dashed #d5d0c8;
+        border-radius: 12px;
+        margin: 20px 0;
+
+        p {
+            margin: 0;
+            font-size: 1.1em;
+            color: #777777;
+        }
+    }
+
+    // Message inscriptions closes dans la fiche détaillée
+    .voyage-reservation-closed {
+        display: block !important;
+        padding: 30px;
+        background: #fbfbfb;
+        border: 1px solid #e8e4dc;
+        border-radius: 12px;
+        text-align: center;
+        margin-top: 30px;
+
+        h2 {
+            margin-top: 0;
+            color: #333333;
+        }
+
+        p {
+            color: #666666;
+            margin-bottom: 20px;
+        }
+    }
+
+    // En preview, on masque le formulaire Tally des séjours expirés pour montrer "Inscriptions closes"
+    .voyage-reservation-tally-active.is-past-tally {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body.km50-preview .voyages-status-filter {
+        border-radius: 16px;
+        width: 100%;
+        gap: 6px;
+
+        .btn-status-filter {
+            flex: 1 1 100%;
+            justify-content: center;
+            padding: 8px 14px;
+            font-size: 0.85em;
+        }
+    }
+}
