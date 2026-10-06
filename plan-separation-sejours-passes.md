@@ -138,8 +138,12 @@ Il existe trois façons de déterminer qu'un séjour est passé :
 - [x] Test de la répartition temporelle (1 séjour disponible, 13 passés, 3 fiches de référence/éditions passées sur 17 voyages).
 - [x] Test de la navigation par catégorie (ex: *Ducati Groupe Priod* reste sur l'onglet disponible avec message d'absence adapté et bouton vers les passés).
 - [x] Test de l'isolation du mode prévisualisation :
-  - **Vue publique** (`https://www.km50.fr/voyages`) : affichage d'origine à 100%, zéro onglet, tous les séjours visibles.
+  - **Vue publique liste** (`https://www.km50.fr/voyages`) : affichage d'origine de la liste, zéro onglet, tous les séjours restent visibles.
   - **Vue dev / prévisualisation** (`https://www.km50.fr/voyages?preview=1`) : barre d'onglets active, filtrage dynamique fonctionnel.
+- [x] **Point d'attention résolu (Isolation frontend du bouton Réserver)** :
+  - Dans [`news_voyage_full.html5`](file:///home/forge/km50.fr/templates/client/news_voyage_full.html5), le bouton « Réserver » reste présent dans le code HTML pour tous les visiteurs avec la classe `is-past-action`.
+  - Dans [`fixes.scss`](file:///home/forge/km50.fr/files/client/css/fixes.scss), le bouton est masqué **uniquement** sous `body.km50-preview`.
+  - En vue publique (`preview=0` / visiteurs normaux), le bouton « Réserver » reste visible comme à l'origine. En prévisualisation (`preview=1`), il est masqué au profit de l'encart d'inscriptions closes.
 - [ ] Présentation du devis à la cliente.
 - [ ] Après acceptation du devis : retrait du conditionnement preview pour ouverture publique.
 - [ ] Création du backup BDD de clôture (`contao:backup:create`).

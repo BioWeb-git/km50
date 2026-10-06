@@ -1123,6 +1123,11 @@ body.km50-preview {
         }
     }
 
+    // En preview, on masque le bouton Réserver de l'en-tête pour les séjours passés
+    .voyage-reserver-action.is-past-action {
+        display: none !important;
+    }
+
     // En preview, on masque le formulaire Tally des séjours expirés pour montrer "Inscriptions closes"
     .voyage-reservation-tally-active.is-past-tally {
         display: none !important;
