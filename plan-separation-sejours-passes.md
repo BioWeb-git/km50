@@ -146,5 +146,5 @@ Il existe trois façons de déterminer qu'un séjour est passé :
   - En vue publique (`preview=0` / visiteurs normaux), le bouton « Réserver » reste visible comme à l'origine. En prévisualisation (`preview=1`), il est masqué au profit de l'encart d'inscriptions closes.
 - [ ] Présentation du devis à la cliente.
 - [ ] Après acceptation du devis : retrait du conditionnement preview pour ouverture publique.
-- [ ] Création du backup BDD de clôture (`contao:backup:create`).
+- [x] Création du backup BDD de clôture (`contao:backup:create`) : `backup__20261006095528.sql.gz`.
 - [ ] Validation de l'utilisateur avant le commit/push final sur `origin main`.
